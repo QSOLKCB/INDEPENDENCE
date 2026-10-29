@@ -45,3 +45,29 @@ We build software that can stand on its own.
 *Independent Software Sovereignty Initiative*
 
 **WE DID NOT LEAVE SOFTWARE ENGINEERING. SOFTWARE ENGINEERING LEFT US.**
+
+---
+
+## Live proof lab
+
+The manifesto now has a working, no-build interactive demonstration on GitHub Pages:
+
+**https://qsolkcb.github.io/INDEPENDENCE/**
+
+- Deterministic, seeded elementary cellular automata (Rules 30, 90, 110 and 184), native Canvas 2D, and a replay fingerprint.
+- Browser tests (including independently known vectors), executed only when requested.
+- A clearly-labelled synthetic dependency-tree thought experiment.
+- Zero third-party runtime packages or externally hosted executable browser assets.
+- Python 3 standard-library dependency and resource audit, plus stdlib unittest tests.
+
+No npm install, pip install, Docker pull, container orchestration, bundler, or third-party service is needed to build, test, or serve it:
+
+    python3 -m unittest discover -s tests -v
+    python3 scripts/audit.py --json
+    python3 -m http.server 8000
+
+Open http://localhost:8000/ for local development. The browser uses relative ECMAScript module imports and therefore should be served over HTTP.
+
+See docs/INVARIANTS.md, docs/EVIDENCE.md, and docs/ROADMAP.md. The scope and limitations are intentional: zero third-party packages is not zero platform dependencies, not an all-repositories audit, and not proof of invulnerability.
+
+**The revolution will not be containerised.**
