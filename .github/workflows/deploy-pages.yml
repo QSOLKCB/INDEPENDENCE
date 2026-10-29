@@ -1,0 +1,59 @@
+# Manually publish the dependency-free website from main.
+# No Node.js/npm build, pip installation, Docker, or Jekyll required.
+name: Deploy INDEPENDENCE to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: independence-github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Verify and publish static website
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+
+      - name: Run Python standard-library tests
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Check zero-package web policy
+        run: python3 scripts/audit.py --json
+
+      - name: Stage only first-party site files
+        shell: bash
+        run: |
+          set -euo pipefail
+          site="$RUNNER_TEMP/independence-pages"
+          mkdir -p "$site/lab"
+          cp index.html styles.css app.js .nojekyll "$site/"
+          cp lab/core.js lab/tests.js "$site/lab/"
+          test -s "$site/index.html"
+          test -s "$site/app.js"
+          test -s "$site/lab/core.js"
+          echo "Static Pages artifact ready; no build required."
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ${{ runner.temp }}/independence-pages
+
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
