@@ -27,7 +27,7 @@ REMOTE_LOADS = (
     ("remote_stylesheet", re.compile(r'<link\b(?=[^>]*\brel\s*=\s*["\x27]stylesheet)(?=[^>]*\bhref\s*=\s*["\x27]https?://)[^>]*>', re.I)),
     ("css_import", re.compile(r'@import\s+(?:url\s*\(\s*)?["\x27]?https?://', re.I)),
     ("remote_css_url", re.compile(r'url\s*\(\s*["\x27]?https?://', re.I)),
-    ("remote_js_import", re.compile(r'\bimport\s*(?:\(|[^;\n]*?\bfrom\s*)["\x27]https?://', re.I)),
+    ("remote_js_import", re.compile(r'\bimport\s*(?:\(\s*|[^;\n]*?\bfrom\s*)?["\x27]https?://', re.I)),
     ("remote_js_fetch", re.compile(r'\bfetch\s*\(\s*["\x27]https?://', re.I)),
 )
 SCHEMA_VERSION = 1
@@ -45,7 +45,7 @@ def audit(root: Path) -> dict:
         relative = path.relative_to(root).as_posix()
         if path.name in FORBIDDEN_MANIFESTS:
             findings.append({"path": relative, "kind": "third_party_manifest"})
-        if "node_modules" in path.parts or ".venv" in path.parts:
+        if "node_modules" in path.relative_to(root).parts or ".venv" in path.relative_to(root).parts:
             findings.append({"path": relative, "kind": "vendored_dependency_directory"})
     for relative in WEB_FILES:
         path = root / relative

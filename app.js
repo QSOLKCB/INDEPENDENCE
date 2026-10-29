@@ -21,8 +21,7 @@ function inputs() {
 
 function paint(result) {
   if (!context) {
-    $('replay').textContent = 'CANVAS UNAVAILABLE';
-    return;
+    return false;
   }
   const scaleX = canvas.width / result.columns;
   const scaleY = canvas.height / result.rows;
@@ -34,6 +33,7 @@ function paint(result) {
       if (result.cells[y * result.columns + x]) context.fillRect(x * scaleX, y * scaleY, scaleX, scaleY);
     }
   }
+  return true;
 }
 
 function generate() {
@@ -41,17 +41,19 @@ function generate() {
   if (!params) return;
   const start = performance.now();
   const result = buildAutomaton(params.rule, params.seed);
-  paint(result);
+  const painted = paint(result);
   const duration = performance.now() - start;
   $('fingerprint').textContent = result.fingerprint.toUpperCase();
   $('cells').textContent = result.cells.length.toLocaleString();
   $('duration').textContent = duration.toFixed(2);
-  $('replay').textContent = 'READY';
+  $('replay').textContent = painted ? 'READY' : 'CANVAS UNAVAILABLE';
+  $('replay').style.color = painted ? '' : '#ff957e';
   last = result;
   lastParams = params;
 }
 
 function verifyReplay() {
+  if (!context) { $('replay').textContent = 'CANVAS UNAVAILABLE'; return; }
   if (!last || !lastParams) { $('replay').textContent = 'GENERATE FIRST'; return; }
   // Verify original inputs even if control fields have been edited.
   const repeat = buildAutomaton(lastParams.rule, lastParams.seed);

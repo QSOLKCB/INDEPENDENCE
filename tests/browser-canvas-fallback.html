@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Canvas fallback regression test — INDEPENDENCE</title></head>
+<body>
+<h1>Canvas fallback regression test</h1>
+<p>This test deliberately simulates a browser that cannot provide Canvas 2D. It uses no packages.</p>
+<canvas id="automaton" width="128" height="76"></canvas>
+<select id="rule"><option value="30">Rule 30</option></select>
+<input id="seed" type="number" value="314159">
+<button id="generate" type="button">Generate</button>
+<button id="repeat" type="button">Replay</button>
+<output id="fingerprint"></output><output id="cells"></output><output id="duration"></output>
+<output id="replay"></output>
+<input id="direct" value="3"><input id="fanout" value="3"><input id="depth" value="3">
+<output id="direct-value"></output><output id="fanout-value"></output><output id="depth-value"></output>
+<output id="hypothetical"></output>
+<button id="run-tests" type="button">Browser tests</button><output id="test-results"></output>
+<pre id="result" role="status" aria-live="polite">Running...</pre>
+<script type="module">
+  const $ = id => document.getElementById(id);
+  // Stub before the module initializes to reproduce the review's exact null-context case.
+  $('automaton').getContext = () => null;
+  const results = [];
+  const check = label => results.push({label, passed: $('replay').textContent === 'CANVAS UNAVAILABLE'});
+  try {
+    await import('../app.js');
+    check('Initial generation retains canvas-unavailable status');
+    $('generate').click();
+    check('Subsequent generation retains canvas-unavailable status');
+    $('repeat').click();
+    check('Replay request retains canvas-unavailable status');
+  } catch (error) {
+    results.push({label: String(error), passed: false});
+  }
+  const passing = results.filter(result => result.passed).length;
+  $('result').textContent = results.map(result => (result.passed ? 'PASS ' : 'FAIL ') + result.label).join('\n') +
+    '\n' + passing + '/' + results.length + ' passed';
+  $('result').style.color = passing === results.length ? 'green' : 'red';
+</script>
+</body>
+</html>

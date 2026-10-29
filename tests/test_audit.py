@@ -62,6 +62,74 @@ class AuditTests(unittest.TestCase):
             report = audit(root)
             self.assertIn({"path": "styles.css", "kind": "remote_css_url"}, report["findings"])
 
+    @staticmethod
+    def _write_clean_assets(root):
+        for relative in WEB_FILES:
+            path = root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("", encoding="utf-8")
+
+    def test_remote_side_effect_imports_are_rejected(self):
+        for statement in (
+            "import 'https://example.com/x.js';",
+            'import "https://example.com/x.js";',
+            "import\n'https://example.com/x.js';",
+            "import {x} from 'https://example.com/x.js';",
+            "import( 'https://example.com/x.js');",
+        ):
+            with self.subTest(statement=statement):
+                with tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory)
+                    self._write_clean_assets(root)
+                    (root / "app.js").write_text(statement, encoding="utf-8")
+                    report = audit(root)
+                    self.assertFalse(report["passed"])
+                    self.assertIn(
+                        {"path": "app.js", "kind": "remote_js_import"}, report["findings"]
+                    )
+
+    def test_relative_side_effect_and_other_local_imports_are_allowed(self):
+        for statement in (
+            "import './lab/core.js';",
+            "import {x} from './lab/core.js';",
+            "import('./lab/core.js');",
+        ):
+            with self.subTest(statement=statement):
+                with tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory)
+                    self._write_clean_assets(root)
+                    (root / "app.js").write_text(statement, encoding="utf-8")
+                    self.assertTrue(audit(root)["passed"])
+
+    def test_checkout_ancestor_names_do_not_change_audit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            reports = []
+            for relative in ("normal/repo", ".venv/repo", "node_modules/repo"):
+                root = base / relative
+                self._write_clean_assets(root)
+                report = audit(root)
+                self.assertTrue(report["passed"], report["findings"])
+                reports.append(report)
+            self.assertEqual(reports[0], reports[1])
+            self.assertEqual(reports[0], reports[2])
+
+    def test_repo_local_vendored_directories_are_still_detected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._write_clean_assets(root)
+            for relative in ("node_modules/pkg/index.js", ".venv/lib/module.py"):
+                path = root / relative
+                path.parent.mkdir(parents=True)
+                path.write_text("", encoding="utf-8")
+            report = audit(root)
+            self.assertFalse(report["passed"])
+            for relative in ("node_modules/pkg/index.js", ".venv/lib/module.py"):
+                self.assertIn(
+                    {"path": relative, "kind": "vendored_dependency_directory"},
+                    report["findings"],
+                )
+
     def test_cli_failure_for_missing_assets(self):
         with tempfile.TemporaryDirectory() as directory:
             self.assertEqual(main(["--root", directory]), 1)
