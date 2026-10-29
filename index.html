@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="The Software Declaration of Independence: a dependency-free interactive engineering demonstration with reproducible Python audits.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>INDEPENDENCE — No Masters. No Dependencies.</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to the evidence</a>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Independence home"><span class="brand-icon" aria-hidden="true">✳</span> INDEPENDENCE<span class="brand-dot">.</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#declaration">Declaration</a>
+      <a href="#lab">Live lab</a>
+      <a href="#evidence">Evidence</a>
+      <a class="nav-github" href="https://github.com/QSOLKCB/INDEPENDENCE">Source ↗</a>
+    </nav>
+  </header>
+  <main id="main">
+    <section id="top" class="hero">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="wrap hero-inner">
+        <div class="eyebrow"><span class="beacon" aria-hidden="true"></span> QSOL-IMC / DECLARATION NO. 001 / 30 OCT 2026</div>
+        <h1>THE SOFTWARE<br>DECLARATION OF<br><em>INDEPENDENCE.</em></h1>
+        <p class="hero-sub">No Docker. No Kubernetes. No Node.js. No npm. No unnecessary dependencies. <strong>Just software that stands on its own.</strong></p>
+        <div class="hero-actions">
+          <a class="action primary" href="#lab">Enter the live proof lab <span aria-hidden="true">↗</span></a>
+          <a class="action secondary" href="#declaration">Read the declaration <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero-strip" aria-label="Project principles">
+          <div><span class="strip-value">0</span><span class="strip-label">Third-party browser packages</span></div>
+          <div><span class="strip-value">100%</span><span class="strip-label">Vanilla browser technologies</span></div>
+          <div><span class="strip-value">stdlib</span><span class="strip-label">Python audit toolchain</span></div>
+          <div><span class="strip-value">OPEN</span><span class="strip-label">Source, tests and audit method</span></div>
+        </div>
+      </div>
+      <span class="hero-vertical" aria-hidden="true">NOT YOUR FRAMEWORK. NOT YOUR PROBLEM.</span>
+    </section>
+
+    <section class="ticker" aria-label="Project slogan"><div>THE REVOLUTION WILL NOT BE CONTAINERISED <span>✳</span> CORRECTNESS OUTRANKS COMPLEXITY <span>✳</span> PROOF OVER POSTURING <span>✳</span></div></section>
+
+    <section id="declaration" class="section wrap split">
+      <div class="section-aside"><span class="kicker">01 / THE POSITION</span><div class="large-mark" aria-hidden="true">✳</div></div>
+      <div>
+        <h2>YOUR APP DOESN'T NEED<br><span class="accent">A FUCKING ORCHESTRA.</span></h2>
+        <p class="lead">A small website should not require a container fleet, a build pipeline, a dependency resolver, and twelve configuration dialects just to put a button on the screen.</p>
+        <p>We aren't claiming containers, package managers, or orchestration never solve real problems. We're rejecting the default assumption that every problem needs them.</p>
+        <div class="principles">
+          <div><span>01</span><strong>Correctness over convenience</strong><small>Write tests. Preserve invariants.</small></div>
+          <div><span>02</span><strong>Auditability over abstraction</strong><small>Small surface. Legible source.</small></div>
+          <div><span>03</span><strong>Portability over lock-in</strong><small>Browser standards and Python stdlib.</small></div>
+          <div><span>04</span><strong>Evidence over slogans</strong><small>Reproduce the result yourself.</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lab" class="section lab-section">
+      <div class="wrap">
+        <div class="section-header"><div><span class="kicker">02 / THE LIVE PROOF LAB</span><h2>NO FRAMEWORK.<br><span class="accent">ACTUAL ENGINEERING.</span></h2></div><p>Interactive, deterministic cellular automata running entirely in your browser. No downloads, CDNs, npm, WebAssembly, or server calls. Inspect every line.</p></div>
+        <div class="lab-shell">
+          <div class="lab-toolbar">
+            <div class="toolbar-title"><span class="beacon" aria-hidden="true"></span> EXPERIMENT / ELEMENTARY CELLULAR AUTOMATA</div>
+            <span class="toolbar-status">LOCAL EXECUTION · NO CLOUD COMPUTE</span>
+          </div>
+          <div class="lab-content">
+            <div class="lab-canvas-wrap"><canvas id="automaton" width="768" height="456" role="img" aria-label="Generated cellular automaton raster" aria-describedby="canvas-help">A deterministic cellular automaton visualization.</canvas><div id="canvas-help" class="canvas-caption">Each pixel is computed locally from an eight-bit neighbourhood rule. Identical inputs produce identical cell states and fingerprints.</div></div>
+            <div class="lab-controls">
+              <div class="panel-heading">CONTROL PANEL <span>v1.0</span></div>
+              <label for="rule">Rule</label>
+              <select id="rule"><option value="30">Rule 30 — chaos</option><option value="90">Rule 90 — fractal</option><option value="110">Rule 110 — complexity</option><option value="184">Rule 184 — traffic</option></select>
+              <label for="seed">Seed (unsigned 32-bit)</label>
+              <input id="seed" type="number" min="1" max="4294967295" step="1" value="314159">
+              <div class="panel-buttons"><button id="generate" class="control-primary" type="button">GENERATE ↗</button><button id="repeat" type="button">VERIFY REPLAY</button></div>
+              <div class="lab-stats">
+                <div><span>STATE FINGERPRINT / FNV-1a</span><output id="fingerprint" aria-live="polite">--------</output></div>
+                <div><span>CELLS COMPUTED</span><output id="cells">—</output></div>
+                <div><span>LAST RENDER (MS)</span><output id="duration">—</output></div>
+                <div><span>REPLAY ASSERTION</span><output id="replay" aria-live="polite">NOT RUN</output></div>
+              </div>
+              <p class="micro">Fingerprint is a reproducibility checksum, <strong>not</strong> a cryptographic security claim. Render timing is an observation on your device, not a benchmark against another stack.</p>
+            </div>
+          </div>
+          <div class="lab-footer"><span>PURE JAVASCRIPT / CANVAS 2D / FIXED DIMENSIONS / DETERMINISTIC PRNG</span><a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/lab/core.js">Inspect algorithm ↗</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="evidence" class="section wrap">
+      <span class="kicker">03 / AUDIT THE CLAIMS</span><h2>DON'T TRUST THE POSTER.<br><span class="accent">VERIFY THE RECEIPTS.</span></h2>
+      <div class="evidence-grid">
+        <article class="evidence-card"><span class="card-number">01 / SOURCE</span><h3>No hidden framework</h3><p>HTML, CSS and ECMAScript modules, all checked into this repository. Browser code only imports relative, first-party modules.</p><a href="https://github.com/QSOLKCB/INDEPENDENCE/tree/main">Read the repository ↗</a></article>
+        <article class="evidence-card"><span class="card-number">02 / LOCAL TESTS</span><h3>Make it prove itself</h3><p>Run the deterministic algorithm checks here, in this browser. They exercise seeded randomness, automaton evolution, fingerprints, and replay identity.</p><button id="run-tests" class="text-button" type="button">RUN BROWSER CHECKS ↗</button><div id="test-results" class="test-results" role="status" aria-live="polite">Not yet executed in this session.</div></article>
+        <article class="evidence-card"><span class="card-number">03 / OFFLINE AUDIT</span><h3>Python. No pip install.</h3><p>Run the repository scanner and unittest suite using the Python standard library. It searches for dependency manifests, remote executable assets, and hashes first-party browser files.</p><div class="command">python3 scripts/audit.py --json</div><div class="command">python3 -m unittest discover -s tests -v</div><a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/EVIDENCE.md">Audit specification ↗</a></article>
+      </div>
+      <div class="tradeoff"><span>IMPORTANT DISTINCTION</span><p><strong>Zero third-party packages is not zero trust.</strong> The browser, operating system, Python interpreter, GitHub Pages hosting, and their supply chains remain real dependencies. This project reduces avoidable application dependencies; it does not claim invulnerability.</p></div>
+    </section>
+
+    <section class="section impact-section">
+      <div class="wrap impact-grid">
+        <div><span class="kicker">04 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
+        <div class="impact-panel">
+          <label for="direct">Direct packages <output id="direct-value">3</output></label><input type="range" id="direct" min="1" max="10" value="3">
+          <label for="fanout">New children per package <output id="fanout-value">3</output></label><input type="range" id="fanout" min="1" max="5" value="3">
+          <label for="depth">Transitive levels <output id="depth-value">3</output></label><input type="range" id="depth" min="0" max="5" value="3">
+          <div class="impact-total"><span>HYPOTHETICAL PACKAGE NODES</span><output id="hypothetical" aria-live="polite">120</output></div><small>Counts nodes in a hypothetical tree, not distinct packages or actual security defects. The direct dependency layer is included.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing wrap">
+      <div class="kicker">05 / THE SIGNATURE</div>
+      <h2>WE DID NOT LEAVE<br>SOFTWARE ENGINEERING.<br><em>SOFTWARE ENGINEERING LEFT US.</em></h2>
+      <div class="signature"><div><strong>QSOL-IMC</strong><span>Independent Software Sovereignty Initiative</span></div><a class="action primary" href="https://github.com/QSOLKCB/INDEPENDENCE">READ THE SOURCE ↗</a></div>
+    </section>
+  </main>
+  <footer><div class="wrap footer-inner"><span>© 2026 QSOL-IMC · APACHE-2.0</span><span>BUILT WITHOUT NODE, NPM, DOCKER OR KUBERNETES</span><a href="#top">BACK TO TOP ↑</a></div></footer>
+</body>
+</html>
