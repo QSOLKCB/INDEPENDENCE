@@ -116,7 +116,7 @@ def finite_bridge() -> dict:
             if explicit_step(rule, row) != automata.reference_step(rule, row):
                 raise RocqEvidenceError("explicit pattern model differs from canonical width-four corpus")
             count += 1
-    if count != 4096 or automata.vectors_digest(automata.vectors()) != automata.EXPECTED_VECTORS_SHA256:
+    if count != 4096 or automata.vectors_digest(list(automata.vectors())) != automata.EXPECTED_VECTORS_SHA256:
         raise RocqEvidenceError("canonical width-four corpus digest/count drift")
     for width in range(9):
         for mask in range(1 << width):
