@@ -314,3 +314,24 @@ deployment; local checks are not misrepresented as public-deployment evidence.
 All Python utilities use the standard library. Firefox/Chromium binaries are
 optional developer testing tools, not site requirements. See
 [the complete v1.0 verification scope](docs/BROWSER-DEPLOYMENT.md).
+
+## v1.0.1 — Immutable Browser Evidence Preservation
+
+The **original 6,182-byte ZIP** from GitHub Actions run `41112613136`,
+artifact `13003029340`, is preserved as nine individually pinned **lossless
+base64 fragments**. Python stdlib reconstructs and verifies the exact original
+ZIP SHA-256 `76514017982d86c95003bd4f86ccdcf4404502ede4609ba8f7767b89ee6c396a`,
+all four original member hashes, immutable PR checkout/source references and
+92 recorded PASS assertions. No reserialisation or reconstructed ZIP substitutes
+for original bytes.
+
+```sh
+python3 scripts/verify_browser_archive.py
+python3 scripts/verify_browser_archive.py --restore independence-real-browser-evidence.zip
+python3 -m unittest discover -s tests -p 'test_browser_archive.py' -v
+```
+
+The preserved evidence belongs to a **PR test checkout**, not the v1.0.0
+tagged production deployment. SHA-256 and internally consistent receipts
+do not independently attest browser execution. See
+[the preservation manifest and method](formal/evidence/browser/v1.0.1/README.md).

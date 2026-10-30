@@ -1,0 +1,82 @@
+{
+  "schema": "INDEPENDENCE-BROWSER-ARCHIVE/1",
+  "version": "1.0.1",
+  "kind": "preserved_original_github_actions_browser_artifact",
+  "source": {
+    "workflow_run_id": 41112613136,
+    "artifact_id": 13003029340,
+    "artifact_name": "independence-real-browser-evidence",
+    "original_zip_bytes": 6182,
+    "original_zip_sha256": "76514017982d86c95003bd4f86ccdcf4404502ede4609ba8f7767b89ee6c396a",
+    "pr_number": 20,
+    "pr_branch_head": "63553a4118dea389547fdf5b821f9e04a50b9dd5",
+    "actions_test_checkout_revision": "9f5616aa76d1dd18448b8e0d1300f7c6eb43d3b3",
+    "staged_site_sha256": "d0350fe0b9123a3f4a21766e84122e9299de2872a3baa7a4a123226a6e473d62",
+    "later_v1_0_0_tag_commit": "764aec4bda8381de2aed620037d5ff992dba25ea"
+  },
+  "members": [
+    {
+      "name": "real-browser-evidence.json",
+      "bytes": 6858,
+      "sha256": "00382bb58b3e3ac94853bbcb8ed4e5a0f43d9a5ea76e65b43ce1080a0dedb3b8",
+      "engine": "Chromium",
+      "cases": {
+        "normal": 14,
+        "http503": 9,
+        "malformed": 9
+      }
+    },
+    {
+      "name": "chromium-narrow.json",
+      "bytes": 3414,
+      "sha256": "06a2269ccd7ecd3050fabbc58e89c01200dc8053175069434d6d338182cb6c19",
+      "engine": "Chromium",
+      "cases": {
+        "normal": 14
+      },
+      "requested_width": 390,
+      "actual_inner_width": 469
+    },
+    {
+      "name": "firefox-browser-evidence.json",
+      "bytes": 6759,
+      "sha256": "a07be87d6fefe4915e0d387874b2d91b4a0f226d94d8a9dc53ea1a136f036087",
+      "engine": "Firefox",
+      "cases": {
+        "normal": 14,
+        "http503": 9,
+        "malformed": 9
+      }
+    },
+    {
+      "name": "firefox-narrow.json",
+      "bytes": 3393,
+      "sha256": "e9f3a076a1e53e74d91f7ed0f91650d35d16a55d55476bede29ae22d5162f29f",
+      "engine": "Firefox",
+      "cases": {
+        "normal": 14
+      },
+      "requested_width": 390,
+      "actual_inner_width": 472
+    }
+  ],
+  "preservation": {
+    "representation": "lossless_base64_fragments",
+    "fragment_files": 9,
+    "full_base64_characters": 8244,
+    "restored_zip_sha256": "76514017982d86c95003bd4f86ccdcf4404502ede4609ba8f7767b89ee6c396a",
+    "restore_command": "python3 scripts/verify_browser_archive.py --restore independence-real-browser-evidence.zip",
+    "verify_command": "python3 scripts/verify_browser_archive.py"
+  },
+  "reported_assertions": {
+    "total": 92,
+    "passed": 92,
+    "failed": 0
+  },
+  "limitations": [
+    "Browser reports are from a PR test checkout, not the v1.0.0 tagged build or public GitHub Pages deployment.",
+    "SHA-256 of original ZIP establishes file integrity, not independent tool execution attestation.",
+    "Requested narrow width 390px differs from observed Chromium 469px and Firefox 472px.",
+    "Browser checks do not establish universal code correctness, WCAG certification or formal Lean/SPARK proof discharge."
+  ]
+}

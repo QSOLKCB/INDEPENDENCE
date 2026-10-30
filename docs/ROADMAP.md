@@ -67,6 +67,14 @@ v1.0 — Real-browser and deployment verification (implementation PR)
 - Manual Pages deployment gated on staged browser checks and post-deploy official HTTPS byte comparison.
 - Finite accessibility checks are not WCAG certification; local browser results are not a live CDN browser attestation.
 
+
+v1.0.1 — Original PR Browser Evidence Preservation (implementation PR)
+- Preserve the original 6,182-byte real-browser GitHub Actions artifact ZIP losslessly in Git as exact base64 fragments.
+- Pin fragment Git blob IDs, ZIP SHA-256, four original JSON member hashes, 92/92 recorded assertions, source PR checkout and staged-site digest.
+- Reconstitute and strictly validate with Python stdlib; reject malformed/missing/duplicate/tampered evidence and inflated execution claims.
+- Keep original PR-run evidence distinct from v1.0.0 production Pages observations, WCAG certification and mathematical proof discharge.
+- Add CI archive restoration/artifact publishing with no new production dependencies.
+
 v1.1.0 — Zenodo formalization of repository (planned)
 - Exact tagged sources, executable proof artefacts and logs, assumptions, partial gaps, SHA manifest and transparent research report.
 
