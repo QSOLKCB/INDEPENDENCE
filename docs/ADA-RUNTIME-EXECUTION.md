@@ -32,3 +32,7 @@ On a successful actual run, the status is LOCAL_BUILD_AND_DIFFERENTIAL_PASSED_UN
 The v1.1.0 Zenodo research archive should retain the actual local output JSON, exact Git source revision, toolchain information and unresolved scope exclusions.
 
 A request with `--samples 8881` selects every finite valid vector and is **normalised to `FULL_FINITE_SET`** in the output, exactly like `--full`. The offline receipt verifier accepts the resulting full-domain evidence. Smaller sample counts retain `SEEDED_SAMPLE`.
+
+## Byte-preserved actual sample/full run evidence
+
+A later uploaded ZIP, checksum-confirmed with SHA-256 `429b946d083c2b0562450704f924eb3370e5c9a9c62eb81ef5ac90d41a5e2256`, contained the user's **original** 150-case and 8,903-case runtime JSON files. The original JSON members are stored byte-identically in `formal/evidence/ada-runtime/v0.7.4` and verified against the uploaded bytes by Git blob hash. Their provenance distinguishes PR #15 HEAD (sample) from the merged main checkout (full run). The ZIP itself is not committed to Git; retain it for later Zenodo deposit. This does not authenticate the user's execution environment independently.
