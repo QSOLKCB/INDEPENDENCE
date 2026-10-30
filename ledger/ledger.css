@@ -1,0 +1,33 @@
+
+/* Software Independence Evidence Ledger — no dependencies */
+.ledger-section{background:#101512;border-top:1px solid #3a413c}
+.ledger-section .ledger-intro{color:#aeb8af;line-height:1.7;max-width:870px;margin:0 0 26px}
+.ledger-summary{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border:1px solid #434a43;margin:28px 0}
+.ledger-summary-item{padding:20px 13px;min-width:0;border-right:1px solid #434a43;display:flex;flex-direction:column;gap:9px}
+.ledger-summary-item:last-child{border-right:0}
+.ledger-summary-item strong{font:900 30px Arial,sans-serif;color:#f3eab4;letter-spacing:-1px}
+.ledger-summary-item span{font:10px "Courier New",monospace;color:#a3ada6;line-height:1.5}
+.ledger-tools{display:flex;gap:12px;margin:25px 0 15px}
+.ledger-tools input,.ledger-tools select{background:#1b2220;border:1px solid #536056;color:#f1f1ec;padding:13px;font:13px "Courier New",monospace;min-height:48px}
+.ledger-tools input{min-width:0;flex:1}.ledger-tools select{width:240px}
+.ledger-method,.ledger-message,.ledger-receipt{font:11px/1.6 "Courier New",monospace;color:#a7b4ac;overflow-wrap:anywhere}
+.ledger-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.ledger-record{border:1px solid #414940;background:#171e1a;padding:22px;min-width:0}
+.ledger-record-top{display:flex;gap:12px;align-items:start;justify-content:space-between;flex-wrap:wrap}
+.ledger-record-name{font:bold 18px Arial,sans-serif;color:#f5f4ee;text-decoration:none;overflow-wrap:anywhere}
+.ledger-record-name:hover,.ledger-tree-link:hover{color:#ff563d}
+.ledger-state{font:700 10px "Courier New",monospace;padding:6px 8px;border:1px solid #58625a;letter-spacing:.3px}
+.ledger-state-signals{color:#ffad91;border-color:#c66b4f}
+.ledger-state-no-manifest{color:#b0ddb6;border-color:#578660}
+.ledger-state-unknown{color:#d6caa7;border-color:#7e7462}
+.ledger-record-meta{font:11px "Courier New",monospace;color:#a4aea6;margin:12px 0}
+.ledger-record-indicators{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.ledger-record-indicators span{background:#252c26;padding:7px 9px;color:#d2d9d0;font:10px "Courier New",monospace}
+.ledger-paths{font:11px/1.6 "Courier New",monospace;color:#c7c1a3;overflow-wrap:anywhere;margin:9px 0}
+.ledger-tree-link{font:bold 11px "Courier New",monospace;color:#f3eab4;text-decoration:none}
+.ledger-more{background:#ff563d;color:#111;border:0;padding:14px 22px;font:900 12px "Courier New",monospace}
+.ledger-more[hidden]{display:none}
+.ledger-disclaimer{border-left:3px solid #f3eab4;background:#20231c;padding:18px 22px;margin:20px 0 0;font:12px/1.7 "Courier New",monospace;color:#d5d9ce}
+.ledger-disclaimer a{color:#f3eab4}
+@media(max-width:1000px){.ledger-summary{grid-template-columns:repeat(3,1fr)}.ledger-summary-item:nth-child(3){border-right:0}.ledger-summary-item:nth-child(-n+3){border-bottom:1px solid #434a43}}
+@media(max-width:700px){.ledger-summary{grid-template-columns:repeat(2,1fr)}.ledger-summary-item:nth-child(3){border-right:1px solid #434a43}.ledger-summary-item:nth-child(even){border-right:0}.ledger-summary-item:nth-child(-n+4){border-bottom:1px solid #434a43}.ledger-list{grid-template-columns:1fr}.ledger-tools{flex-direction:column}.ledger-tools select{width:100%}.ledger-summary-item strong{font-size:25px}}
