@@ -83,3 +83,10 @@ The browser test button runs a separate native-JavaScript suite.
 62. Preserve the original mutable Uint8Array/fingerprint counterexample. The new guardedSnapshot is opt-in, defensively copies typed arrays and rejects stale fingerprints; never silently rewrite the v0.7 public API.
 63. Property receipts must be SHA-256 over the exact JSON payload, and the independent Python verifier must reject status/provenance inflation, forged generated cases, malformed receipts and self-inconsistent witnesses.
 64. Property-sample results are not mathematical proofs, independent browser execution attestation, or proof of the previously archived Lean/SPARK/Ada results. UI must render only inert textContent and must fail closed on any property mismatch.
+
+65. AUTOMATA4/1 is a separate four-cell, fixed-zero-boundary model with an immutable human-reviewed versioned source specification; width-four comparisons do not prove arbitrary widths.
+66. Lean theorem declarations/axiom-audit source checks are NOT proof discharge; only the pinned real Lean kernel at trust=0 may certify new theorem status, with transitive axioms checked by name.
+67. New Ada SPARK kernel and developer-only CLI must remain separate. GNATprove must report positive check counts with no unresolved checks; compilation/CLI conformance is not SPARK proof of I/O.
+68. Independent Python, developer Node/JavaScript and Ada vectors must match the exact 4,096-case corpus hash and reject both altered inputs and output mismatches. Optional tools never become GitHub Pages dependencies.
+69. Missing toolchains, stale binaries, zero-check proof logs and failed comparisons must fail closed; no successful status is borrowed from v0.7.x historical evidence or from a self-hashed receipt.
+70. New v0.9 evidence must record exact sources, commands, tool outputs, limitations and NOT_RUN where applicable; no generic production JS formal refinement or independent attestation may be claimed.

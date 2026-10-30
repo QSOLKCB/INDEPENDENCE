@@ -10,7 +10,11 @@ Machine-readable obligation registry, deterministic bounded checks against real 
 
 Add deterministic property generators with recorded seeds and minimal failing inputs, boundary/invalid-input testing, differential Python/JavaScript reference vectors, and controlled network failure simulations for the public ledger. Resolve the mutable typed-array/fingerprint contract through a reviewed API choice, not a silent behavioural change.
 
-## v0.9.0 — Lean 4 and SPARK/Ada (planned)
+## v0.9.0 — Lean 4 and SPARK/Ada (executable model added; new proofs pending local tools)
+
+A new four-cell `AUTOMATA4/1` formal experiment now has six Lean theorem obligations, an exact SPARK/Ada reference kernel, independent 4,096-case Python and developer Node/JavaScript vectors, a fresh Ada CLI build-and-test runner and strict, per-stage status reporting. The earlier 13 Lean theorem checks, 21 SPARK obligations and 8,903 Ada/Python comparisons remain separate historical evidence. **No new v0.9 proof is claimed discharged until the new toolchain reports are supplied.** See `docs/AUTOMATA-FORMAL.md`.
+
+The original wider programme remains explicit:
 
 1. Review a mathematical specification of elementary automaton transitions with fixed-zero boundaries and 0..255 rule indices.
 2. Prove selected properties in Lean 4, record exact tool version, complete source, theorem statements, kernel-checked log and remaining assumptions. Unreviewed sorry, custom axioms or holes are unresolved.
