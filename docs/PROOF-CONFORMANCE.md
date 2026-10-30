@@ -24,7 +24,7 @@ not a mathematical proof.
 
 The optional Ada CLI differential runner actually invokes the supplied
 executable for a seeded deterministic selection (default 128 valid cases,
-including all seven operations), plus all 16 invalid cases, or any larger
+including all seven operations), plus all 16 numeric-invalid cases and six lexical-invalid Ada strings, or any larger
 requested finite prefix/sample. It fails on a mismatch, abnormal exit, stderr,
 or timeout. Missing executable means NOT_RUN, not a fabricated match.
 
@@ -83,3 +83,5 @@ provenance, or a complete formal verification.
 The v1.1.0 Zenodo research archive should preserve the distinct statuses,
 exact commits, tool versions, raw logs and unresolved obligations rather than
 collapsing them into a single green badge.
+
+The separate lexical-negative suite includes Ada based numeric literals (`2#1#`), signs and underscores. Inputs must be ASCII decimal digits only before `Natural'Value` parses them; these additional cases are included in the Ada CLI vector receipt and verified offline.
