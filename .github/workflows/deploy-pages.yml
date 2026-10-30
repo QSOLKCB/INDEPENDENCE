@@ -48,6 +48,13 @@ jobs:
       - name: Verify staged deployment against checkout
         run: python3 scripts/site_bundle.py verify --source . --site "$RUNNER_TEMP/independence-pages" --revision "$GITHUB_SHA"
 
+      - name: Preserve exact deployment manifest for later public observation
+        uses: actions/upload-artifact@v4
+        with:
+          name: independence-pages-manifest
+          path: ${{ runner.temp }}/independence-pages/deployment-manifest.json
+          if-no-files-found: error
+
       - name: Execute real browser smoke and ledger fault journeys
         run: python3 scripts/run_browser_journeys.py --site "$RUNNER_TEMP/independence-pages" --require-browser --output "$RUNNER_TEMP/pages-browser-evidence.json"
 
@@ -81,8 +88,35 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
       
-      - name: Verify public GitHub Pages bytes after deployment
-        run: python3 scripts/verify_deployed_site.py --manifest "$RUNNER_TEMP/independence-pages/deployment-manifest.json" --attempts 8 --delay 5 --output "$RUNNER_TEMP/pages-remote-evidence.json"
+      # GitHub reported a successful deployment before we began this separate
+      # eventually-consistent public-CDN observation. Do not turn a transient
+      # 404 into a false "deployment failed", nor turn a missing match into PASS.
+      - name: Observe public GitHub Pages bytes (separate from publishing)
+        id: public-observation
+        continue-on-error: true
+        run: python3 scripts/verify_deployed_site.py --manifest "$RUNNER_TEMP/independence-pages/deployment-manifest.json" --attempts 8 --delay 10 --output "$RUNNER_TEMP/pages-remote-evidence.json"
+
+      - name: Report separate publishing and public-byte observation outcomes
+        if: always() && steps.deployment.outcome == 'success'
+        shell: bash
+        env:
+          PUBLIC_OBSERVATION_OUTCOME: ${{ steps.public-observation.outcome }}
+          PUBLISHED_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          {
+            echo "### GitHub Pages deployment"
+            echo "Deployment action: **SUCCESS**"
+            echo "Published URL: $PUBLISHED_URL"
+            if [[ "$PUBLIC_OBSERVATION_OUTCOME" == "success" ]]; then
+              echo "Public asset observation: **REMOTE_BYTES_MATCHED_UNATTESTED**"
+            else
+              echo "Public asset observation: **NOT_VERIFIED**"
+              echo "This does not roll back the successful publish. Check the observation artifact and run the separate manual verification workflow with this deployment run ID."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [[ "$PUBLIC_OBSERVATION_OUTCOME" != "success" ]]; then
+            echo "::warning::Pages deployment succeeded, but the public byte comparison is NOT_VERIFIED; use the manual follow-up workflow."
+          fi
 
       - name: Preserve public byte-observation evidence
         if: always()

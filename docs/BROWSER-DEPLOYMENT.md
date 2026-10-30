@@ -82,3 +82,62 @@ ignored. The PR CI and the manual Pages preflight require narrow Chromium and
 Firefox passes, separately from the standard 1280px three-scenario runs.
 This is a responsive smoke test, **not** a device emulator or a full
 WCAG/visual-regression audit.
+
+## Public CDN propagation and honest deployment status
+
+GitHub Pages can report the deployment action as successful before every
+newly uploaded URL is observable from all public CDN edges. The original
+v1.0.0 workflow incorrectly made the entire deployment run fail when the
+separate public-byte verification returned HTTP 404 shortly after publish.
+The actual deployment action had already reported SUCCESS.
+
+The workflow now distinguishes:
+
+- **Deployment: SUCCESS** means `actions/deploy-pages@v4` completed.
+- **Public byte observation: REMOTE_BYTES_MATCHED_UNATTESTED** means the exact
+  publicly fetched deployment manifest and all file hashes matched.
+- **Public byte observation: NOT_VERIFIED** means the observation failed,
+  with the exact requested URL and HTTP code recorded. It is **never** counted
+  as a public match or proof of website availability.
+
+Each deploy stores the *exact deployed manifest* as a separately downloadable
+Actions artifact called `independence-pages-manifest`. This is essential
+because `ledger/data.json` can be freshly collected during each deploy,
+so regenerating a manifest from a later Git checkout can change the bytes.
+
+If propagation takes longer than the in-run bounded retries, launch the
+**Verify Published INDEPENDENCE Bytes** workflow manually, entering the
+original **deployment workflow run ID**. It first downloads that run's independent
+`independence-pages-manifest` artifact; where unavailable for historical
+runs, it extracts `./deployment-manifest.json` from the original
+`github-pages` archive's `artifact.tar`. It then strictly retries
+official HTTPS byte matching.
+This also works with historical deployment run **41113714704**, whose
+upload artifact was verified to contain both index.html and the exact
+deployment-manifest.json. No republishing is needed to repeat the
+observation, and a missing page is never silently treated as verified. A failed follow-up
+verification run remains red, with a `NOT_VERIFIED` JSON evidence artifact.
+
+If the main website remains 404 after propagation, inspect the repository's
+Settings → Pages → Build and deployment → Source (GitHub Actions), and
+review the Pages deployment logs. Do not attribute a persistent 404 to
+propagation without evidence.
+
+## Manifest artifact precedence — follow-up observation
+
+The standalone `independence-pages-manifest` is the preferred exact source
+for any deployment run that uploaded it. Unlike the special `github-pages`
+upload, which defaults to roughly one-day retention, this independent upload
+follows repository artifact-retention settings. The follow-up verifier first
+downloads the standalone manifest. **Only if that artifact cannot be
+downloaded** does it request the short-lived `github-pages` archive and
+extract the historical manifest from its `artifact.tar`. The fallback
+remains useful for early deployment runs such as `41113714704` while the
+archive is retained.
+
+Both paths pass through `scripts/select_public_manifest.py`: the exact
+manifest must satisfy its strict checksum/schema contract before comparison.
+An already-downloaded but corrupt primary manifest **fails closed**; it is
+never silently replaced with data from another source. When both sources
+are unavailable, the selector emits `NOT_VERIFIED` evidence and the
+workflow fails instead of inventing a successful remote observation.

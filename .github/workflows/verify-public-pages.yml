@@ -1,0 +1,64 @@
+# Manually verify a previous Pages publish without redeploying it.
+# Prefer the separately preserved independence-pages-manifest, using the
+# short-lived github-pages artifact.tar only for historical deployments.
+name: Verify Published INDEPENDENCE Bytes
+
+on:
+  workflow_dispatch:
+    inputs:
+      deployment_run_id:
+        description: "Completed Deploy INDEPENDENCE workflow run ID"
+        type: string
+        required: true
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  verify-public:
+    name: Observe published HTTPS bytes (strict)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # The independent manifest follows repository artifact retention;
+      # the special github-pages archive defaults to about one day.
+      - name: Download separately preserved manifest first
+        id: preserved_manifest
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: independence-pages-manifest
+          run-id: ${{ inputs.deployment_run_id }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/preferred-manifest
+
+      - name: Download legacy Pages archive only if the manifest is unavailable
+        if: steps.preserved_manifest.outcome != 'success'
+        id: historical_pages
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          run-id: ${{ inputs.deployment_run_id }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/historical-pages
+
+      - name: Select and strictly validate exact original manifest
+        run: |
+          python3 scripts/select_public_manifest.py \
+            --preferred "$RUNNER_TEMP/preferred-manifest/deployment-manifest.json" \
+            --legacy-tar "$RUNNER_TEMP/historical-pages/artifact.tar" \
+            --output "$RUNNER_TEMP/published-manifest/deployment-manifest.json" \
+            --failure-output "$RUNNER_TEMP/manual-pages-observation.json"
+
+      - name: Compare every public byte with preserved deployment manifest
+        run: python3 scripts/verify_deployed_site.py --manifest "$RUNNER_TEMP/published-manifest/deployment-manifest.json" --attempts 8 --delay 10 --output "$RUNNER_TEMP/manual-pages-observation.json"
+
+      - name: Preserve success or explicit NOT_VERIFIED evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independence-manual-pages-observation
+          path: ${{ runner.temp }}/manual-pages-observation.json
+          if-no-files-found: ignore

@@ -14,6 +14,7 @@ from pathlib import Path
 import sys
 import time
 from urllib.parse import urlsplit
+from urllib.error import HTTPError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from site_bundle import MANIFEST, SITE_FILES, BundleError, envelope, parse_manifest
@@ -55,13 +56,16 @@ def fetch_bytes(url: str) -> bytes:
     # The dedicated opener prevents urllib's default automatic redirect
     # handling. No external or downgraded HTTP URL can be fetched first.
     opener = build_opener(RejectRedirects())
-    with opener.open(Request(url, headers={"User-Agent": "INDEPENDENCE-v1-deployment-check"}),
-                     timeout=15) as response:
-        if response.geturl() != url:
-            raise DeploymentError("unexpected final public Pages URL")
-        if getattr(response, "status", 200) != 200:
-            raise DeploymentError("non-200 CDN response: " + url)
-        data = response.read(MAX_BYTES + 1)
+    try:
+        with opener.open(Request(url, headers={"User-Agent": "INDEPENDENCE-v1-deployment-check"}),
+                         timeout=15) as response:
+            if response.geturl() != url:
+                raise DeploymentError("unexpected final public Pages URL")
+            if getattr(response, "status", 200) != 200:
+                raise DeploymentError("non-200 CDN response: " + url)
+            data = response.read(MAX_BYTES + 1)
+    except HTTPError as exc:
+        raise DeploymentError("public asset HTTP " + str(exc.code) + " at " + url) from exc
     if len(data) > MAX_BYTES:
         raise DeploymentError("oversized public asset: " + url)
     return data
@@ -130,6 +134,26 @@ def main(argv=None) -> int:
         print(encoded, end="")
         return 0
     except (OSError, ValueError) as err:
+        # The initial Pages publication may have succeeded even if public CDN
+        # propagation or an individual asset did not. Write a truthful,
+        # machine-readable failure receipt instead of losing all evidence.
+        failure = {
+            "protocol": PROTOCOL,
+            "status": "NOT_VERIFIED",
+            "public_site": BASE,
+            "reason": str(err),
+            "limitations": [
+                "A failed public-byte observation does not reverse or establish Pages deployment.",
+                "No public asset match or independent execution attestation is claimed."
+            ],
+        }
+        if args.output:
+            try:
+                args.output.parent.mkdir(parents=True, exist_ok=True)
+                args.output.write_text(json.dumps(failure, sort_keys=True, indent=2) + "\n",
+                                       encoding="utf-8")
+            except OSError as output_error:
+                print("FAILED_TO_SAVE_OBSERVATION: " + str(output_error), file=sys.stderr)
         print("NOT_VERIFIED: " + str(err), file=sys.stderr)
         return 1
 
