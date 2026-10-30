@@ -46,6 +46,8 @@ We build software that can stand on its own.
 
 **WE DID NOT LEAVE SOFTWARE ENGINEERING. SOFTWARE ENGINEERING LEFT US.**
 
+**This is not War, This is a Divorce.**
+
 ---
 
 ## Live proof lab
