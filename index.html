@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="./breeding/breeding.css">
   <link rel="stylesheet" href="./workflow/workflow.css">
   <link rel="stylesheet" href="./proof/proof.css">
+  <link rel="stylesheet" href="./property/property.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -30,6 +31,7 @@
       <a href="#breeding">Breeding Lab</a>
       <a href="#workflow">The Secret</a>
       <a href="#proof">Proof Contracts</a>
+      <a href="#property-lab">Property Lab</a>
       <a class="nav-github" href="https://github.com/QSOLKCB/INDEPENDENCE">Source ↗</a>
     </nav>
   </header>
@@ -304,6 +306,31 @@
           <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/PROOF-CONTRACTS.md">VERIFICATION SCOPE ↗</a>
           <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/scripts/verify_proof_receipt.py">OFFLINE VERIFIER ↗</a>
           <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/FORMAL-ROADMAP.md">LEAN / SPARK ROADMAP ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="property-lab" class="section property-section">
+      <div class="wrap">
+        <span class="kicker">09B / DETERMINISTIC PROPERTY GENERATION &amp; MINIMISATION</span>
+        <h2>FIND THE GREMLIN.<br><span class="accent">SHRINK THE EVIDENCE.</span></h2>
+        <p class="property-intro">Run seed-replayable, bounded property tests against the real first-party automaton. A deliberately injected wraparound-boundary defect demonstrates canonical counterexample minimisation; a separate <strong>real legacy Uint8Array ownership counterexample</strong> demonstrates an opt-in defensive-copy alternative.</p>
+        <div class="property-panel">
+          <div class="property-controls">
+            <label for="property-seed">Seed (unsigned 32-bit)
+              <input id="property-seed" type="number" min="1" max="4294967295" step="1" value="314159">
+            </label>
+            <label for="property-trials">Generated cases (1–512)
+              <input id="property-trials" type="number" min="1" max="512" step="1" value="128">
+            </label>
+            <button id="property-run" type="button">RUN GENERATOR &amp; SHRINKER ↗</button>
+            <button id="property-export" type="button" disabled>EXPORT RECEIPT ↓</button>
+          </div>
+          <p class="property-note">Every input is deterministic at a fixed seed. The mutant is an explicit teaching fixture, not a discovered production vulnerability. The ownership defect is real, and the existing API remains unchanged. No claims of mathematical proof or authentic external execution.</p>
+          <p id="property-status" role="status" aria-live="polite">Property lab not executed yet.</p>
+          <div id="property-results" class="property-results" aria-label="Generated properties and minimized counterexamples"></div>
+          <p id="property-hash">No receipt issued.</p>
+          <p class="property-note"><a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/PROPERTY-LAB.md">METHOD &amp; LIMITATIONS ↗</a> · <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/scripts/verify_property_receipt.py">OFFLINE RECEIPT VERIFIER ↗</a></p>
         </div>
       </div>
     </section>
