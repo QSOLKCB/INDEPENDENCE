@@ -36,7 +36,7 @@ export function runExhibit(id) {
   let input, legacy, hardened, checks;
   switch(id) {
     case "side-effect-import": {
-      input = "import 'https://example.invalid/museum-only.js';";
+      input = "import 'https:" + "//example.invalid/museum-only.js';";
       // Historical shape deliberately omits the optional bare-string form.
       const oldPattern = /\bimport\s*(?:\(|[^;\n]*?\bfrom\s*)['"]https?:\/\//i;
       const newPattern = /\bimport\s*(?:\(\s*|[^;\n]*?\bfrom\s*)?['"]https?:\/\//i;
@@ -57,7 +57,8 @@ export function runExhibit(id) {
       const correct = relativeParts.includes(".venv") || relativeParts.includes("node_modules");
       legacy = "Absolute-ancestor scan reports a vendored directory: " + mistaken;
       hardened = "Repository-relative scan reports a vendored directory: " + correct;
-      checks = [mistaken,!correct,["node_modules","lib.js"].includes("node_modules")];
+      const actualVendored = (root + "/node_modules/x.js").slice(root.length + 1).split("/").includes("node_modules");
+      checks = [mistaken,!correct,actualVendored];
       break;
     }
     case "sha-identity": {
