@@ -1,5 +1,7 @@
 """SPARK source contracts only; compiler/prover availability is never assumed."""
 import json
+import subprocess
+from unittest.mock import patch
 from pathlib import Path
 import shutil
 import sys
@@ -71,12 +73,53 @@ class SparkReferenceTests(unittest.TestCase):
         self.assertNotIn("Natural'Value (CLI.Argument", source)
 
     def test_missing_tool_reports_not_run(self):
-        result = run_gnatprove(ROOT, executable="/missing/gnatprove")
-        self.assertEqual(result["ada_contracts"], "NOT_RUN")
+        with patch("check_spark_reference.shutil.which", return_value=None), \
+             patch("check_spark_reference.subprocess.run") as runner:
+            result = run_gnatprove(ROOT)
+            self.assertEqual(result["ada_contracts"], "NOT_RUN")
+            runner.assert_not_called()
 
     def test_no_synthetic_proof_success(self):
-        result = run_gnatprove(ROOT, executable="/missing/gnatprove")
-        self.assertNotEqual(result["ada_contracts"], "GNATPROVE_REPORTED_DISCHARGED")
+        with patch("check_spark_reference.shutil.which", return_value=None):
+            result = run_gnatprove(ROOT)
+            self.assertNotEqual(result["ada_contracts"], "GNATPROVE_REPORTED_DISCHARGED")
+
+    def test_fixed_shell_free_gnatprove_commands(self):
+        version = subprocess.CompletedProcess(["gnatprove", "--version"], 0,
+                                              stdout="GNATprove fixture", stderr="")
+        proof = subprocess.CompletedProcess(["gnatprove"], 0,
+                                            stdout="3 checks proved", stderr="")
+        with patch("check_spark_reference.shutil.which", return_value="/trusted/bin/gnatprove"), \
+             patch("check_spark_reference.subprocess.run", side_effect=[version, proof]) as runner:
+            result = run_gnatprove(ROOT)
+        self.assertEqual(result["ada_contracts"], "GNATPROVE_REPORTED_DISCHARGED")
+        self.assertEqual(runner.call_count, 2)
+        self.assertEqual(runner.call_args_list[0].args[0], ["gnatprove", "--version"])
+        self.assertEqual(runner.call_args_list[1].args[0], [
+            "gnatprove", "-P", "kernel.gpr", "-u", "reference_kernel.adb",
+            "--mode=all", "--checks-as-errors=on", "--warnings=error",
+            "--report=all", "--level=2"
+        ])
+        for call in runner.call_args_list:
+            self.assertIs(call.kwargs["shell"], False)
+            self.assertEqual(call.kwargs["cwd"], ROOT / "formal" / "spark")
+        self.assertNotIn("/trusted/bin/gnatprove", repr(runner.call_args_list))
+
+    def test_version_check_failure_does_not_run_prover(self):
+        version = subprocess.CompletedProcess(["gnatprove", "--version"], 1,
+                                              stdout="", stderr="failed")
+        with patch("check_spark_reference.shutil.which", return_value="/trusted/bin/gnatprove"), \
+             patch("check_spark_reference.subprocess.run", return_value=version) as runner:
+            result = run_gnatprove(ROOT)
+        self.assertEqual(result["ada_contracts"], "FAILED_OR_UNPROVED")
+        self.assertEqual(runner.call_count, 1)
+
+    def test_proof_runner_argument_vectors_are_literal(self):
+        source = (ROOT / "scripts/check_spark_reference.py").read_text(encoding="utf-8")
+        self.assertIn('subprocess.run(["gnatprove", "--version"]', source)
+        self.assertIn('["gnatprove", "-P", "kernel.gpr", "-u", "reference_kernel.adb"', source)
+        self.assertNotIn("subprocess.run(command", source)
+        self.assertNotIn("executable: str | None", source)
 
     def test_static_gate_without_compiler(self):
         self.assertEqual(main([]), 0)
