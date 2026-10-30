@@ -175,7 +175,7 @@ def stage(source: Path, site: Path, revision: str) -> dict:
     source, site = source.resolve(), site.absolute()
     if site.exists() and (not site.is_dir() or any(site.iterdir())):
         raise BundleError("destination must be absent or an empty directory")
-    if site.resolve() == source or source.is_relative_to(site.resolve()):
+    if site.resolve() == source or source.is_relative_to(site.resolve()) or site.resolve().is_relative_to(source):
         raise BundleError("source and destination cannot overlap")
     source_hashes = inventory(source)
     result = audit(source)

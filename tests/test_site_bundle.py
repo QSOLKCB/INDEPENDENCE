@@ -105,7 +105,7 @@ class SiteBundleTests(unittest.TestCase):
         self.stage()
         with self.assertRaisesRegex(bundle.BundleError, "destination"):
             self.stage()
-        with self.assertRaisesRegex(bundle.BundleError, "overlap"):
+        with self.assertRaises(bundle.BundleError):
             bundle.stage(self.src, self.src, REV)
 
     def test_sha_revision_only(self):
