@@ -54,13 +54,16 @@ def available() -> tuple[str | None, str | None]:
     return firefox, driver
 
 
-def run(site: Path, *, require_browser: bool = True, modes=MODES) -> dict:
+def run(site: Path, *, require_browser: bool = True, modes=MODES,
+        width: int = 1280, height: int = 900) -> dict:
+    if not (320 <= width <= 2048 and 480 <= height <= 1600):
+        raise BrowserError("viewport dimensions outside bounded test range")
     staged = verify(site)
     firefox, driver = available()
     report = {
         "protocol": PROTOCOL, "site_tree_sha256": staged["tree_sha256"],
         "source_revision": staged["revision"], "actual_browser": "NOT_RUN",
-        "browser_version": None, "runs": [],
+        "browser_version": None, "runs": [], "requested_viewport": {"width": width, "height": height},
         "limitations": [
             "Real Firefox and Geckodriver are optional developer tools, not a shipped website dependency.",
             "Local loopback HTTP does not attest deployment to the public GitHub Pages CDN.",
@@ -111,7 +114,7 @@ def run(site: Path, *, require_browser: bool = True, modes=MODES) -> dict:
         report["browser_version"] = ("Firefox " + str(caps.get("browserVersion", "unknown")) +
                                      "; " + ver.stdout.strip().split("\n")[0])
         post(endpoint + "/session/" + session + "/window/rect",
-             {"width": 1280, "height": 900})
+             {"width": width, "height": height})
         for mode in modes:
             phase = "RUN_" + mode
             server = serve(site.resolve(), mode)
@@ -134,6 +137,8 @@ def run(site: Path, *, require_browser: bool = True, modes=MODES) -> dict:
                     time.sleep(0.15)
                 if result is None:
                     raise BrowserError("Firefox browser harness timed out: " + mode)
+                if width <= 500 and result["viewport"]["width"] > 640:
+                    raise BrowserError("narrow viewport ignored by real Firefox")
                 report["runs"].append({
                     "mode": mode, "status": result["status"], "checks": result["checks"],
                     "user_agent": result.get("user_agent", ""),
@@ -181,9 +186,14 @@ def main(argv=None):
     parser.add_argument("--site", type=Path, required=True)
     parser.add_argument("--output", type=Path)
     parser.add_argument("--require-browser", action="store_true")
+    parser.add_argument("--width", type=int, default=1280)
+    parser.add_argument("--height", type=int, default=900)
+    parser.add_argument("--normal-only", action="store_true")
     args = parser.parse_args(argv)
     try:
-        record = run(args.site, require_browser=args.require_browser)
+        record = run(args.site, require_browser=args.require_browser,
+                     modes=("normal",) if args.normal_only else MODES,
+                     width=args.width, height=args.height)
         if args.output:
             args.output.parent.mkdir(parents=True, exist_ok=True)
             args.output.write_text(json.dumps(record, sort_keys=True, indent=2) + "\n", encoding="utf-8")

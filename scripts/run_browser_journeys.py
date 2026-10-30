@@ -159,7 +159,10 @@ def parse_html(html: str, expected_mode: str) -> dict:
     return record
 
 
-def run(site: Path, browser: str, *, require_browser: bool = True, modes=MODES) -> dict:
+def run(site: Path, browser: str, *, require_browser: bool = True, modes=MODES,
+        width: int = 1280, height: int = 900) -> dict:
+    if not (320 <= width <= 2048 and 480 <= height <= 1600):
+        raise BrowserError("viewport dimensions outside bounded test range")
     staged = verify(site)
     executable = (shutil.which(browser) if browser else
                   next((shutil.which(name) for name in ("chromium", "google-chrome", "chromium-browser")
@@ -167,7 +170,7 @@ def run(site: Path, browser: str, *, require_browser: bool = True, modes=MODES) 
     report = {
         "protocol": PROTOCOL, "site_tree_sha256": staged["tree_sha256"],
         "source_revision": staged["revision"], "actual_browser": "NOT_RUN",
-        "browser_version": None, "runs": [],
+        "browser_version": None, "runs": [], "requested_viewport": {"width": width, "height": height},
         "limitations": [
             "A real headless Chromium executable is used; this is not Firefox, WebKit or a real-device accessibility audit.",
             "Local loopback HTTP is not the remote GitHub Pages CDN or deployment attestation.",
@@ -195,7 +198,7 @@ def run(site: Path, browser: str, *, require_browser: bool = True, modes=MODES) 
                                "--disable-gpu", "--disable-dev-shm-usage",
                                "--disable-background-networking", "--no-first-run",
                                "--no-default-browser-check", "--disable-extensions",
-                               "--user-data-dir=" + profile, "--window-size=1280,900",
+                               "--user-data-dir=" + profile, "--window-size=" + str(width) + "," + str(height),
                                "--virtual-time-budget=25000", "--dump-dom", url]
                     process = subprocess.run(command, capture_output=True, text=True,
                                              timeout=75, check=False)
@@ -203,6 +206,8 @@ def run(site: Path, browser: str, *, require_browser: bool = True, modes=MODES) 
                         raise BrowserError("actual browser failed: exit=" +
                                            str(process.returncode) + " " + process.stderr[-300:])
                     checked = parse_html(process.stdout, mode)
+                    if width <= 500 and checked["viewport"]["width"] > 640:
+                        raise BrowserError("narrow viewport ignored by real Chromium")
                     report["runs"].append({
                         "mode": mode, "status": checked["status"],
                         "checks": checked["checks"],
@@ -230,9 +235,14 @@ def main(argv=None):
     ap.add_argument("--browser", default="")
     ap.add_argument("--output", type=Path)
     ap.add_argument("--require-browser", action="store_true")
+    ap.add_argument("--width", type=int, default=1280)
+    ap.add_argument("--height", type=int, default=900)
+    ap.add_argument("--normal-only", action="store_true")
     args = ap.parse_args(argv)
     try:
-        report = run(args.site, args.browser, require_browser=args.require_browser)
+        report = run(args.site, args.browser, require_browser=args.require_browser,
+                     modes=("normal",) if args.normal_only else MODES,
+                     width=args.width, height=args.height)
         if args.output:
             args.output.parent.mkdir(parents=True, exist_ok=True)
             args.output.write_text(json.dumps(report, sort_keys=True, indent=2) + "\n",
