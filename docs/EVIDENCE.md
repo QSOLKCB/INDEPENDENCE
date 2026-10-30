@@ -49,3 +49,9 @@ The committed ledger/data.json is a source-labelled bootstrap inventory; the man
 DOM-TRIBUNAL/1 uses same-origin first-party JavaScript adapters on identical seeded DOM-list operations. The user starts the trial explicitly. Warmups precede measured trials, candidate order alternates, and both implementations must pass complete DOM ID, order, and text checks. Results contain paired samples, medians, deterministic bootstrap percentile intervals, adapter-source byte lengths, and an exported SHA-256 receipt. See docs/TRIBUNAL.md.
 
 **Boundaries:** Direct DOM versus a locally authored keyed adapter is NOT an actual React/Vue/Svelte comparison. Detached DOM timing excludes layout and painting; uncontrolled browser/JIT/CPU scheduling affects outcomes. The Python verifier tests data integrity and arithmetic, but cannot authenticate a real measurement.
+
+## v0.4 — Gremlin Museum
+
+GREMLIN-MUSEUM/1 is a browser-native, fixed-fixture teaching and verification system containing five safe, **inert** reproductions of bug patterns: a historical static import regex omission, a historical repo-path ancestry false positive, a historical Git/receipt SHA-size mix-up, illustrative JSON numeric overflow, and illustrative HTML output encoding. The last two are NOT asserted to have occurred in INDEPENDENCE.
+
+Every specimen has explicit legacy and corrected behaviours and meaningful deterministic assertions. No payload is imported, fetched, evaluated, rendered as unsafe markup, or passed to a real service. The UI renders all samples using textContent and generates a SHA-256 of exact JSON payload bytes. An offline Python stdlib verifier checks payload integrity and known fixture outputs; receipts do not certify absence of vulnerabilities.

@@ -4,6 +4,7 @@ import {makePhases, fingerprint, median, bootstrapMedianCI, assessPairs, validat
 import {createAdapter as directAdapter} from '../tribunal/direct.js';
 import {createAdapter as keyedAdapter} from '../tribunal/keyed.js';
 import {validateConfig} from '../tribunal/bench.js';
+import {EXHIBITS,runExhibit,runAll,assembleReport,encodeHtml,finiteJSON} from '../museum/core.js';
 
 // No testing framework: assertions intentionally use only native JavaScript.
 export function runTests() {
@@ -66,6 +67,26 @@ export function runTests() {
       const first = root.children[1];
       adapter.render(phases.update);
       return root.children[1] === first;
+    }],
+    ['museum all five specimens pass deterministic checks', () =>
+      EXHIBITS.length === 5 && runAll().every(r => r.passed && r.assertions.total === r.assertions.passed)],
+    ['museum stable repeated observations', () =>
+      JSON.stringify(runAll()) === JSON.stringify(runAll())],
+    ['museum refuses unknown specimen', () => {
+      try { runExhibit('unknown'); return false; } catch(e) { return e instanceof RangeError; }
+    }],
+    ['museum escape and nonfinite guards', () =>
+      encodeHtml('<>&"\x27') === '&lt;&gt;&amp;&quot;&#39;' &&
+      !finiteJSON({deep:[1,{n:Infinity}]}) && finiteJSON({deep:[1,{n:3}]})],
+    ['museum report rejects failed results', () => {
+      const results=runAll();
+      results[0].passed=false;
+      try { assembleReport(results); return false; } catch(e) { return true; }
+    }],
+    ['museum report preserves ordered provenance', () => {
+      const result=assembleReport(runAll());
+      return result.protocol === 'GREMLIN-MUSEUM/1' &&
+        result.provenance.length === 5 && result.provenance.every((x,i)=>x.id===EXHIBITS[i].id);
     }]
   ];
   return checks.map(([name, check]) => {

@@ -19,9 +19,11 @@ v0.3 — Dependency Tribunal (implemented)
 - No claims about production frameworks, security, deployment footprint, or cross-machine superiority.
 - Real framework candidates, ergonomics, patching and build-size analyses require future version-pinned third-party fixtures.
 
-v0.4 — Security research exhibits
-- Authorized local toy examples and test fixtures of common classes of vulnerabilities.
-- Minimized reproductions, proposed mitigations, responsible disclosure.
-- No active exploitation of third-party hosts.
+v0.4 — The Gremlin Museum (implemented in this PR)
+- Five isolated browser specimens: remote side-effect import audit bypass, checkout ancestry false positive, SHA format confusion, JSON finite-number drift and HTML output encoding.
+- Clearly distinguish three historical review findings from two generic illustrative security classes.
+- Fixed inputs, bounded reproductions, corrected behaviour and deterministic assertions; no real exploits.
+- Exportable SHA-256 receipts, Python standard-library verifier and adversarial offline tests.
+- Same-origin static GitHub Pages museum, without external dependencies or browser API calls.
 
 Each phase requires deterministic tests and a documented limitation statement.

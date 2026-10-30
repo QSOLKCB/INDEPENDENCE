@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./ledger/ledger.css">
   <link rel="stylesheet" href="./tribunal/tribunal.css">
+  <link rel="stylesheet" href="./museum/museum.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -22,6 +23,7 @@
       <a href="#evidence">Evidence</a>
       <a href="#ledger">Ledger</a>
       <a href="#tribunal">Tribunal</a>
+      <a href="#museum">Museum</a>
       <a class="nav-github" href="https://github.com/QSOLKCB/INDEPENDENCE">Source ↗</a>
     </nav>
   </header>
@@ -152,9 +154,33 @@
       </div>
     </section>
 
+    <section id="museum" class="section museum-section">
+      <div class="wrap">
+        <span class="kicker">06 / THE GREMLIN MUSEUM</span>
+        <h2>THE BUGS ARE<br><span class="accent">IN CAPTIVITY.</span></h2>
+        <p class="museum-intro">A safe, interactive archive of software failure modes. Reproduce the mistakes, inspect the bounded correction, and run assertions before accepting the evidence. Three specimens reflect documented INDEPENDENCE review findings; two are clearly labelled illustrative security examples.</p>
+        <div class="museum-notice"><strong>SECURE DISPLAY CONTRACT:</strong> All specimens are hard-coded local data or inert source strings. No untrusted markup is rendered as HTML; no exploit executes; no third-party host is contacted. This is not a vulnerability scanner, CVE database, or penetration-testing service. Learn the pattern, not an attack against somebody else's systems.</div>
+        <div class="museum-shell">
+          <div id="museum-specimens" class="museum-specimens" role="group" aria-label="Museum exhibits"></div>
+          <div id="museum-stage" class="museum-stage" role="region" aria-label="Selected specimen and correction" aria-live="polite"></div>
+        </div>
+        <div class="museum-action-row">
+          <button id="museum-run-all" type="button" class="museum-action">RUN ALL FIXTURE CHECKS ↗</button>
+          <button id="museum-export" type="button" class="museum-action secondary" disabled>EXPORT EVIDENCE RECEIPT ↓</button>
+        </div>
+        <p class="museum-status" id="museum-status" aria-live="polite">No museum-wide run yet. Exhibit observations are generated on demand.</p>
+        <p class="museum-hash" id="museum-hash">No evidence receipt yet.</p>
+        <div class="tribunal-links">
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/MUSEUM.md">MUSEUM PROTOCOL ↗</a>
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/scripts/verify_museum.py">PYTHON RECEIPT VERIFIER ↗</a>
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/tree/main/museum">INSPECT ALL SPECIMENS ↗</a>
+        </div>
+      </div>
+    </section>
+
     <section class="section impact-section">
       <div class="wrap impact-grid">
-        <div><span class="kicker">06 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
+        <div><span class="kicker">07 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
         <div class="impact-panel">
           <label for="direct">Direct packages <output id="direct-value">3</output></label><input type="range" id="direct" min="1" max="10" value="3">
           <label for="fanout">New children per package <output id="fanout-value">3</output></label><input type="range" id="fanout" min="1" max="5" value="3">
@@ -165,7 +191,7 @@
     </section>
 
     <section class="closing wrap">
-      <div class="kicker">07 / THE SIGNATURE</div>
+      <div class="kicker">08 / THE SIGNATURE</div>
       <h2>WE DID NOT LEAVE<br>SOFTWARE ENGINEERING.<br><em>SOFTWARE ENGINEERING LEFT US.</em></h2>
       <div class="signature"><div><strong>QSOL-IMC</strong><span>Independent Software Sovereignty Initiative</span></div><a class="action primary" href="https://github.com/QSOLKCB/INDEPENDENCE">READ THE SOURCE ↗</a></div>
     </section>

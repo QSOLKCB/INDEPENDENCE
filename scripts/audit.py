@@ -18,6 +18,7 @@ WEB_FILES = (
     "ledger/ledger.js", "ledger/ledger.css", "ledger/data.json",
     "tribunal/core.js", "tribunal/direct.js", "tribunal/keyed.js",
     "tribunal/bench.js", "tribunal/ui.js", "tribunal/tribunal.css",
+    "museum/core.js", "museum/ui.js", "museum/museum.css",
 )
 FORBIDDEN_MANIFESTS = frozenset({
     "package.json", "package-lock.json", "npm-shrinkwrap.json", "yarn.lock",
