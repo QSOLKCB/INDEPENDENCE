@@ -153,3 +153,15 @@ Reproduce the registry check and verify a downloaded receipt with Python stdlib:
     python3 scripts/verify_proof_receipt.py proof-contracts-<hash>.json --json
 
 Hash verification does not attest execution. No Lean or SPARK proof has yet been constructed or discharged. The proof tools remain planned as optional development-only components, not runtime dependencies. Read [docs/PROOF-CONTRACTS.md](docs/PROOF-CONTRACTS.md) and [the formal programme through v1.1.0 Zenodo](docs/FORMAL-ROADMAP.md).
+
+## v0.7.1 — SPARK Ada Reference Kernel
+
+Introduces development-only SPARK/Ada source under `formal/spark/` for a narrow finite reference: rectangular addressing and decoding, GF(2) parity arithmetic, mod-3 phase addition and validated in-range, distinct endpoint transitions. Canonical semantics are versioned at `formal/spec/kernel-v1.json`.
+
+The kernel specifies preconditions and postconditions. **No GNATprove execution was possible in the implementing environment; the contracts are NOT_RUN, not proved.** The CLI input boundary is not formally analyzed. There is no claim that this reference verifies existing Python or JavaScript.
+
+    python3 scripts/check_spark_reference.py
+    python3 scripts/check_spark_reference.py --prove --output spark-evidence.json
+    python3 scripts/check_spark_reference.py --require-proved
+
+The strict command fails unless actual GNATprove analysis reports discharged obligations. GNAT/GNATprove are optional development-only tools, never site runtime dependencies. See [docs/SPARK-REFERENCE.md](docs/SPARK-REFERENCE.md).

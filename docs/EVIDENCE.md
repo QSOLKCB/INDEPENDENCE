@@ -75,3 +75,11 @@ The machine-readable proof/contracts.json specifies eight obligations, all forma
 A fifth result is a deliberate COUNTEREXAMPLE: a frozen return wrapper contains a mutable Uint8Array, so the stored fingerprint can be invalidated by client mutation. It is not a security exploit claim. Lean, SPARK and independent receipt execution attestation are PENDING, not passed.
 
 scripts/check_proof_contracts.py validates the contract registry using stdlib, and scripts/verify_proof_receipt.py checks exact browser report integrity and fixed results. Neither is a full proof or attestation of source execution. See docs/PROOF-CONTRACTS.md and docs/FORMAL-ROADMAP.md.
+
+## v0.7.1 — SPARK Ada reference, not proof by declaration
+
+The project adds SPARK_Mode On Ada functions for bounded rectangular addressing, GF(2) parity addition/multiplication, modulo-3 phase addition and edge endpoint validation. The canonical input limits and explicit nonclaims live in formal/spec/kernel-v1.json.
+
+The source-level Python gate checks files, hashes, forbidden proof-escape annotations and declared contracts. This is not GNATprove. An optional strict runner invokes GNATprove with checks-as-errors and records actual tool output; where it was unavailable, evidence remains NOT_RUN and outstanding. The reference does not establish Python or JavaScript equivalence.
+
+A subsequent v0.7.2 conformance layer must separately compare Python/Ada results against the same versioned semantics. See docs/SPARK-REFERENCE.md.

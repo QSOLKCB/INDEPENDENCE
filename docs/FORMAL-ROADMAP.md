@@ -38,3 +38,7 @@ Only after substantive evidence exists, assemble a version-pinned archive with e
 | Formal tooling causes runtime dependency bloat | P2 | Strict development/runtime separation |
 
 Proof statuses belong to exact versioned artefacts. Human review and a fresh Git HEAD remain mandatory.
+
+## v0.7.1 / v0.7.2 accelerated foundation
+
+The scoped SPARK/Ada kernel precedes the larger v0.9 Lean+SPARK proof laboratory. v0.7.1 introduces contracts and the optional actual GNATprove runner but never asserts discharged proofs without recorded output. v0.7.2 will introduce an independent Python oracle, bounded finite test vectors and an Ada CLI conformance bridge, reported separately from mathematical and Ada contract proof. The initial implementation deliberately does NOT prove CRT, monomial orders, quasicrystal adjacency, or production Python/JS.
