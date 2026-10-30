@@ -11,7 +11,7 @@
 .proof-case{border:1px solid #3d5447;background:#132019;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
 .proof-id{font:bold 12px/1.4 "Courier New",monospace;color:#f1e2b2;overflow-wrap:anywhere}
 .proof-state{align-self:flex-start;font:bold 11px "Courier New",monospace;border:1px solid currentColor;padding:6px 8px}
-.proof-observed{color:#9cdaa5}.proof-warning{color:#ff917b}.proof-pending{color:#d5c48b}
+.proof-observed{color:#9cdaa5}.proof-counterexample{color:#ff917b}.proof-pending{color:#d5c48b}
 .proof-case p{margin:0;color:#b8c9bb;font:12px/1.7 "Courier New",monospace}
 .proof-case .proof-implication{color:#ffb5a4}
 .proof-case .proof-hash-compare{overflow-wrap:anywhere}

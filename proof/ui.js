@@ -14,7 +14,7 @@ function display(report){
   for(const row of report.checks){
     const card=node("article","proof-case");
     card.append(node("span","proof-id",row.id));
-    card.append(node("strong","proof-state "+(row.status==="COUNTEREXAMPLE"?"proof-warning":"proof-observed"),row.status));
+    card.append(node("strong","proof-state "+(row.status==="COUNTEREXAMPLE"?"proof-counterexample":"proof-observed"),row.status));
     card.append(node("p","","Cases: "+row.cases+" · assertions: "+row.assertions));
     if(row.implication)card.append(node("p","proof-implication",row.implication));
     if(row.stored_fingerprint)card.append(node("p","proof-hash-compare",
