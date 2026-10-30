@@ -85,3 +85,9 @@ exact commits, tool versions, raw logs and unresolved obligations rather than
 collapsing them into a single green badge.
 
 The separate lexical-negative suite includes Ada based numeric literals (`2#1#`), signs and underscores. Inputs must be ASCII decimal digits only before `Natural'Value` parses them; these additional cases are included in the Ada CLI vector receipt and verified offline.
+
+## v0.7.4 — Executable compiled-Ada bridge
+
+scripts/build_and_compare_ada.py compiles the source snapshot tied to PR #13 GNATprove evidence from scratch in an isolated temporary directory and invokes the actual Ada executable. Run with --samples 128 for 150 total comparisons (128 valid + 22 invalid), or --full for 8,903 total comparisons. The existing Python bridge independently checks the oracle and emits its original versioned receipt. The CLI output gate now demands exactly one expected LF-terminated line, no stderr and exit code 0.
+
+scripts/verify_ada_runtime_evidence.py verifies the reported build/run record and the embedded Python/Ada receipt against the pinned source archive. This is internal consistency, **not independent attestation**. See [ADA-RUNTIME-EXECUTION.md](ADA-RUNTIME-EXECUTION.md).

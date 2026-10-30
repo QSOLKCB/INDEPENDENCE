@@ -81,3 +81,10 @@ v0.7.3 — Lean Mathematical Foundation (proof candidate; actual Lean run pendin
 - Finite CRT 2×3, GF(2), cyclic modulo-3 identities and partial degree-lex ordering properties.
 - Strict local kernel check with no unapproved proof holes, no new axioms, exact toolchain version and recorded logs.
 - Do not promote any theorem to PROVED before actual Lean 4 kernel verification; general CRT and complete monomial-order results remain open.
+
+v0.7.4 — Actual Ada compilation and independent Python/Ada differential (executable milestone)
+- Build historically pinned PR #13 Ada kernel and CLI sources afresh with developer-owned GNAT/GPRbuild.
+- Compare 128 sampled or all 8,881 valid finite vectors, plus 16 numeric-invalid and six lexical-invalid inputs.
+- Fail closed on missing compiler, compilation failure, extra CLI output, stderr, mismatch or timeout.
+- Produce local, non-attested build/runtime evidence and strict offline internal-consistency validation.
+- Real tool execution remains pending until a compatible GNAT environment runs the new command; do not infer a passed result from source or mocks.
