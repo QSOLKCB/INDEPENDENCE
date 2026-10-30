@@ -5,8 +5,10 @@
 [![Release](https://img.shields.io/github/v/release/QSOLKCB/INDEPENDENCE?label=release)](https://github.com/QSOLKCB/INDEPENDENCE/releases/latest)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-[![Pages deploy (manual)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/deploy-pages.yml/badge.svg?branch=main)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/deploy-pages.yml)
-[![Published-byte audit (manual)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/verify-public-pages.yml/badge.svg?branch=main)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/verify-public-pages.yml)
+[![Pages deploy (manual)](https://img.shields.io/badge/Pages_deploy-manual-lightgrey)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/deploy-pages.yml)
+[![Published-byte audit (manual)](https://img.shields.io/badge/Published_byte_audit-manual-lightgrey)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/verify-public-pages.yml)
+
+**Badge interpretation:** The Verify badge reports live automatic CI status. Pages deployment and published-byte audit are *manual operations*, so their neutral badges link to workflow histories rather than presenting the most recent manual attempt as continuous deployment health. The last Pages run (2026-10-30, [run 41113714704](https://github.com/QSOLKCB/INDEPENDENCE/actions/runs/41113714704)) **published successfully**, but its separate HTTPS byte check received 404 after eight attempts. That observation is NOT_VERIFIED; it does not certify the currently served website. Run the manual Pages workflow from the latest `main` and inspect the new public-byte evidence to establish current status.
 
 **Project milestone: v1.1.0 formalisation complete.** [GitHub release](https://github.com/QSOLKCB/INDEPENDENCE/releases/tag/v1.1.0) · [Full research report](formal/research/v1.1.0/FORMALISATION_REPORT.md) · [Published Zenodo dataset](https://doi.org/10.5281/zenodo.23816739). Historical evidence and proof boundaries remain explicitly preserved.
 
