@@ -34,8 +34,15 @@ class ReadmePublicationTests(unittest.TestCase):
         self.assertIn("Published-byte audit (manual)", readme)
         self.assertIn("https://img.shields.io/badge/Pages_deploy-manual-lightgrey", readme)
         self.assertIn("https://img.shields.io/badge/Published_byte_audit-manual-lightgrey", readme)
-        self.assertIn("separate HTTPS byte check received 404", readme)
-        self.assertIn("That observation is NOT_VERIFIED", readme)
+        self.assertIn("manual observation run 41137612537", readme)
+        self.assertIn("deployment run 41136291743", readme)
+        self.assertIn("35/35 HTTP-observable assets matched", readme)
+        self.assertIn("first attempt", readme)
+        self.assertIn("REMOTE_HTTP_ASSETS_MATCHED_MARKER_UNOBSERVED", readme)
+        self.assertIn("0dbcf0fced7317a1117d0c3bdda1951959eb7c2b", readme)
+        self.assertIn("not a guarantee of ongoing availability", readme)
+        self.assertIn("not the latest verification result", readme)
+        self.assertNotIn("Run the manual Pages workflow from the latest", readme)
 
     def test_completed_v110_has_auditable_citation_and_limits(self):
         readme = README.read_text(encoding="utf-8")
