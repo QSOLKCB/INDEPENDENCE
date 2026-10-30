@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 import run_kernel_conformance as bridge
 from run_kernel_conformance import (build_report, finite_cases, rejected_cases,
-    oracle, sample_ada_cases, make_receipt, run_ada)
+    oracle, sample_ada_cases, lexical_cases, make_receipt, run_ada)
 from verify_kernel_receipt import (InvalidReceipt, verify, strict_json)
 
 
@@ -63,6 +63,12 @@ class ConformanceTests(unittest.TestCase):
             with patch.object(bridge, "SPEC", path):
                 with self.assertRaisesRegex(ValueError, "specification changed"):
                     build_report()
+
+    def test_ada_cli_lexical_negatives_are_raw_and_rejected(self):
+        cases = lexical_cases()
+        self.assertEqual(len(cases), 6)
+        self.assertTrue(all(oracle(op, args) == "ERR:INVALID" for op, args in cases))
+        self.assertTrue(any("2#1#" in args for _, args in cases))
 
     def test_valid_receipt(self):
         self.assertTrue(verify(make_receipt(self.report))["valid"])
