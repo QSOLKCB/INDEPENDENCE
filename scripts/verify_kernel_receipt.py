@@ -10,7 +10,7 @@ import re
 import sys
 
 from run_kernel_conformance import (BRIDGE, RECEIPT, build_report,
-    finite_cases, rejected_cases, oracle, sample_ada_cases)
+    finite_cases, rejected_cases, lexical_cases, oracle, sample_ada_cases)
 
 
 class InvalidReceipt(ValueError):
@@ -79,10 +79,10 @@ def verify(document):
     expected = build_report(seed=report["seed"])
     if ada.get("status") == "ADA_CLI_TESTED_UNATTESTED":
         count = ada.get("cases")
-        if type(count) is not int or count < len(rejected_cases()) + 7 or count > len(list(finite_cases())) + len(rejected_cases()):
+        if type(count) is not int or count < len(rejected_cases()) + len(lexical_cases()) + 7 or count > len(list(finite_cases())) + len(rejected_cases()) + len(lexical_cases()):
             raise InvalidReceipt("invalid Ada case count")
-        number = count - len(rejected_cases())
-        cases = sample_ada_cases(list(finite_cases()), number, report["seed"]) + rejected_cases()
+        number = count - len(rejected_cases()) - len(lexical_cases())
+        cases = sample_ada_cases(list(finite_cases()), number, report["seed"]) + rejected_cases() + lexical_cases()
         records = [[op, list(args), oracle(op, args)] for op, args in cases]
         reference_sha = hashlib.sha256(json.dumps(
             records, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
