@@ -54,6 +54,11 @@ jobs:
       - name: Run real Firefox WebDriver journeys before deploying
         run: python3 scripts/firefox_journeys.py --site "$RUNNER_TEMP/independence-pages" --require-browser --output "$RUNNER_TEMP/pages-firefox-evidence.json"
 
+      - name: Verify narrow viewport journeys in both actual browsers
+        shell: bash
+        run: |
+          python3 scripts/run_browser_journeys.py --site "$RUNNER_TEMP/independence-pages" --width 390 --height 844 --normal-only --require-browser --output "$RUNNER_TEMP/pages-chromium-narrow.json"
+          python3 scripts/firefox_journeys.py --site "$RUNNER_TEMP/independence-pages" --width 390 --height 844 --normal-only --require-browser --output "$RUNNER_TEMP/pages-firefox-narrow.json"
       - name: Preserve pre-deployment browser evidence
         uses: actions/upload-artifact@v4
         with:
@@ -61,6 +66,8 @@ jobs:
           path: |
             ${{ runner.temp }}/pages-browser-evidence.json
             ${{ runner.temp }}/pages-firefox-evidence.json
+            ${{ runner.temp }}/pages-chromium-narrow.json
+            ${{ runner.temp }}/pages-firefox-narrow.json
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

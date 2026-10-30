@@ -71,3 +71,14 @@ to build and inspect the artifact offline; no Node/npm/pip/containers.
   v1.0 browser/deployment evidence.
 - Running against an exact staged artifact is intentionally different
   from executing browsers against a live, mutable production URL.
+
+
+## Narrow responsive browser execution
+
+Both developer browser runners support `--width 390 --height 844 --normal-only`
+to execute the normal real DOM journey in a narrow window. The result records
+the actual observed viewport, and fails if a requested narrow viewport is
+ignored. The PR CI and the manual Pages preflight require narrow Chromium and
+Firefox passes, separately from the standard 1280px three-scenario runs.
+This is a responsive smoke test, **not** a device emulator or a full
+WCAG/visual-regression audit.
