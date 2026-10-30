@@ -17,6 +17,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run Python regression suite
         run: python3 -m unittest discover -s tests -v
+      - name: Verify and restore the exact historical v1.0.1 browser evidence ZIP
+        run: python3 scripts/verify_browser_archive.py --restore "$RUNNER_TEMP/independence-original-browser-evidence.zip"
+      - name: Preserve restored original ZIP as a CI artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: independence-v1.0.1-original-browser-evidence
+          path: ${{ runner.temp }}/independence-original-browser-evidence.zip
+          if-no-files-found: error
       - name: Check proof contract registry
         run: python3 scripts/check_proof_contracts.py --json
       - name: Check new AUTOMATA4 proof-source and corpus consistency
