@@ -43,3 +43,9 @@ The standard-library collector (scripts/build_ledger.py) queries the GitHub publ
 A successful untruncated tree is labelled scanned. A negative filename finding is labelled no known manifest and is **never** interpreted as dependency-free. Truncation, HTTP failures, and missing branches are always unknown. Canonical SHA-256 receipts exclude their own digest member. No private GitHub repositories or personal context contents are intentionally collected.
 
 The committed ledger/data.json is a source-labelled bootstrap inventory; the manually triggered GitHub Pages workflow regenerates an up-to-date published snapshot, without writing it back to main. See docs/LEDGER.md.
+
+## v0.3 — Dependency Tribunal
+
+DOM-TRIBUNAL/1 uses same-origin first-party JavaScript adapters on identical seeded DOM-list operations. The user starts the trial explicitly. Warmups precede measured trials, candidate order alternates, and both implementations must pass complete DOM ID, order, and text checks. Results contain paired samples, medians, deterministic bootstrap percentile intervals, adapter-source byte lengths, and an exported SHA-256 receipt. See docs/TRIBUNAL.md.
+
+**Boundaries:** Direct DOM versus a locally authored keyed adapter is NOT an actual React/Vue/Svelte comparison. Detached DOM timing excludes layout and painting; uncontrolled browser/JIT/CPU scheduling affects outcomes. The Python verifier tests data integrity and arithmetic, but cannot authenticate a real measurement.

@@ -1,5 +1,9 @@
 import {xorshift32, evolve, fnv1a, buildAutomaton, dependencyExposure} from './core.js';
 import {validTreeSha, validReceiptSha} from '../ledger/ledger.js';
+import {makePhases, fingerprint, median, bootstrapMedianCI, assessPairs, validateOutput} from '../tribunal/core.js';
+import {createAdapter as directAdapter} from '../tribunal/direct.js';
+import {createAdapter as keyedAdapter} from '../tribunal/keyed.js';
+import {validateConfig} from '../tribunal/bench.js';
 
 // No testing framework: assertions intentionally use only native JavaScript.
 export function runTests() {
@@ -23,7 +27,46 @@ export function runTests() {
       !validReceiptSha('g'.repeat(64)) && !validReceiptSha(null)],
     ['Git tree IDs accept exactly 40 hex characters', () =>
       validTreeSha('b'.repeat(40)) && !validTreeSha('b'.repeat(64)) &&
-      !validTreeSha('g'.repeat(40)) && !validTreeSha(undefined)]
+      !validTreeSha('g'.repeat(40)) && !validTreeSha(undefined)],
+    ['tribunal fixtures replay exactly', () => {
+      const a = makePhases(12345, 24), b = makePhases(12345, 24);
+      return fingerprint(a.initial) === fingerprint(b.initial) &&
+        fingerprint(a.reorder) === fingerprint(b.reorder) && a.reorder.length === 16;
+    }],
+    ['tribunal statistics preserve paired semantics', () => {
+      const summary = assessPairs(Array.from({length: 8}, (_, i) => ({direct: i + 1, keyed: i + 2})));
+      return summary.direct_median_ms === 4.5 && summary.keyed_median_ms === 5.5 &&
+        summary.paired_delta_median_ms === 1 && summary.paired_delta_bootstrap_95_ms.every(v => v === 1);
+    }],
+    ['tribunal bootstrap reproducibility', () =>
+      JSON.stringify(bootstrapMedianCI([3,2,1,1,0,-1,2,3])) ===
+      JSON.stringify(bootstrapMedianCI([3,2,1,1,0,-1,2,3]))],
+    ['tribunal median rejects nonfinite values', () => {
+      try { median([1, Infinity]); return false; } catch (e) { return e instanceof RangeError; }
+    }],
+    ['tribunal config rejects unsafe trial counts', () => {
+      try { validateConfig({seed:1,count:100,warmups:2,trials:1000}); return false; }
+      catch (e) { return e instanceof RangeError; }
+    }],
+    ['tribunal adapters match every DOM phase', () => {
+      const phases = makePhases(55, 28);
+      for (const adapter of [directAdapter, keyedAdapter]) {
+        const root = document.createElement('ul'), instance = adapter(root);
+        for (const phase of ['initial','update','reorder']) {
+          instance.render(phases[phase]);
+          if (!validateOutput(root, phases[phase])) return false;
+        }
+      }
+      return true;
+    }],
+    ['tribunal keyed adapter preserves node identity', () => {
+      const phases = makePhases(55, 28), root = document.createElement('ul');
+      const adapter = keyedAdapter(root);
+      adapter.render(phases.initial);
+      const first = root.children[1];
+      adapter.render(phases.update);
+      return root.children[1] === first;
+    }]
   ];
   return checks.map(([name, check]) => {
     try { return { name, passed: check() === true }; }

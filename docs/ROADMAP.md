@@ -12,10 +12,12 @@ v0.2 — Public evidence ledger (implemented in this PR)
 - Static browser search/filter; no browser-side GitHub API calls.
 - Import/dependency graph resolution and immutable historical archive are future work.
 
-v0.3 — Comparative experiments
-- Paired workloads, identical behavior and target hardware, warmup, repetitions, medians, confidence bounds.
-- Disclose differences in ergonomics and security patching as well as distribution size.
-- No invented results or unsupported one-size-fits-all claims.
+v0.3 — Dependency Tribunal (implemented)
+- First-party direct DOM and illustrative keyed-reconciliation adapters, identical fixture and correctness checks.
+- Explicit user-initiated paired browser measurements: alternating order, warmups, medians, bootstrap percentile intervals.
+- Source byte measurements, SHA-256 receipt downloads, Python stdlib integrity verifier and adversarial tests.
+- No claims about production frameworks, security, deployment footprint, or cross-machine superiority.
+- Real framework candidates, ergonomics, patching and build-size analyses require future version-pinned third-party fixtures.
 
 v0.4 — Security research exhibits
 - Authorized local toy examples and test fixtures of common classes of vulnerabilities.

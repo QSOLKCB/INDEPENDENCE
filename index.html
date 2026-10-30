@@ -9,6 +9,7 @@
   <title>INDEPENDENCE — No Masters. No Dependencies.</title>
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./ledger/ledger.css">
+  <link rel="stylesheet" href="./tribunal/tribunal.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -20,6 +21,7 @@
       <a href="#lab">Live lab</a>
       <a href="#evidence">Evidence</a>
       <a href="#ledger">Ledger</a>
+      <a href="#tribunal">Tribunal</a>
       <a class="nav-github" href="https://github.com/QSOLKCB/INDEPENDENCE">Source ↗</a>
     </nav>
   </header>
@@ -58,6 +60,7 @@
           <div><span>03</span><strong>Portability over lock-in</strong><small>Browser standards and Python stdlib.</small></div>
           <div><span>04</span><strong>Evidence over slogans</strong><small>Reproduce the result yourself.</small></div>
         </div>
+        <p class="divorce-declaration"><span>This is not War,</span><strong>This is a Divorce.</strong></p>
       </div>
     </section>
 
@@ -126,9 +129,32 @@
       </div>
     </section>
 
+    <section id="tribunal" class="section tribunal-section">
+      <div class="wrap">
+        <span class="kicker">05 / THE DEPENDENCY TRIBUNAL</span>
+        <h2>NO RIGGED BENCHMARKS.<br><span class="accent">SHOW YOUR WORK.</span></h2>
+        <p class="tribunal-intro">Run two first-party implementations of the <strong>same deterministic DOM workload</strong> on your device: direct DOM replacement and a small local keyed reconciler. Timings, adapter source sizes, paired differences and SHA-256 evidence receipts are generated locally on demand. No external services or package installation.</p>
+        <div class="tribunal-warning"><strong>WHAT THIS IS NOT:</strong> The local keyed adapter is an illustrative abstraction, NOT React, Vue, Svelte, or a representative framework benchmark. Timings include detached DOM mutations only: no layout, paint, memory, network, production build, or cross-hardware claims. Bootstrap intervals describe sample resampling, not controlled operating conditions.</div>
+        <div class="tribunal-controls">
+          <label for="tribunal-seed">DETERMINISTIC SEED<input id="tribunal-seed" type="number" min="1" max="4294967295" step="1" value="314159" required></label>
+          <label for="tribunal-rows">ROWS<select id="tribunal-rows"><option value="80">80</option><option value="200" selected>200</option><option value="400">400</option></select></label>
+          <label for="tribunal-warmup">WARMUP PAIRS<select id="tribunal-warmup"><option value="2">2</option><option value="4" selected>4</option><option value="8">8</option></select></label>
+          <label for="tribunal-trials">MEASURED PAIRS<select id="tribunal-trials"><option value="12">12</option><option value="24" selected>24</option><option value="40">40</option></select></label>
+        </div>
+        <div class="tribunal-actions">
+          <button id="tribunal-run" type="button">RUN PAIRED EXPERIMENT ↗</button>
+          <button id="tribunal-export" type="button" class="secondary" disabled>EXPORT SHA-256 RECEIPT ↓</button>
+        </div>
+        <p id="tribunal-status" class="tribunal-status" aria-live="polite" role="status">No measurement has run. The results below are intentionally empty.</p>
+        <div id="tribunal-output" class="tribunal-output" aria-live="polite"></div>
+        <p id="tribunal-hash" class="tribunal-hash">No measured receipt yet.</p>
+        <div class="tribunal-links"><a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/TRIBUNAL.md">EXPERIMENTAL METHOD ↗</a><a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/scripts/verify_tribunal.py">OFFLINE RECEIPT VERIFIER ↗</a><a href="https://github.com/QSOLKCB/INDEPENDENCE/tree/main/tribunal">SOURCE ADAPTERS ↗</a></div>
+      </div>
+    </section>
+
     <section class="section impact-section">
       <div class="wrap impact-grid">
-        <div><span class="kicker">05 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
+        <div><span class="kicker">06 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
         <div class="impact-panel">
           <label for="direct">Direct packages <output id="direct-value">3</output></label><input type="range" id="direct" min="1" max="10" value="3">
           <label for="fanout">New children per package <output id="fanout-value">3</output></label><input type="range" id="fanout" min="1" max="5" value="3">
@@ -139,7 +165,7 @@
     </section>
 
     <section class="closing wrap">
-      <div class="kicker">06 / THE SIGNATURE</div>
+      <div class="kicker">07 / THE SIGNATURE</div>
       <h2>WE DID NOT LEAVE<br>SOFTWARE ENGINEERING.<br><em>SOFTWARE ENGINEERING LEFT US.</em></h2>
       <div class="signature"><div><strong>QSOL-IMC</strong><span>Independent Software Sovereignty Initiative</span></div><a class="action primary" href="https://github.com/QSOLKCB/INDEPENDENCE">READ THE SOURCE ↗</a></div>
     </section>

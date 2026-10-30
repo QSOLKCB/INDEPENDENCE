@@ -24,3 +24,9 @@ The browser test button runs a separate native-JavaScript suite.
 12. QSOL-IMC catalogue categories are editorial. QSOL-CONTEXT is private and must never be queried, ingested, linked as public evidence, or exposed through the ledger. Its high-level provenance design is inspiration only.
 13. Browser ledger code accesses only packaged same-origin static JSON. Only Python collector and manual deployment contact GitHub REST. No browser token.
 14. Preserve canonical snapshot hashing. The receipt SHA-256 must exclude the digest itself. Regression tests must be able to run offline.
+
+15. DOM-TRIBUNAL/1 compares a first-party direct DOM baseline against a *local illustrative* keyed reconciler only, never a production third-party framework.
+16. Paired trials must share identical deterministic input, alternate candidate order, validate exact DOM identity/order/content after each phase, and discard measurements if correctness fails.
+17. Timings are local observed measurements, not deterministic fixtures or global rankings. No precomputed benchmark results or claimed winners.
+18. Receipt exports use WebCrypto SHA-256 over exact UTF-8 payload text. Offline verifier tests payload integrity/internal consistency, not trusted provenance or authentic timing.
+19. No external packages, remote assets, telemetry, third-party network calls, or client-side GitHub API access in Tribunal.
