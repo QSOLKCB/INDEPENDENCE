@@ -1,0 +1,22 @@
+/* First-party Tribunal layout. No browser dependency. */
+.tribunal-section{background:#121714;border-block:1px solid #333d35}
+.tribunal-intro{font-size:16px;line-height:1.65;color:#aebbb0;max-width:850px}
+.tribunal-warning{border-left:3px solid #f3eab4;background:#23251d;color:#ece4be;padding:18px 20px;font:12px/1.7 "Courier New",monospace;margin:20px 0}
+.tribunal-controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:28px 0}
+.tribunal-controls label{display:flex;flex-direction:column;gap:9px;color:#ced2c9;font:11px "Courier New",monospace}
+.tribunal-controls input,.tribunal-controls select{width:100%;border:1px solid #62685e;background:#1c241e;color:#eee;padding:12px;border-radius:0;min-height:45px}
+.tribunal-actions{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0 23px}
+.tribunal-actions button{border:1px solid #f65b43;background:#ff563d;color:#10110f;font:900 12px "Courier New",monospace;padding:16px 22px}
+.tribunal-actions button.secondary{background:transparent;color:#f3eab4;border:1px solid #777}
+.tribunal-actions button:disabled{opacity:.48;cursor:not-allowed}
+.tribunal-status,.tribunal-footnote,.tribunal-hash{color:#bac4b9;font:12px/1.7 "Courier New",monospace;overflow-wrap:anywhere}
+.tribunal-output{overflow-x:auto}
+.tribunal-results{border-collapse:collapse;width:100%;margin-top:23px;text-align:left;font:12px/1.5 "Courier New",monospace}
+.tribunal-results caption{text-align:left;font-size:11px;color:#a8b6ab;margin-bottom:10px}
+.tribunal-results th,.tribunal-results td{padding:14px 10px;border:1px solid #445044}
+.tribunal-results th{color:#f2e6b3;background:#222923}
+.tribunal-results td{color:#e0e8db}
+.tribunal-links{display:flex;flex-wrap:wrap;gap:20px;margin-top:25px}
+.tribunal-links a{font:12px "Courier New",monospace;color:#f3eab4}
+@media(max-width:800px){.tribunal-controls{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:440px){.tribunal-controls{grid-template-columns:1fr}}
