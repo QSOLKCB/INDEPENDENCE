@@ -84,7 +84,7 @@ v0.7.3 — Lean Mathematical Foundation (proof candidate; actual Lean run pendin
 
 v0.7.4 — Actual Ada compilation and independent Python/Ada differential (executable milestone)
 - Build historically pinned PR #13 Ada kernel and CLI sources afresh with developer-owned GNAT/GPRbuild.
-- Compare 128 sampled or all 8,881 valid finite vectors, plus 16 numeric-invalid and six lexical-invalid inputs.
+- Compare 128 sampled or all 8,881 valid finite vectors, plus 16 rejected and six lexical-invalid inputs.
 - Fail closed on missing compiler, compilation failure, extra CLI output, stderr, mismatch or timeout.
 - Produce local, non-attested build/runtime evidence and strict offline internal-consistency validation.
 - Real tool execution remains pending until a compatible GNAT environment runs the new command; do not infer a passed result from source or mocks.
