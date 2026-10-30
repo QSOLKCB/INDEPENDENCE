@@ -22,6 +22,15 @@ from site_bundle import MANIFEST, SITE_FILES, BundleError, envelope, parse_manif
 BASE = "https://qsolkcb.github.io/INDEPENDENCE/"
 MAX_BYTES = 2_000_000
 PROTOCOL = "GITHUB-PAGES-OBSERVATION/1"
+# .nojekyll is a packaging/deployment-control marker. The original staged
+# artifact and complete manifest MUST contain it, but GitHub Pages can
+# return 404 when fetching the dotfile over public HTTP. Its remote
+# content cannot be attested by this public HTTP byte comparison.
+NON_HTTP_MARKERS = (".nojekyll",)
+PUBLIC_HTTP_ASSETS = tuple(name for name in SITE_FILES if name not in NON_HTTP_MARKERS)
+if set(NON_HTTP_MARKERS) != {".nojekyll"} or set(PUBLIC_HTTP_ASSETS) != set(SITE_FILES) - set(NON_HTTP_MARKERS):
+    raise ValueError("unexpected public HTTP vs packaging marker inventory")
+
 
 
 class DeploymentError(ValueError):
@@ -46,7 +55,7 @@ class RejectRedirects(HTTPRedirectHandler):
 def fetch_bytes(url: str) -> bytes:
     validate_base(BASE)
     requested = urlsplit(url)
-    permitted = {MANIFEST, *SITE_FILES}
+    permitted = {MANIFEST, *PUBLIC_HTTP_ASSETS}
     # Check the whole URI, not merely a string prefix or a final redirect URL.
     if (requested.scheme != "https" or requested.netloc != "qsolkcb.github.io"
             or requested.path != "/INDEPENDENCE/" + requested.path.removeprefix("/INDEPENDENCE/")
@@ -81,17 +90,28 @@ def verify_once(manifest_path: Path, *, base: str = BASE) -> dict:
     if raw != remote_manifest:
         raise DeploymentError("public deployment manifest differs from staged bytes")
     matched = 0
-    for name in SITE_FILES:
+    for name in PUBLIC_HTTP_ASSETS:
         observed = fetch_bytes(base + name)
         if hashlib.sha256(observed).hexdigest() != local["files"][name]:
             raise DeploymentError("public deployment asset differs from staging: " + name)
         matched += 1
+    # The public manifest is byte-identical to the staged manifest and includes
+    # the original SHA-256 of .nojekyll. That establishes only the marker's
+    # *declared* staging identity, NOT a successful remote marker fetch.
     return {
-        "protocol": PROTOCOL, "status": "REMOTE_BYTES_MATCHED_UNATTESTED",
-        "revision": local["revision"], "files": matched,
+        "protocol": PROTOCOL,
+        "status": "REMOTE_HTTP_ASSETS_MATCHED_MARKER_UNOBSERVED",
+        "revision": local["revision"],
+        "files": matched,
+        "manifest_verified": True,
+        "non_http_markers_unobserved": list(NON_HTTP_MARKERS),
+        "non_http_marker_staged_sha256": {
+            name: local["files"][name] for name in NON_HTTP_MARKERS
+        },
         "tree_sha256": local["tree_sha256"],
         "limitations": [
-            "This checks HTTPS responses observed now, not durable availability or CDN stability.",
+            "Only public HTTP assets and the manifest were fetched and matched at this instant.",
+            "The .nojekyll deployment-control marker is locally packaged and named in the verified manifest but not remotely byte-observed.",
             "HTTPS and SHA-256 checks are not independent proof of authorship or security.",
             "JavaScript execution is verified separately using actual local browser journeys."
         ]

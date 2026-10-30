@@ -31,9 +31,11 @@ GITHUB-PAGES-OBSERVATION/1. Development-only checks; no runtime packages.
    exercise fake GitHub REST responses without live GitHub traffic.
 5. **Remote deployment:** after the manually triggered GitHub Pages
    deployment succeeds, scripts/verify_deployed_site.py fetches the exact
-   official HTTPS QSOLKCB/INDEPENDENCE path and matches the deployed manifest
-   and *every asset byte* to the staged checksums. No arbitrary URL targets,
-   credentials or browser-origin remote calls.
+   official HTTPS QSOLKCB/INDEPENDENCE path, matches the deployed manifest
+   and *every HTTP-observable asset byte* to the staged checksums. The special
+   .nojekyll marker is required in the staged artifact and manifest, but
+   is not independently HTTP-observable and must never be reported as such.
+   No arbitrary URL targets, credentials or browser-origin remote calls.
 
 ## Reproduce
 
@@ -94,8 +96,11 @@ The actual deployment action had already reported SUCCESS.
 The workflow now distinguishes:
 
 - **Deployment: SUCCESS** means `actions/deploy-pages@v4` completed.
-- **Public byte observation: REMOTE_BYTES_MATCHED_UNATTESTED** means the exact
-  publicly fetched deployment manifest and all file hashes matched.
+- **Public byte observation: REMOTE_HTTP_ASSETS_MATCHED_MARKER_UNOBSERVED** means
+  the exact publicly fetched deployment manifest and every HTTP-observable
+  HTML/CSS/JS/JSON asset matched the staging hashes. The .nojekyll
+  packaging marker remained locally hashed and declared in the matching
+  manifest, but its remote bytes were not observed.
 - **Public byte observation: NOT_VERIFIED** means the observation failed,
   with the exact requested URL and HTTP code recorded. It is **never** counted
   as a public match or proof of website availability.
@@ -141,3 +146,26 @@ An already-downloaded but corrupt primary manifest **fails closed**; it is
 never silently replaced with data from another source. When both sources
 are unavailable, the selector emits `NOT_VERIFIED` evidence and the
 workflow fails instead of inventing a successful remote observation.
+
+## Special .nojekyll marker and remote observation
+
+Evidence uploaded after Pages run [41136291743](https://github.com/QSOLKCB/INDEPENDENCE/actions/runs/41136291743)
+reports NOT_VERIFIED after eight failed GETs for
+`https://qsolkcb.github.io/INDEPENDENCE/.nojekyll`. The deployment action
+had reported SUCCESS, and this follow-up failed specifically on the special
+deployment-control dotfile. Its absence at an HTTP URL is not evidence that
+regular web assets mismatch, but it is also not a successful remote byte check.
+
+The verifier now treats .nojekyll as a **non-HTTP-observable marker**:
+the staged artifact still requires it, computes its SHA-256 and includes it in
+the complete deployment manifest. The verifier requires the **exact remote
+manifest bytes** and individually fetches and hashes **every** declared
+public HTTP asset (HTML, CSS, JavaScript and JSON). It does not issue a GET
+for .nojekyll, and the success receipt explicitly names the unobserved
+marker and records its staged-only fingerprint.
+
+A 404/mismatch for the remote manifest or any actual HTTP asset still
+fails closed. A successful follow-up observation does not attest the
+physical presence of the marker on the remote server, continuous availability,
+remote runtime execution or authorship. The previous failing receipt remains
+historically valid and must not be rewritten.
