@@ -101,6 +101,24 @@ class SparkEvidenceArchiveTests(unittest.TestCase):
             with self.assertRaisesRegex(EvidenceError, "Python test summary"):
                 verify(root)
 
+    def test_manifest_limitations_cannot_inflate_provenance(self):
+        tmp, root = self.fixture()
+        with tmp:
+            self.change_json(root, "manifest.json",
+                             lambda m: m["limitations"].__setitem__(
+                                 0, "Independent tool execution was authenticated"))
+            with self.assertRaisesRegex(EvidenceError, "limitations mismatch"):
+                verify(root)
+
+    def test_toolchain_version_must_be_exact(self):
+        tmp, root = self.fixture()
+        with tmp:
+            self.change_json(root, "spark-evidence.json",
+                             lambda r: r.update(tool_version=r["tool_version"] +
+                                              "\\nIndependently certified SPARK verifier"))
+            with self.assertRaisesRegex(EvidenceError, "toolchain version mismatch"):
+                verify(root)
+
     def test_unknown_evidence_field_rejected(self):
         tmp, root = self.fixture()
         with tmp:
