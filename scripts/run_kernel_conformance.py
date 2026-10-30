@@ -151,8 +151,11 @@ def run_ada(binary: Path, cases):
                                   capture_output=True, text=True, timeout=3, check=False)
         except (OSError, subprocess.TimeoutExpired) as error:
             raise RuntimeError("Ada CLI unavailable/timeout: " + str(error)) from error
-        actual = proc.stdout.strip()
-        if proc.returncode != 0 or actual != expected or proc.stderr.strip():
+        # Ada.Text_IO.Put_Line emits exactly one LF-terminated response on
+        # the tested Linux toolchain. Ignore no extra output, blank lines,
+        # unexpected whitespace or diagnostic stderr.
+        actual = proc.stdout
+        if proc.returncode != 0 or actual != expected + "\n" or proc.stderr:
             raise RuntimeError("Ada mismatch: " + repr((operation, args, expected, actual,
                                                        proc.stderr[:160], proc.returncode)))
         records.append([operation, list(args), expected])
