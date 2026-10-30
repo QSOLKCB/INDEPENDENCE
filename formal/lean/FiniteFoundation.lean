@@ -21,7 +21,14 @@ theorem crt_left_inverse : ∀ n : Fin 6, crtDecode (crtEncode n) = n := by
   decide +kernel
 
 theorem crt_right_inverse : ∀ p : Fin 2 × Fin 3, crtEncode (crtDecode p) = p := by
-  decide +kernel
+  -- A generic Prod does not expose a Decidable universal quantifier here.
+  -- Each component Fin has a finite decidable universal quantifier.
+  have cases_checked : ∀ (a : Fin 2) (b : Fin 3),
+      crtEncode (crtDecode (a, b)) = (a, b) := by
+    decide +kernel
+  intro p
+  cases p with
+  | mk a b => exact cases_checked a b
 
 /-- GF(2) reference semantics represented by Bool, not an Ada/Python proof. -/
 def parityAdd (a b : Bool) : Bool := Bool.xor a b
