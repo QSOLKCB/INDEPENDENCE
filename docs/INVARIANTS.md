@@ -90,3 +90,10 @@ The browser test button runs a separate native-JavaScript suite.
 68. Independent Python, developer Node/JavaScript and Ada vectors must match the exact 4,096-case corpus hash and reject both altered inputs and output mismatches. Optional tools never become GitHub Pages dependencies.
 69. Missing toolchains, stale binaries, zero-check proof logs and failed comparisons must fail closed; no successful status is borrowed from v0.7.x historical evidence or from a self-hashed receipt.
 70. New v0.9 evidence must record exact sources, commands, tool outputs, limitations and NOT_RUN where applicable; no generic production JS formal refinement or independent attestation may be claimed.
+
+
+65. v0.9 AUTOMATA4/1 has exactly one canonical width-four, fixed-zero model and a 4,096-vector corpus; do not introduce a second competing proof specification in the browser.
+66. Developer JS evidence binds both the production evolve() module and comparator source to the checkout with SHA-256; a changed source requires renewed evidence.
+67. Lean evidence requires recorded axiom lists to match exactly the parsed raw compiler output. No missing, duplicate, mismatched or unapproved axioms, even in a rehashed receipt.
+68. Browser v0.9 tests real first-party evolve() and unchanged original typed-array inputs. Finite checks, local WebCrypto digest and self-reported receipt are not a formal refinement or third-party attestation.
+69. The formal lab CSS link must be a complete, closed HTML link element, leaving the application's only module script intact. Formal toolchains stay optional developer-only tools, not mandatory Pages dependencies.

@@ -95,3 +95,11 @@ v0.7.4 — Actual Ada compilation and independent Python/Ada differential (execu
 - Fail closed on missing compiler, compilation failure, extra CLI output, stderr, mismatch or timeout.
 - Produce local, non-attested build/runtime evidence and strict offline internal-consistency validation.
 - Real tool execution remains pending until a compatible GNAT environment runs the new command; do not infer a passed result from source or mocks.
+
+
+v0.9 consolidated browser addendum (implemented in PR)
+- Retain the single AUTOMATA4/1 width-four Lean/SPARK/Ada model and its canonical 4,096-vector corpus.
+- Ship a first-party browser experiment and SHA-256 receipt with independent Python verifier.
+- Bind JS evidence to production/comparator source hashes and parse Lean axiom logs exactly.
+- Use a portable direct .mjs Node invocation for optional developer comparisons.
+- Preserve original proof archives, no new required tooling or external browser dependencies.

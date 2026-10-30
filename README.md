@@ -275,3 +275,14 @@ Check saved evidence integrity (not execution attestation):
 python3 scripts/verify_automata_evidence.py automata4-evidence.json
 ```
  No build tool or external dependency is added to the deployed website. See [AUTOMATA-FORMAL.md](docs/AUTOMATA-FORMAL.md).
+
+
+### v0.9.0 browser formal lab — unified AUTOMATA4/1
+
+[Open the four-cell formal lab](https://qsolkcb.github.io/INDEPENDENCE/#formal-lab) after merging and manual Pages deployment. It runs the actual first-party automaton on **4,096** inputs (256 rules × 16 width-four rows), checks all outputs and source ownership against an independent reference, and exports a locally hashed JSON receipt. There is only **one authoritative four-cell formal specification**, not competing Lean/Ada reference implementations.
+
+Verify a browser receipt with standard-library Python:
+
+    python3 scripts/verify_automata_browser_receipt.py /path/to/automata4-browser-xxxxxxxxxxxx.json
+
+The receipt verifies consistency with the canonical corpus but does **not** independently attest that the browser executed. Formal theorem checks and Ada differential execution remain optional developer-only tools.

@@ -76,3 +76,27 @@ Requiring a new actual proof still requires executing `--run-lean`,
 self-consistent report is possible in principle.
 
 The new proof/status vocabulary applies only to this `AUTOMATA4/1` revision and must not rewrite earlier evidence or existing proof-contract UI classifications.
+
+
+## Consolidated v0.9 browser experiment (4,096 real-source cases)
+
+The GitHub Pages site adds an interactive #formal-lab section based on this
+same four-cell AUTOMATA4/1 reference, *not* another Lean/Ada specification.
+The user-triggered experiment executes the real first-party JS evolve()
+function for all 256 rules and all 16 four-bit rows, checking all four output
+bits and original Uint8Array immutability against an independently implemented
+arithmetic reference. It orders vectors by ascending rule and mask, then uses
+the same compact JSON array encoding as the Python vectors_digest() function.
+Canonical SHA-256: f1ecce4798a35f6642a065a0ffbf87e6bdfcbb30ba0afffb5fb0da69c7c40635.
+
+After passing, the browser can export an AUTOMATA4-BROWSER-RECEIPT/1 SHA-256
+envelope with an explicit NOT_A_FORMAL_PROOF status. The Python standard-library
+verifier checks exact payload hashing, format, case count and canonical corpus,
+rejecting extra/duplicate fields, nonfinite numbers and misleading rehashed
+proof claims:
+
+    python3 scripts/verify_automata_browser_receipt.py /path/to/automata4-browser-xxxxxxxxxxxx.json
+
+Receipt integrity is not independent authentication of browser execution or
+model-to-implementation formal refinement. The additional browser lab and
+Pages assets introduce no Node/npm dependency or remote runtime API.
