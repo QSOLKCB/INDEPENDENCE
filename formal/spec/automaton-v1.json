@@ -1,0 +1,28 @@
+{
+  "protocol": "AUTOMATON-SEMANTICS/1",
+  "version": 1,
+  "scope": "One elementary cellular automaton transition at a three-bit neighbourhood, plus fixed-zero row boundaries.",
+  "rule_range": [
+    0,
+    255
+  ],
+  "bit_range": [
+    0,
+    1
+  ],
+  "row_width_range": [
+    1,
+    8
+  ],
+  "neighbourhood_index": "4*left + 2*center + right",
+  "next_bit": "floor(rule / (2 ** neighbourhood_index)) % 2",
+  "fixed_zero_boundary": true,
+  "vector_order": "rule (ascending), left, center, right (each ascending)",
+  "vector_encoding": "ASCII decimal rule,left,center,right:output followed by LF for all 2048 vectors",
+  "limitations": [
+    "A mathematical reference does not establish refinement of production JavaScript.",
+    "Lean and GNATprove checks require real locally executed pinned tools.",
+    "Finite matching vectors are evidence of bounded agreement, not universal correctness.",
+    "Locally generated reports and self-hashes cannot authenticate their executor."
+  ]
+}
