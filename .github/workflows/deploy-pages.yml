@@ -43,13 +43,14 @@ jobs:
         run: |
           set -euo pipefail
           site="$RUNNER_TEMP/independence-pages"
-          mkdir -p "$site/lab" "$site/ledger" "$site/tribunal" "$site/museum"
+          mkdir -p "$site/lab" "$site/ledger" "$site/tribunal" "$site/museum" "$site/breeding"
           cp index.html styles.css app.js .nojekyll "$site/"
           cp lab/core.js lab/tests.js "$site/lab/"
           cp ledger/ledger.js ledger/ledger.css ledger/data.json "$site/ledger/"
           cp tribunal/core.js tribunal/direct.js tribunal/keyed.js "$site/tribunal/"
           cp tribunal/bench.js tribunal/ui.js tribunal/tribunal.css "$site/tribunal/"
           cp museum/core.js museum/ui.js museum/museum.css "$site/museum/"
+          cp breeding/core.js breeding/ui.js breeding/breeding.css "$site/breeding/"
           test -s "$site/index.html"
           test -s "$site/app.js"
           test -s "$site/lab/core.js"
@@ -58,6 +59,8 @@ jobs:
           test -s "$site/tribunal/bench.js"
           test -s "$site/museum/core.js"
           test -s "$site/museum/ui.js"
+          test -s "$site/breeding/core.js"
+          test -s "$site/breeding/ui.js"
           echo "Static Pages artifact ready; no build required."
 
       - name: Configure GitHub Pages

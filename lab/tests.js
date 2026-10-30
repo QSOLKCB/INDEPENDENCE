@@ -5,6 +5,7 @@ import {createAdapter as directAdapter} from '../tribunal/direct.js';
 import {createAdapter as keyedAdapter} from '../tribunal/keyed.js';
 import {validateConfig} from '../tribunal/bench.js';
 import {EXHIBITS,runExhibit,runAll,assembleReport,encodeHtml,finiteJSON} from '../museum/core.js';
+import {TARGETS,runMutationLab,validateConfig as validateMutationConfig} from '../breeding/core.js';
 
 // No testing framework: assertions intentionally use only native JavaScript.
 export function runTests() {
@@ -87,7 +88,30 @@ export function runTests() {
       const result=assembleReport(runAll());
       return result.protocol === 'GREMLIN-MUSEUM/1' &&
         result.provenance.length === 5 && result.provenance.every((x,i)=>x.id===EXHIBITS[i].id);
-    }]
+    }],
+    ['breeding smoke suite leaves known survivors', () => {
+      const r=runMutationLab({seed:314159,suite:'smoke'});
+      return r.mutants===15 && r.summary.killed===2 && r.summary.survived===13;
+    }],
+    ['breeding full fixture suite detects all curated mutants', () => {
+      const r=runMutationLab({seed:314159,suite:'full'});
+      return r.baseline_assertions===26 && r.summary.killed===15 && r.summary.survived===0;
+    }],
+    ['breeding reproducible run order', () => JSON.stringify(runMutationLab({seed:99,suite:'smoke'}))===
+      JSON.stringify(runMutationLab({seed:99,suite:'smoke'}))],
+    ['breeding seed changes order without changing scores', () => {
+      const a=runMutationLab({seed:1,suite:'full'}),b=runMutationLab({seed:314159,suite:'full'});
+      return a.results[0].id!==b.results[0].id && a.summary.killed===b.summary.killed;
+    }],
+    ['breeding has witnesses for all mutants', () => runMutationLab({seed:1,suite:'smoke'}).results.every(r=>r.witness_tests.length>0)],
+    ['breeding invalid suite rejected', () => {
+      try { validateMutationConfig({seed:1,suite:'oops'});return false; }catch(e){return e instanceof RangeError;}
+    }],
+    ['breeding invalid seed rejected', () => {
+      try { validateMutationConfig({seed:0,suite:'full'});return false; }catch(e){return e instanceof RangeError;}
+    }],
+    ['breeding catalogue contains five targets and fifteen mutants', () =>
+      TARGETS.length===5 && TARGETS.reduce((n,t)=>n+t.mutants.length,0)===15]
   ];
   return checks.map(([name, check]) => {
     try { return { name, passed: check() === true }; }
