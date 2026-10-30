@@ -101,3 +101,15 @@ Verify an exported file with Python stdlib:
     python3 scripts/verify_tribunal.py /path/to/tribunal-receipt.json --json
 
 Verification checks exact UTF-8 payload integrity and internal sample/summary consistency, not the authenticity of measured timings. Read [the protocol](docs/TRIBUNAL.md) for scope and limitations.
+
+## v0.4.0 — THE GREMLIN MUSEUM
+
+[Enter the Gremlin Museum](https://qsolkcb.github.io/INDEPENDENCE/#museum) after merge and manual Pages deployment.
+
+Five safe, first-party, fixed-input demonstrations of software failure modes, each with a legacy observation, bounded corrective behaviour and reproducible assertions. Three reflect historic INDEPENDENCE review findings; two are explicitly marked illustrative. **Nothing malicious is executed:** all code-like inputs are inert strings shown with textContent. No external host, upload, installation, framework or package manager is needed.
+
+Run a specimen individually or all five. For a passing full run, download an exact-payload SHA-256 JSON receipt and verify it offline:
+
+    python3 scripts/verify_museum.py /path/to/gremlin-museum-xxxxxxxxxxxx.json --json
+
+The verifier checks integrity and fixed observations, not authorship, real-world exploitability or the absence of undiscovered vulnerabilities. Read [docs/MUSEUM.md](docs/MUSEUM.md).

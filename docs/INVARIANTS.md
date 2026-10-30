@@ -30,3 +30,9 @@ The browser test button runs a separate native-JavaScript suite.
 17. Timings are local observed measurements, not deterministic fixtures or global rankings. No precomputed benchmark results or claimed winners.
 18. Receipt exports use WebCrypto SHA-256 over exact UTF-8 payload text. Offline verifier tests payload integrity/internal consistency, not trusted provenance or authentic timing.
 19. No external packages, remote assets, telemetry, third-party network calls, or client-side GitHub API access in Tribunal.
+
+20. GREMLIN-MUSEUM/1 contains only fixed, inert local specimens. Never execute injected HTML, import remote code, touch real files via traversal, perform credential operations, or contact third-party services.
+21. Historical review reproductions must be explicitly distinguished from illustrative cases. A class of failure is not automatically an exploit, CVE, or discovered project vulnerability.
+22. Museum displays all input and observations with textContent, never innerHTML/eval/script injection. No user-provided arbitrary script, external target or remote payload execution is permitted.
+23. Each exhibit must include a reproducible failing legacy condition, a corrected condition, meaningful assertions and provenance. Failed tests must prevent receipt export.
+24. SHA-256 receipt verification checks exact payload integrity and fixed-fixture consistency, never authorship, vulnerability absence, or deployment safety.
