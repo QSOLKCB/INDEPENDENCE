@@ -183,7 +183,8 @@ def verify_receipt(envelope: dict) -> dict:
         pair[side][phase] == 0 for pair in times for side in ("direct", "keyed") for phase in PHASES
     ):
         raise ReceiptError("low-resolution warning mismatch")
-    if report.get("methodology", {}).get("attribution") != (
+    methodology = report.get("methodology")
+    if not isinstance(methodology, dict) or methodology.get("attribution") != (
         "local keyed adapter is illustrative; NOT a React/Vue/Svelte benchmark"
     ):
         raise ReceiptError("missing evidence attribution")
@@ -201,7 +202,7 @@ def main(argv=None):
             raise ReceiptError("receipt file exceeds size limit")
         envelope = strict_json(args.receipt.read_text(encoding="utf-8"))
         output = verify_receipt(envelope)
-    except (OSError, UnicodeError, ReceiptError, AttributeError) as error:
+    except (OSError, UnicodeError, ReceiptError, AttributeError, RecursionError) as error:
         print("FAIL: " + str(error), file=sys.stderr)
         return 1
     print(json.dumps(output, sort_keys=True) if args.json else
