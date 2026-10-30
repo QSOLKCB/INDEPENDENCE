@@ -1,4 +1,5 @@
 """Independent Python/Ada bridge: statuses must not be conflated."""
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -96,6 +97,39 @@ class ConformanceTests(unittest.TestCase):
         report["evidence"]["ada_cli_conformance"] = {"status":"ADA_CLI_TESTED_UNATTESTED", "cases":200,
             "vectors_sha256":"0"*64,"binary_sha256":"f"*64}
         with self.assertRaisesRegex(InvalidReceipt, "Ada CLI evidence"):
+            verify(make_receipt(report))
+
+    @staticmethod
+    def forged_consistent_ada_report():
+        report = build_report()
+        cases = sample_ada_cases(list(finite_cases()), 7) + rejected_cases() + lexical_cases()
+        vectors = [[op, list(args), oracle(op, args)] for op, args in cases]
+        proof = {
+            "status": "ADA_CLI_TESTED_UNATTESTED", "cases": len(cases),
+            "vectors_sha256": hashlib.sha256(json.dumps(
+                vectors, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest(),
+            "binary_sha256": "a" * 64,
+            "note": "CLI output matched oracle; binary provenance and SPARK compilation not independently attested"
+        }
+        report["evidence"]["ada_cli_conformance"] = proof
+        report["unresolved"][3] = "Ada CLI execution matches selected inputs but provenance not attested"
+        return report
+
+    def test_self_consistent_ada_receipt_still_unattested(self):
+        result = verify(make_receipt(self.forged_consistent_ada_report()))
+        self.assertEqual(result["ada_status"], "ADA_CLI_TESTED_UNATTESTED")
+        self.assertEqual(result["ada_contracts"], "NOT_RUN")
+
+    def test_resealed_ada_fake_attestation_disclaimer_rejected(self):
+        report = self.forged_consistent_ada_report()
+        report["evidence"]["ada_cli_conformance"]["note"] = "GNATprove-certified independent provenance"
+        with self.assertRaisesRegex(InvalidReceipt, "unsupported provenance"):
+            verify(make_receipt(report))
+
+    def test_resealed_ada_extra_proof_field_rejected(self):
+        report = self.forged_consistent_ada_report()
+        report["evidence"]["ada_cli_conformance"]["ada_contracts"] = {"status": "ADA_CONTRACT_VERIFIED"}
+        with self.assertRaisesRegex(InvalidReceipt, "extra fields"):
             verify(make_receipt(report))
 
     def test_resealed_wrong_python_count_rejected(self):
