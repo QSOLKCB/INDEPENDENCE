@@ -10,7 +10,11 @@ Machine-readable obligation registry, deterministic bounded checks against real 
 
 Add deterministic property generators with recorded seeds and minimal failing inputs, boundary/invalid-input testing, differential Python/JavaScript reference vectors, and controlled network failure simulations for the public ledger. Resolve the mutable typed-array/fingerprint contract through a reviewed API choice, not a silent behavioural change.
 
-## v0.9.0 — Lean 4 and SPARK/Ada (planned)
+## v0.9.0 — Lean 4 and SPARK/Ada (executable model added; new proofs pending local tools)
+
+A new four-cell `AUTOMATA4/1` formal experiment now has six Lean theorem obligations, an exact SPARK/Ada reference kernel, independent 4,096-case Python and developer Node/JavaScript vectors, a fresh Ada CLI build-and-test runner and strict, per-stage status reporting. The earlier 13 Lean theorem checks, 21 SPARK obligations and 8,903 Ada/Python comparisons remain separate historical evidence. **No new v0.9 proof is claimed discharged until the new toolchain reports are supplied.** See `docs/AUTOMATA-FORMAL.md`.
+
+The original wider programme remains explicit:
 
 1. Review a mathematical specification of elementary automaton transitions with fixed-zero boundaries and 0..255 rule indices.
 2. Prove selected properties in Lean 4, record exact tool version, complete source, theorem statements, kernel-checked log and remaining assumptions. Unreviewed sorry, custom axioms or holes are unresolved.
@@ -54,3 +58,13 @@ A pinned, no-Mathlib Lean proof source and fail-closed stdlib kernel runner cove
 ## v0.7.3 Lean evidence preservation (reported successful run)
 
 After the v0.7.3 CRT-right-inverse correction merged in PR #11, the user supplied a terminal transcript reporting Lean 4.35.0 exit 0, `KERNEL_CHECKED`, 13 theorem axiom audits, no `sorryAx`, and 169 passing Python tests. A self-contained copy of the specific historical Lean source, toolchain pin, recovered JSON report and a provenance manifest is archived under `formal/evidence/lean/v0.7.3` for the proposed v1.1.0 Zenodo package. The evidence source is a user-reported local run; the original file was not uploaded and byte-identical provenance is not independently verified. This record proves neither Ada contract discharge nor Python/JS conformance.
+
+
+## v0.9.0 combined browser evidence — single authoritative model
+
+The original AUTOMATA4/1 width-four 4,096-vector corpus now also drives a
+first-party interactive browser laboratory at #formal-lab. Receipts are
+independently checked against the reference Python corpus with
+scripts/verify_automata_browser_receipt.py. No duplicate Lean/SPARK model is
+introduced by the browser, and the reported finite conformance and digest
+do not constitute a universal refinement theorem or authenticated execution.

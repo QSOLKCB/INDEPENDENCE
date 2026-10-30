@@ -9,6 +9,7 @@ import {TARGETS,runMutationLab,validateConfig as validateMutationConfig} from '.
 import {STAGES, CONTROLS, CASE_STUDIES, validateMission, makeHandoff, gateStatus} from '../workflow/core.js';
 import {CONTRACT_IDS, runProofChecks, checkFingerprintImmutability} from '../proof/core.js';
 import {runPropertySelfTests} from '../property/tests.js';
+import {runFormalLabSelfTests} from '../formal-lab/tests.js';
 
 // No testing framework: assertions intentionally use only native JavaScript.
 export function runTests() {
@@ -170,6 +171,8 @@ export function runTests() {
     }],
     ['property lab reproducible native assertions', () => runPropertySelfTests().every(r => r.passed)],
     ['property lab has sixteen actual assertions', () => runPropertySelfTests().length === 16],
+    ['formal lab 4096-vector native self-tests', () => runFormalLabSelfTests().every(x => x.passed)],
+    ['formal lab defines five executable native assertions', () => runFormalLabSelfTests().length === 5],
     ['proof contract IDs are unique and ordered', () =>
       CONTRACT_IDS.length===5 && new Set(CONTRACT_IDS).size===5 &&
       CONTRACT_IDS[4]==='FINGERPRINT-IMMUTABILITY']

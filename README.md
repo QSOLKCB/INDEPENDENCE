@@ -248,3 +248,41 @@ python3 scripts/verify_property_receipt.py /path/to/property-lab-<hash>.json
 ```
 
 The injected mutant is intentionally faulty, **not a discovered production defect**. Finite tests, self-hashed receipts and opt-in ownership guards establish no universal proof or independent browser execution attestation. See [docs/PROPERTY-LAB.md](docs/PROPERTY-LAB.md).
+
+## v0.9.0 — Lean 4 + SPARK/Ada Elementary-Automata Laboratory
+
+v0.9 introduces a distinct `AUTOMATA4/1` four-cell elementary automaton reference, specifying fixed-zero boundaries and all 256 rule masks over 16 possible input rows (**4,096 deterministic vectors**). It adds six new Lean 4 theorem candidates, an exact standalone SPARK-mode Ada reference and developer CLI, independent Python finite oracle, and a developer-only JavaScript check against the actual first-party `evolve` function. Unlike the earlier 13 Lean and 21 SPARK results, **new v0.9 formal proof statuses remain NOT_RUN until real local compilation and axiom audit evidence is supplied**.
+
+Run without any additional dependencies:
+
+```bash
+python3 -m unittest discover -s tests -v
+python3 scripts/check_automata_formal.py --output automata4-static.json
+```
+
+On a machine with the pinned Lean 4.35.0, GNATprove, GPRbuild and optional Node, the strict executable gate is:
+
+```bash
+export PATH="$HOME/opt/edgewalk-spark-toolchain/bin:$PATH"
+python3 scripts/check_automata_formal.py --require-all --output automata4-evidence.json
+```
+
+This checks formal proof outcomes, compiled Ada execution and all 4,096 real JavaScript transitions as **separate** evidence classes.
+
+Check saved evidence integrity (not execution attestation):
+
+```bash
+python3 scripts/verify_automata_evidence.py automata4-evidence.json
+```
+ No build tool or external dependency is added to the deployed website. See [AUTOMATA-FORMAL.md](docs/AUTOMATA-FORMAL.md).
+
+
+### v0.9.0 browser formal lab — unified AUTOMATA4/1
+
+[Open the four-cell formal lab](https://qsolkcb.github.io/INDEPENDENCE/#formal-lab) after merging and manual Pages deployment. It runs the actual first-party automaton on **4,096** inputs (256 rules × 16 width-four rows), checks all outputs and source ownership against an independent reference, and exports a locally hashed JSON receipt. There is only **one authoritative four-cell formal specification**, not competing Lean/Ada reference implementations.
+
+Verify a browser receipt with standard-library Python:
+
+    python3 scripts/verify_automata_browser_receipt.py /path/to/automata4-browser-xxxxxxxxxxxx.json
+
+The receipt verifies consistency with the canonical corpus but does **not** independently attest that the browser executed. Formal theorem checks and Ada differential execution remain optional developer-only tools.

@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="./workflow/workflow.css">
   <link rel="stylesheet" href="./proof/proof.css">
   <link rel="stylesheet" href="./property/property.css">
+  <link rel="stylesheet" href="./formal-lab/formal-lab.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -32,6 +33,7 @@
       <a href="#workflow">The Secret</a>
       <a href="#proof">Proof Contracts</a>
       <a href="#property-lab">Property Lab</a>
+      <a href="#formal-lab">Formal Lab</a>
       <a class="nav-github" href="https://github.com/QSOLKCB/INDEPENDENCE">Source ↗</a>
     </nav>
   </header>
@@ -331,6 +333,24 @@
           <div id="property-results" class="property-results" aria-label="Generated properties and minimized counterexamples"></div>
           <p id="property-hash">No receipt issued.</p>
           <p class="property-note"><a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/PROPERTY-LAB.md">METHOD &amp; LIMITATIONS ↗</a> · <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/scripts/verify_property_receipt.py">OFFLINE RECEIPT VERIFIER ↗</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="formal-lab" class="section formal-lab-section">
+      <div class="wrap">
+        <span class="kicker">09C / LEAN + SPARK / EXECUTABLE FOUR-CELL BRIDGE</span>
+        <h2>PROVE THE MODEL.<br><span class="accent">TEST THE IMPLEMENTATION.</span></h2>
+        <p>Explore v0.9's AUTOMATA4/1 finite specification: all 256 rules × all 16 four-bit rows, with fixed-zero exterior boundaries. The browser executes the <strong>real first-party JavaScript evolve()</strong>, compares all 4,096 simultaneous transitions to independent arithmetic and detects input mutation.</p>
+        <div class="formal-lab-panel">
+          <div class="formal-lab-actions">
+            <button id="formal-lab-run" type="button">RUN 4,096-VECTOR BRIDGE ↗</button>
+            <button id="formal-lab-export" type="button" disabled>EXPORT SHA-256 RECEIPT ↓</button>
+          </div>
+          <p id="formal-lab-status" role="status" aria-live="polite">Nothing has run. No verification is claimed.</p>
+          <p id="formal-lab-hash">No receipt issued.</p>
+          <p class="formal-lab-scope">FINITE CONFORMANCE IS NOT A FORMAL REFINEMENT PROOF. SHA-256 RECEIPTS ARE NOT EXECUTION ATTESTATION. New Lean and GNATprove results remain NOT_RUN until verified on actual toolchains.</p>
+          <p><a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/AUTOMATA-FORMAL.md">SPECIFICATION &amp; PROOF EVIDENCE ↗</a> · <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/scripts/verify_automata_browser_receipt.py">OFFLINE RECEIPT VERIFIER ↗</a></p>
         </div>
       </div>
     </section>

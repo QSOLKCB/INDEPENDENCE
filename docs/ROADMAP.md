@@ -53,8 +53,11 @@ v0.8 — Deterministic Property Generation and Counterexample Minimisation (impl
 - Python stdlib independent fixture/replay receipt checker, adversarial tests, browser dashboard, Pages and audit integration.
 - No general fuzzing claim, formal proof, arbitrary counterexample shrinking, or independent browser-execution attestation.
 
-v0.9 — Lean 4 + SPARK Ada proof laboratory (planned)
-- Human-reviewed specification, Lean kernel-checked theorems, SPARK reference and GNATprove obligations, documented semantic bridge.
+v0.9 — Lean 4 + SPARK Ada proof laboratory (new executable source and proof obligations)
+- Versioned AUTOMATA4/1 elementary cellular automaton spec, six new Lean 4 theorem candidates, and separate SPARK-mode Ada kernel/CLI.
+- Complete 4,096-case finite Python oracle, developer-only JavaScript real-source differential, fresh-compiled Ada comparison, exact vector SHA-256.
+- Strict pinned-toolchain Lean/axiom and GNATprove runners; fail closed and preserve NOT_RUN until real proof execution.
+- Existing historical Lean, SPARK and Ada/Python evidence remains unchanged; production refinement is still outstanding.
 
 v1.0 — Real-browser and deployment verification (planned)
 - Cross-browser journeys, CSP, accessibility, fault handling and deploy artifact checks.
@@ -92,3 +95,11 @@ v0.7.4 — Actual Ada compilation and independent Python/Ada differential (execu
 - Fail closed on missing compiler, compilation failure, extra CLI output, stderr, mismatch or timeout.
 - Produce local, non-attested build/runtime evidence and strict offline internal-consistency validation.
 - Real tool execution remains pending until a compatible GNAT environment runs the new command; do not infer a passed result from source or mocks.
+
+
+v0.9 consolidated browser addendum (implemented in PR)
+- Retain the single AUTOMATA4/1 width-four Lean/SPARK/Ada model and its canonical 4,096-vector corpus.
+- Ship a first-party browser experiment and SHA-256 receipt with independent Python verifier.
+- Bind JS evidence to production/comparator source hashes and parse Lean axiom logs exactly.
+- Use a portable direct .mjs Node invocation for optional developer comparisons.
+- Preserve original proof archives, no new required tooling or external browser dependencies.

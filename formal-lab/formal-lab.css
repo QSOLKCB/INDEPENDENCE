@@ -1,0 +1,10 @@
+.formal-lab-section { border-top: 1px solid rgba(255,255,255,.12); }
+.formal-lab-panel { border: 1px solid rgba(255,255,255,.22); border-radius: 8px;
+  padding: clamp(1rem, 3vw, 2rem); margin: 1.5rem 0; background: rgba(255,255,255,.035); }
+.formal-lab-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin: 1rem 0; }
+.formal-lab-actions button { cursor: pointer; padding: .85rem 1.2rem;
+  border: 1px solid currentColor; color: inherit; background: transparent;
+  border-radius: 4px; font: inherit; font-weight: 700; }
+.formal-lab-actions button:disabled { opacity: .4; cursor: not-allowed; }
+.formal-lab-panel p { max-width: 76ch; overflow-wrap: anywhere; }
+.formal-lab-scope { opacity: .85; }
