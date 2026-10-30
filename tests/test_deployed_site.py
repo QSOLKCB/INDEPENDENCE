@@ -87,7 +87,11 @@ class DeployObservationTests(unittest.TestCase):
                     forged["files"][".nojekyll"] = "0" * 64
                 path.write_text(json.dumps(forged))
                 with patch.object(remote, "fetch_bytes") as fetch:
-                    with self.assertRaises(remote.DeploymentError):
+                    # Missing marker inventory fails in the existing strict
+                    # bundle schema; changed marker digest fails in the
+                    # observation's manifest-envelope check. Both fail closed.
+                    with self.assertRaises((remote.DeploymentError,
+                                            bundle.BundleError)):
                         remote.verify_once(path)
                     fetch.assert_not_called()
         path.write_text(json.dumps(record))
