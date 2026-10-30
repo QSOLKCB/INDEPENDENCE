@@ -51,6 +51,51 @@ def checked_median(values):
     return statistics.median(values)
 
 
+
+MASK = 0xffffffff
+
+
+def _next_xorshift(state):
+    state ^= (state << 13) & MASK
+    state ^= state >> 17
+    state ^= (state << 5) & MASK
+    return state & MASK
+
+
+def phase_fingerprints(seed, count):
+    """Independent stdlib reimplementation of the fixed first-party JS fixture."""
+    state = seed
+    initial = []
+    for index in range(count):
+        state = _next_xorshift(state)
+        initial.append(("r" + str(index),
+                        "ITEM " + str(index) + " · " + str(state % 100000).zfill(5)))
+    update = [(name, label + " *" if index % 2 == 0 else label)
+              for index, (name, label) in enumerate(initial)]
+    reorder = list(reversed([value for index, value in enumerate(update) if index % 3 != 0]))
+    def fnv(rows):
+        digest = 0x811c9dc5
+        for name, label in rows:
+            for char in name + "\x00" + label + "\n":
+                digest = ((digest ^ ord(char)) * 0x01000193) & MASK
+        return format(digest, "08x")
+    return {"initial": fnv(initial), "update": fnv(update), "reorder": fnv(reorder)}
+
+
+def bootstrap_interval(differences, resamples=512):
+    """Cross-language match to the JavaScript xorshift32 resampling algorithm."""
+    state = 0x1a2b3c4d
+    medians = []
+    for _ in range(resamples):
+        draw = []
+        for _ in differences:
+            state = _next_xorshift(state)
+            draw.append(differences[state % len(differences)])
+        medians.append(statistics.median(draw))
+    medians.sort()
+    return [medians[math.floor((resamples - 1) * 0.025)],
+            medians[math.ceil((resamples - 1) * 0.975)]]
+
 def verify_receipt(envelope: dict) -> dict:
     if not isinstance(envelope, dict) or set(envelope) != {
         "format", "algorithm", "sha256", "payload_text"
@@ -83,6 +128,8 @@ def verify_receipt(envelope: dict) -> dict:
         {"id": "keyed", "label": "Local keyed adapter", "kind": "illustrative"},
     ]:
         raise ReceiptError("unexpected candidates")
+    if report.get("phase_fingerprints") != phase_fingerprints(config["seed"], config["count"]):
+        raise ReceiptError("fixture fingerprint mismatch")
     times = report.get("samples_ms")
     if not isinstance(times, list) or len(times) != config["trials"]:
         raise ReceiptError("incorrect paired trial count")
@@ -119,6 +166,9 @@ def verify_receipt(envelope: dict) -> dict:
             type(v) not in (int, float) or not math.isfinite(v) for v in interval
         ) or interval[0] > interval[1]:
             raise ReceiptError("invalid bootstrap interval")
+        for actual, expected in zip(interval, bootstrap_interval(differences)):
+            if not math.isclose(actual, expected, rel_tol=1e-12, abs_tol=1e-10):
+                raise ReceiptError("bootstrap interval mismatch: " + phase)
     size = report.get("adapter_source_bytes")
     if not isinstance(size, dict) or set(size) != {"direct", "keyed"} or any(
         type(v) is not int or v <= 0 for v in size.values()
