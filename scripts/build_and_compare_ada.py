@@ -97,8 +97,9 @@ def copy_verified_sources(destination: Path, root: Path = ROOT) -> dict[str, str
 
 def execute(root: Path = ROOT, sample_count: int = 128, full: bool = False,
             seed: int = SEED, build_timeout: int = 180) -> dict:
-    count = len(list(finite_cases())) if full else sample_count
-    if (type(count) is not int or count < 7 or count > len(list(finite_cases()))
+    finite_domain_size = len(list(finite_cases()))
+    count = finite_domain_size if full else sample_count
+    if (type(count) is not int or count < 7 or count > finite_domain_size
             or type(seed) is not int or not 0 <= seed <= 0xffffffff):
         raise ExecutionError("INPUT", "invalid Ada sample count or seed")
     if type(build_timeout) is not int or not 10 <= build_timeout <= 900:
@@ -145,7 +146,7 @@ def execute(root: Path = ROOT, sample_count: int = 128, full: bool = False,
             "build_output_sha256": hashlib.sha256(build_output.encode("utf-8")).hexdigest(),
             "binary_sha256": binary_sha,
             "seed": seed,
-            "mode": "FULL_FINITE_SET" if count == len(list(finite_cases())) else "SEEDED_SAMPLE",
+            "mode": "FULL_FINITE_SET" if count == finite_domain_size else "SEEDED_SAMPLE",
             "finite_cases_checked": count,
             "rejected_fixture_checked": len(rejected_cases()),
             "lexical_invalid_checked": len(lexical_cases()),
