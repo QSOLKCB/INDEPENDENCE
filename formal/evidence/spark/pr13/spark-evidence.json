@@ -1,0 +1,29 @@
+{
+  "ada_contracts": "GNATPROVE_REPORTED_DISCHARGED",
+  "command": [
+    "gnatprove",
+    "-P",
+    "kernel.gpr",
+    "-u",
+    "reference_kernel.adb",
+    "--mode=all",
+    "--checks-as-errors=on",
+    "--warnings=error",
+    "--report=all",
+    "--level=2"
+  ],
+  "exit_code": 0,
+  "files_sha256": {
+    "cli.gpr": "b92a85e592d792c740e1b16d9a01c3b441a83cdb5d6420e240c993f1a97e8309",
+    "kernel.gpr": "bd71f6edab8d5f2ff97c686f3c72600e532d28c25c8c07f982879f2b2ca7f312",
+    "reference_cli.adb": "937c51b184e8173f90dd71d0df80797c25f3a88b20ea86910f1ee179c483d83a",
+    "reference_kernel.adb": "22cb09b6df9e0b5a93406e6746b895205e7b465381ebcd4d61d267b6cf289334",
+    "reference_kernel.ads": "a1569a35c2e924243f8d9cc2a3c83a83391e263f1c38a5a280f1b056984408fe"
+  },
+  "note": "Only the analyzed kernel and stated assumptions are in scope",
+  "proof_output": "Phase 1 of 3: generation of data representation information ...\nPhase 2 of 3: generation of Global contracts ...\nPhase 3 of 3: flow analysis and proof ...\nSuccess: all checks proved (21 checks).\nSummary logged in /home/trent/INDEPENDENCE/formal/spark/obj/gnatprove/gnatprove.out\n\n info: division check proved\n--> reference_kernel.adb:11:45\n\n info: range check proved\n--> reference_kernel.adb:11:45\n\n info: division check proved\n--> reference_kernel.adb:17:45\n\n info: implicit aspect Always_Terminates on \"Address\" has been proved, subprogram will terminate\n--> reference_kernel.ads:11:13\n\n info: postcondition proved\n--> reference_kernel.ads:15:15\n\n info: implicit aspect Always_Terminates on \"Decode_Row\" has been proved, subprogram will terminate\n--> reference_kernel.ads:18:13\n\n info: postcondition proved\n--> reference_kernel.ads:22:15\n\n info: division check proved\n--> reference_kernel.ads:23:29\n\n info: implicit aspect Always_Terminates on \"Decode_Column\" has been proved, subprogram will terminate\n--> reference_kernel.ads:25:13\n\n info: postcondition proved\n--> reference_kernel.ads:29:15\n\n info: division check proved\n--> reference_kernel.ads:30:29\n\n info: implicit aspect Always_Terminates on \"Parity_Add\" has been proved, subprogram will terminate\n--> reference_kernel.ads:32:13\n\n info: postcondition proved\n--> reference_kernel.ads:33:17\n\n info: implicit aspect Always_Terminates on \"Parity_Mul\" has been proved, subprogram will terminate\n--> reference_kernel.ads:35:13\n\n info: postcondition proved\n--> reference_kernel.ads:36:17\n\n info: implicit aspect Always_Terminates on \"Phase_Add\" has been proved, subprogram will terminate\n--> reference_kernel.ads:38:13\n\n info: postcondition proved\n--> reference_kernel.ads:39:17\n\n info: implicit aspect Always_Terminates on \"Valid_Edge\" has been proved, subprogram will terminate\n--> reference_kernel.ads:41:13\n\n info: postcondition proved\n--> reference_kernel.ads:43:17\n\n info: implicit aspect Always_Terminates on \"Edge_Step\" has been proved, subprogram will terminate\n--> reference_kernel.ads:46:13\n\n info: postcondition proved\n--> reference_kernel.ads:51:15\n",
+  "proof_output_sha256": "834ff4418b98e36e011900c7c5a6897776d2db5f12d7874011a64a474a268fab",
+  "spec": "INDEPENDENCE-KERNEL-SPEC/1",
+  "static_contracts": "INSPECTED_ONLY",
+  "tool_version": "FSF 16.1.0\nWhy3 for gnatprove version 1.8.2+git\n/home/trent/opt/edgewalk-spark-toolchain/libexec/spark/bin/alt-ergo: Alt-Ergo version 2.6.1\n/home/trent/opt/edgewalk-spark-toolchain/libexec/spark/bin/cvc5: This is cvc5 version 1.3.2 [git 86cecd8 on branch HEAD]\n/home/trent/opt/edgewalk-spark-toolchain/libexec/spark/bin/z3: Z3 version 4.15.4 - 64 bit"
+}
