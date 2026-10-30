@@ -105,6 +105,18 @@ class PropertyLabTests(unittest.TestCase):
             with self.subTest(raw=raw), self.assertRaises(prop.ReceiptError):
                 prop.read_json(raw)
 
+    def test_generated_transition_checks_exact_typed_array_for_mutation(self):
+        core = (ROOT / 'property/core.js').read_text(encoding='utf-8')
+        browser_tests = (ROOT / 'property/tests.js').read_text(encoding='utf-8')
+        self.assertIn('export function checkGeneratedTransition(input, transition = evolve)', core)
+        self.assertIn('const source = Uint8Array.from(bits);', core)
+        self.assertIn('const before = source.slice();', core)
+        self.assertIn('const actual = transition(source, input.rule);', core)
+        self.assertIn('if (!equal(source, before))', core)
+        self.assertIn('checkGeneratedTransition(cases[i]);', core)
+        self.assertIn('row.fill(255)', browser_tests)
+        self.assertIn('correct output with mutated typed input is rejected', browser_tests)
+
     def test_core_and_ui_keep_first_party_invariants(self):
         core = (ROOT / 'property/core.js').read_text(encoding='utf-8')
         ui = (ROOT / 'property/ui.js').read_text(encoding='utf-8')

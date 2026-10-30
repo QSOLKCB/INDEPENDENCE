@@ -134,15 +134,30 @@ export function ownershipWitness() {
     guarded_status: 'DEFENSIVE_COPY_CONFIRMED'};
 }
 
+// Check the *actual* typed array handed to the transition. Comparing a
+// separate bits array would miss a candidate that returns the right result
+// while clobbering its Uint8Array argument.
+export function checkGeneratedTransition(input, transition = evolve) {
+  const bits = bitsOf(input);
+  const source = Uint8Array.from(bits);
+  const before = source.slice();
+  const expected = transitionOracle(bits, input.rule);
+  const actual = transition(source, input.rule);
+  if (!actual || !equal(expected, actual))
+    throw new Error('transition output differs from independent oracle');
+  if (!equal(source, before))
+    throw new Error('transition mutated its typed-array source input');
+  return true;
+}
+
 export function runPropertyLab(config = DEFAULT_CONFIG) {
   const checked = validateConfig(config);
   const cases = makeCases(checked);
   for (let i = 0; i < cases.length; i += 1) {
-    const input = cases[i], bits = bitsOf(input), before = bits.join(',');
-    const expected = transitionOracle(bits, input.rule);
-    const actual = [...evolve(Uint8Array.from(bits), input.rule)];
-    if (!equal(expected, actual) || before !== bits.join(','))
-      throw new Error('deployed evolve mismatch at generated case ' + i);
+    try { checkGeneratedTransition(cases[i]); }
+    catch (error) {
+      throw new Error('deployed evolve mismatch at generated case ' + i + ': ' + error.message);
+    }
   }
   // A pinned probe guarantees that the intentionally defective candidate is
   // observable even for a one-case run; randomized cases never fake discovery.

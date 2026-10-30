@@ -169,7 +169,7 @@ export function runTests() {
         r.limitations.length===3;
     }],
     ['property lab reproducible native assertions', () => runPropertySelfTests().every(r => r.passed)],
-    ['property lab has thirteen actual assertions', () => runPropertySelfTests().length === 13],
+    ['property lab has sixteen actual assertions', () => runPropertySelfTests().length === 16],
     ['proof contract IDs are unique and ordered', () =>
       CONTRACT_IDS.length===5 && new Set(CONTRACT_IDS).size===5 &&
       CONTRACT_IDS[4]==='FINGERPRINT-IMMUTABILITY']

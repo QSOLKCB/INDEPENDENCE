@@ -1,6 +1,6 @@
 import {makeCases, runPropertyLab, minimizeBoundaryWitness, mismatches, guardedSnapshot,
-        transitionOracle, injectedWraparoundStep, validateConfig} from './core.js';
-import {buildAutomaton, fnv1a} from '../lab/core.js';
+        transitionOracle, injectedWraparoundStep, validateConfig, checkGeneratedTransition} from './core.js';
+import {buildAutomaton, fnv1a, evolve} from '../lab/core.js';
 
 // Native browser assertions. No framework or test-time network activity.
 export function runPropertySelfTests() {
@@ -24,6 +24,29 @@ export function runPropertySelfTests() {
     ['candidate may return a Uint8Array like the real function', () =>
       !mismatches({width: 1, rule: 4, mask: 1}, (bits, rule) =>
         new Uint8Array(transitionOracle(bits, rule)))],
+    ['actual evolve preserves its typed input bytes', () =>
+      checkGeneratedTransition({width: 5, rule: 90, mask: 17}) === true],
+    ['correct output with mutated typed input is rejected', () => {
+      const input = {width: 3, rule: 90, mask: 1};
+      try {
+        checkGeneratedTransition(input, (row, rule) => {
+          const correct = evolve(row, rule);
+          row.fill(255); // Codex P2: deliberately corrupt the same input object.
+          return correct;
+        });
+        return false;
+      } catch (error) {
+        return error instanceof Error && error.message.includes('mutated its typed-array source input');
+      }
+    }],
+    ['incorrect output without mutation is still rejected', () => {
+      try {
+        checkGeneratedTransition({width: 3, rule: 90, mask: 1}, row => new Uint8Array(row.length));
+        return false;
+      } catch (error) {
+        return error instanceof Error && error.message.includes('independent oracle');
+      }
+    }],
     ['known zero-boundary oracle result', () =>
       String(transitionOracle([0, 0, 1, 0, 0], 90)) === '0,1,0,1,0'],
     ['deliberate wraparound mutant has a real mismatch', () =>
