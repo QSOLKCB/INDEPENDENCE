@@ -42,3 +42,7 @@ Proof statuses belong to exact versioned artefacts. Human review and a fresh Git
 ## v0.7.1 / v0.7.2 accelerated foundation
 
 The scoped SPARK/Ada kernel precedes the larger v0.9 Lean+SPARK proof laboratory. v0.7.1 introduces contracts and the optional actual GNATprove runner but never asserts discharged proofs without recorded output. v0.7.2 will introduce an independent Python oracle, bounded finite test vectors and an Ada CLI conformance bridge, reported separately from mathematical and Ada contract proof. The initial implementation deliberately does NOT prove CRT, monomial orders, quasicrystal adjacency, or production Python/JS.
+
+## v0.7.2 — Conformance bridge, independent of proofs
+
+A new Python reference and separately coded oracle now enable practical exhaustive finite checks. Ada CLI differential comparisons remain an optional **actual execution** gate when a GNAT binary exists. No Lean mathematical theorem, GNATprove contract or production Python/JS correctness claim is inferred from the reference comparison. Versioned receipts retain pending fields for the v1.1.0 formalization.

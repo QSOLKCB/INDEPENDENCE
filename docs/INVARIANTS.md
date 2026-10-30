@@ -65,3 +65,9 @@ The browser test button runs a separate native-JavaScript suite.
 47. Explicit modular integer input checking must occur before converting CLI parameters to Ada mod-2 or mod-3 types; invalid inputs must be rejected, not silently wrapped.
 48. Keep GNATprove, GNAT, Ada compiler and CLI out of the GitHub Pages runtime and default Python-only deployment gate.
 49. Python and JavaScript remain separate, unresolved conformance obligations until differential execution evidence exists.
+
+50. Proof-Conformance Bridge version 1 treats the shared kernel specification, not Ada or Python source, as the authority. No Ada proof implies Python or JavaScript correctness by association.
+51. Python conformance must compare a distinct implementation with an independently constructed oracle over exactly declared finite input domains; invalid inputs must be tested separately.
+52. The optional Ada CLI must be genuinely executed and checked on recorded inputs. When no executable/toolchain exists, the only permitted result is NOT_RUN; a supplied matching executable is marked UNATTESTED without binary provenance.
+53. Lean mathematical theorem status, GNATprove contract status, Python conformance and Ada runtime agreement are independent receipt fields. Unproved or unexecuted obligations remain unresolved even if other fields pass.
+54. Source/spec hashes bind local bytes but neither a checksum nor a Python verifier authenticates real execution. Never report a successful application-wide Python or JavaScript proof from reference fixtures.

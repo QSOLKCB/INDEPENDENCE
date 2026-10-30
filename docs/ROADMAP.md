@@ -69,3 +69,9 @@ v0.7.2 — Proof-Conformance Bridge (stacked phase)
 - Exhaustive practical finite cases, independent Python oracle and optional executed Ada CLI comparison.
 - Split receipt statuses for mathematical proof, Ada contracts, tested Python and unresolved source-execution gaps.
 - No Ada compilation means NOT_RUN Ada differential conformance, never simulated proof success.
+
+v0.7.2 — Proof-Conformance Bridge (stacked PR)
+- Versioned kernel-v1 specification as authority: independent Python implementation and separately coded arithmetic oracle.
+- Exhaustive practical 8,881-case finite sweep plus 16 invalid inputs.
+- Optional real Ada CLI comparisons using deterministic selections; no Ada compiler means NOT_RUN, not fabricated agreement.
+- SHA-256 receipts distinguish mathematical proof, Ada contract discharge, Python tests, Ada runtime comparison and unresolved obligations.

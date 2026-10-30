@@ -165,3 +165,18 @@ The kernel specifies preconditions and postconditions. **No GNATprove execution 
     python3 scripts/check_spark_reference.py --require-proved
 
 The strict command fails unless actual GNATprove analysis reports discharged obligations. GNAT/GNATprove are optional development-only tools, never site runtime dependencies. See [docs/SPARK-REFERENCE.md](docs/SPARK-REFERENCE.md).
+
+## v0.7.2 — Proof-Conformance Bridge
+
+A separate, versioned conformance layer tests a newly written independent Python reference against the same kernel-v1 semantics used by the v0.7.1 SPARK/Ada kernel. **An Ada proof does not automatically prove Python correct.**
+
+The bridge executes 8,881 valid finite-domain cases and 16 invalid inputs against an independently coded Python oracle. It can optionally compare real Ada CLI output for a deterministic, operation-covering sample, or the whole domain if Ada tools are available.
+
+    python3 scripts/run_kernel_conformance.py --receipt conformance.json
+    python3 scripts/verify_kernel_receipt.py conformance.json
+
+To compare an actually built Ada CLI, supply the executable:
+
+    python3 scripts/run_kernel_conformance.py --ada-cli formal/spark/bin/reference_cli --ada-cases 128 --receipt ada-comparison.json
+
+The receipt distinctly reports Lean mathematical proofs, Ada contract verification, tested Python conformance, Ada CLI comparisons and unresolved obligations. In the source author's execution environment, GNAT/GNATprove were unavailable, so Ada contracts and differential comparison remain NOT_RUN. Matching a supplied executable is explicitly UNATTESTED; neither Python application-wide correctness nor production JavaScript is established. Details: [docs/PROOF-CONFORMANCE.md](docs/PROOF-CONFORMANCE.md).
