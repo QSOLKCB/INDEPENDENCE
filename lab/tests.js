@@ -77,7 +77,7 @@ export function runTests() {
     }],
     ['museum escape and nonfinite guards', () =>
       encodeHtml('<>&"\x27') === '&lt;&gt;&amp;&quot;&#39;' &&
-      !finiteJSON({deep:[1,{n:Infinity}]}) && finiteJSON({deep:[1,{n:3}]}))],
+      !finiteJSON({deep:[1,{n:Infinity}]}) && finiteJSON({deep:[1,{n:3}]})],
     ['museum report rejects failed results', () => {
       const results=runAll();
       results[0].passed=false;
