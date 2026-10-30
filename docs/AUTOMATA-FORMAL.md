@@ -58,4 +58,21 @@ For each individual optional stage, a missing tool causes `NOT_RUN` and a nonzer
 
 **A Lean model proof does not prove Ada, Python or production JavaScript; SPARK postconditions are not proven until real GNATprove output discharges all relevant checks; and 4,096 exact differential matches are not an executable refinement theorem.** No stage independently attests its own execution or compiler provenance. The Ada CLI's parsing and I/O remain outside SPARK. This model does not claim general cellular automaton widths, arbitrary Unicode/JSON inputs, Penrose geometry, or full application correctness.
 
+## Verify captured tool output offline
+
+The stdlib `scripts/verify_automata_evidence.py` checks exact source/spec identity,
+the finite vector corpus, separate stage status schemas, recorded output SHA-256,
+positive Lean theorem-by-theorem axiom declarations, positive GNATprove check
+count and explicit unresolved-obligation rejection. It validates *internal
+consistency*, **not** independently witnessed execution.
+
+```bash
+python3 scripts/verify_automata_evidence.py automata4-static.json
+python3 scripts/verify_automata_evidence.py automata4-evidence.json
+```
+
+Requiring a new actual proof still requires executing `--run-lean`,
+`--run-spark` or `--require-all` on a trusted local toolchain; a forged
+self-consistent report is possible in principle.
+
 The new proof/status vocabulary applies only to this `AUTOMATA4/1` revision and must not rewrite earlier evidence or existing proof-contract UI classifications.
