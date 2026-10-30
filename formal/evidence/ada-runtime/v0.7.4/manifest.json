@@ -1,0 +1,82 @@
+{
+  "protocol": "INDEPENDENCE-ORIGINAL-ADA-EVIDENCE/1",
+  "publication_target": "Zenodo v1.1.0 (planned, not published)",
+  "package": {
+    "uploaded_name": "INDEPENDENCE-proof-evidence.zip",
+    "sha256": "429b946d083c2b0562450704f924eb3370e5c9a9c62eb81ef5ac90d41a5e2256",
+    "provided_checksum_file_match": true,
+    "zip_crc_validation": "PASS",
+    "zip_entries": 23,
+    "zip_bytes": 23238,
+    "zip_retained_in_git": false
+  },
+  "provenance": {
+    "acquisition": "DIRECT_USER_UPLOADED_ORIGINAL_ZIP",
+    "original_runtime_json_bytes": "GIT_BLOBS_EXACTLY_MATCH_ZIP_ENTRIES",
+    "local_execution_reported_date": "2026-10-31",
+    "historical_gnatprove_source_commit": "9900e57f2283c534815657dd6c079d0e966715f4",
+    "pr15_sample_checkout": "554627bdd8813b6106624f5e435659fbabb5f9c5",
+    "pr15_full_checkout": "765e00d7f6a361b0ee3744157c2a35c9dfc7ae59",
+    "independently_attested_execution": false
+  },
+  "files": [
+    {
+      "path": "formal/evidence/ada-runtime/v0.7.4/ada-runtime-evidence.json",
+      "original_zip_member": "ada-runtime-evidence.json",
+      "sha256": "78ce9e40d221634391a9cf6a982848521369efa0bd9926459ec028a649e87aa6",
+      "git_blob_sha1": "7baab24fc65a12655288666272257cf655d5b9a6",
+      "size_bytes": 5118,
+      "mode": "SEEDED_SAMPLE",
+      "reported_ada_processes": 150,
+      "valid_finite_cases": 128,
+      "invalid_fixtures": 16,
+      "lexical_invalid": 6,
+      "vector_sha256": "24155e14fd2727781648bcd43aff8f13f33b0753f9c2a0a07ecbdc19b28a5ea5",
+      "reported_checkout": "554627bdd8813b6106624f5e435659fbabb5f9c5"
+    },
+    {
+      "path": "formal/evidence/ada-runtime/v0.7.4/ada-runtime-evidence-full.json",
+      "original_zip_member": "ada-runtime-evidence-full.json",
+      "sha256": "3dff931e123f55f0b3e7e8f3a8247d381d06cfbbb1135dc3fb637b03eba80b0a",
+      "git_blob_sha1": "242503aef78c6e73558a16a487abf80e098eadb5",
+      "size_bytes": 5123,
+      "mode": "FULL_FINITE_SET",
+      "reported_ada_processes": 8903,
+      "valid_finite_cases": 8881,
+      "invalid_fixtures": 16,
+      "lexical_invalid": 6,
+      "vector_sha256": "2d0c6fb5763d637b7ce7ef6750ff68f9dac7e954b87ee6e49015bbabf5f256bf",
+      "reported_checkout": "765e00d7f6a361b0ee3744157c2a35c9dfc7ae59"
+    }
+  ],
+  "existing_records": [
+    {
+      "path": "formal/evidence/spark/pr13/spark-evidence.json",
+      "original_zip_member": "spark-evidence.json",
+      "sha256": "cd3c4ec7986e391ab9627d69069142b86bdf60bc6f4e4aced1d8622093cd1eba",
+      "git_blob_sha1": "b3689f185c7286cf0be2f2b637fb823ed063bc19",
+      "original_zip_bytes_match_existing_git": true,
+      "gnatprove_checks_reported": 21
+    },
+    {
+      "path": "formal/evidence/lean/v0.7.3/lean-evidence.json",
+      "original_zip_member": "formal/evidence/lean/v0.7.3/lean-evidence.json",
+      "sha256": "ef3edf6cbfb7ac0b02ca6c30e3c9bfd3b21e89382f3ec0436f31093c5e4355a7",
+      "git_blob_sha1": "43024889bbd10b812cc7221987b610eff901409b",
+      "original_file_provenance": "ALREADY_ARCHIVED_TRANSCRIPT_RECONSTRUCTION"
+    }
+  ],
+  "comparison": {
+    "compiled_binary_sha256_in_both": "9d74484857e3937586003a0dea2a648704c58e039ad6812b8a75167b1169fddf",
+    "compiler_build_output_sha256": "57a6e70e47972383c6d2c3cd69f68c25b7220eb7fba938763277c4f56981cb64",
+    "source_spec_sha256": "a8cdcf3dccc4f4b91173069528935db02a6dac14681f60a47b10174cdfa451e0",
+    "reported_python_unit_tests": 233
+  },
+  "limitations": [
+    "User-provided JSON and ZIP bytes are verified, but Ada compiler execution was not independently attested.",
+    "The 8,903 Ada processes exhaust only the declared finite vectors and invalid fixtures, not arbitrary inputs or production application code.",
+    "GNATprove's 21 reported checks cover the Ada reference kernel, not CLI parsing or I/O.",
+    "The Lean ZIP member was an earlier archived transcript reconstruction; its provenance is unchanged.",
+    "The original binary ZIP is identified by SHA-256 but is not stored in the Git repository."
+  ]
+}

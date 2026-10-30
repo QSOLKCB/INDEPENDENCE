@@ -228,3 +228,11 @@ python3 scripts/verify_ada_runtime_evidence.py ada-runtime-evidence.json
 ~~~
 
 See [docs/ADA-RUNTIME-EXECUTION.md](docs/ADA-RUNTIME-EXECUTION.md). The archive verifier does not independently authenticate build execution, and Ada/Lean proofs do not establish production Python/JavaScript correctness.
+
+## Original v0.7.4 runtime evidence preserved
+
+The user uploaded the **original ZIP and checksum** following the actual Ada/Python runs. Both original JSON runtime receipts are now preserved byte-identically under [formal/evidence/ada-runtime/v0.7.4](formal/evidence/ada-runtime/v0.7.4), with 150-case and full 8,903-case results, their exact file SHA-256, Git blob IDs, reported Ada binary digest, historical Git revisions and a reproducibility/provenance manifest. The uploaded ZIP checksum is `429b946d083c2b0562450704f924eb3370e5c9a9c62eb81ef5ac90d41a5e2256`; **the ZIP itself is not stored in this Git repository**. The separately uploaded GNATprove JSON matches the already archived SPARK report byte-for-byte; the Lean ZIP member remains the previously transcript-reconstructed archive file.
+
+    python3 scripts/verify_original_ada_evidence.py
+
+File-byte identity and internal consistency are now established; independent authentication of local compiler execution is **not** asserted. The full set is finite, not a general formal proof of CLI or application behaviour.

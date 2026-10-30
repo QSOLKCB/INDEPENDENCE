@@ -1,0 +1,47 @@
+{
+  "ada_processes_checked": 8903,
+  "binary_sha256": "9d74484857e3937586003a0dea2a648704c58e039ad6812b8a75167b1169fddf",
+  "bridge_receipt_verification": "SELF_CONSISTENT_ONLY",
+  "build_command": [
+    "gprbuild",
+    "-P",
+    "cli.gpr",
+    "-p",
+    "-f"
+  ],
+  "build_exit_code": 0,
+  "build_output": "Setup\n   [mkdir]        object directory for project Kernel_CLI\n   [mkdir]        exec directory for project Kernel_CLI\nCompile\n   [Ada]          reference_cli.adb\n   [Ada]          reference_kernel.adb\nBind\n   [gprbind]      reference_cli.bexch\n   [Ada]          reference_cli.ali\nLink\n   [link]         reference_cli.adb\n\ncli.gpr:1:20: warning: file name does not match project name, should be \"kernel_cli.gpr\"\n",
+  "build_output_sha256": "57a6e70e47972383c6d2c3cd69f68c25b7220eb7fba938763277c4f56981cb64",
+  "finite_cases_checked": 8881,
+  "historical_source_commit": "9900e57f2283c534815657dd6c079d0e966715f4",
+  "independent_execution_attestation": false,
+  "lexical_invalid_checked": 6,
+  "limitations": [
+    "Local CLI execution and binary hashing do not independently attest the compiler, host, or run.",
+    "The archived GNATprove result covers the SPARK kernel only; CLI input handling is unproved.",
+    "Differential agreement covers the specified finite vectors, not arbitrary inputs or production JS.",
+    "Lean mathematical results and SPARK contracts are separate from Python/Ada runtime equivalence."
+  ],
+  "mode": "FULL_FINITE_SET",
+  "protocol": "ADA-PYTHON-EXECUTION/1",
+  "python_bridge_receipt": {
+    "algorithm": "SHA-256/UTF-8",
+    "format": "PROOF-CONFORMANCE-RECEIPT/1",
+    "payload_text": "{\n  \"protocol\": \"PROOF-CONFORMANCE-BRIDGE/1\",\n  \"schema_version\": 1,\n  \"spec_protocol\": \"INDEPENDENCE-KERNEL-SPEC/1\",\n  \"spec_sha256\": \"a8cdcf3dccc4f4b91173069528935db02a6dac14681f60a47b10174cdfa451e0\",\n  \"sources_sha256\": {\n    \"python\": \"7298a9a8f7f09997f0ffeaf59261603100baf4c86b917da030810a9d28bf54be\",\n    \"ada_spec\": \"a1569a35c2e924243f8d9cc2a3c83a83391e263f1c38a5a280f1b056984408fe\",\n    \"ada_body\": \"22cb09b6df9e0b5a93406e6746b895205e7b465381ebcd4d61d267b6cf289334\"\n  },\n  \"seed\": 314159,\n  \"evidence\": {\n    \"mathematical_proof\": {\n      \"status\": \"NOT_RUN\",\n      \"tool\": \"Lean 4\"\n    },\n    \"ada_contracts\": {\n      \"status\": \"NOT_RUN\",\n      \"tool\": \"GNATprove\"\n    },\n    \"python_conformance\": {\n      \"status\": \"FINITE_EXHAUSTIVE_TESTED\",\n      \"finite_cases\": 8881,\n      \"rejected_cases\": 16,\n      \"operations\": {\n        \"ADDR\": 2180,\n        \"DECODE\": 2178,\n        \"EDGE_STEP\": 676,\n        \"EDGE_VALID\": 3841,\n        \"PARITY_ADD\": 6,\n        \"PARITY_MUL\": 5,\n        \"PHASE_ADD\": 10,\n        \"UNKNOWN\": 1\n      }\n    },\n    \"ada_cli_conformance\": {\n      \"status\": \"ADA_CLI_TESTED_UNATTESTED\",\n      \"cases\": 8903,\n      \"vectors_sha256\": \"2d0c6fb5763d637b7ce7ef6750ff68f9dac7e954b87ee6e49015bbabf5f256bf\",\n      \"binary_sha256\": \"9d74484857e3937586003a0dea2a648704c58e039ad6812b8a75167b1169fddf\",\n      \"note\": \"CLI output matched oracle; binary provenance and SPARK compilation not independently attested\"\n    }\n  },\n  \"unresolved\": [\n    \"Lean mathematical theorems NOT_RUN\",\n    \"GNATprove Ada contracts NOT_RUN\",\n    \"Existing application Python/JavaScript conformance NOT_ESTABLISHED\",\n    \"Ada CLI execution matches selected inputs but provenance not attested\"\n  ],\n  \"limitations\": [\n    \"Finite Python results compare a new independent kernel, not all existing Python application logic.\",\n    \"No checked Lean theorem or discharged GNATprove contract is asserted.\",\n    \"A self-hashed receipt proves bytes match reported data, not external execution authenticity.\",\n    \"Endpoint validity does not prove Penrose tile adjacency or CRT address bijection.\"\n  ]\n}",
+    "sha256": "60d5f1b0bd833498f61cbf9b9cafc4d7dc3de11115c181474f11d9334fe9c066"
+  },
+  "rejected_fixture_checked": 16,
+  "seed": 314159,
+  "source_sha256": {
+    "cli.gpr": "b92a85e592d792c740e1b16d9a01c3b441a83cdb5d6420e240c993f1a97e8309",
+    "reference_cli.adb": "937c51b184e8173f90dd71d0df80797c25f3a88b20ea86910f1ee179c483d83a",
+    "reference_kernel.adb": "22cb09b6df9e0b5a93406e6746b895205e7b465381ebcd4d61d267b6cf289334",
+    "reference_kernel.ads": "a1569a35c2e924243f8d9cc2a3c83a83391e263f1c38a5a280f1b056984408fe"
+  },
+  "status": "LOCAL_BUILD_AND_DIFFERENTIAL_PASSED_UNATTESTED",
+  "tool_versions": {
+    "gnatmake": "GNATMAKE 16.1.0\nCopyright (C) 1995-2025, Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+    "gprbuild": "GPRBUILD 26.0.0 (2026-04-15) (x86_64-pc-linux-gnu)\nCopyright (C) 2004-2026, AdaCore\nThis is free software; see the source for copying conditions.\nThere is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+  },
+  "vectors_sha256": "2d0c6fb5763d637b7ce7ef6750ff68f9dac7e954b87ee6e49015bbabf5f256bf"
+}
