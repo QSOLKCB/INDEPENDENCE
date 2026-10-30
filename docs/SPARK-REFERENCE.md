@@ -53,3 +53,26 @@ unproved until real tool output is supplied.
 The next phase, v0.7.2, adds a separate Python/Ada conformance bridge using
 fixed versioned input/output semantics. Ada proof is not evidence that Python
 or JavaScript conforms.
+
+## Real-toolchain GPR project syntax correction
+
+An initial real GNATprove invocation stopped before any Ada contracts were
+analysed because the `Object_Dir` project attribute was written as a
+one-element list. GPR defines `Object_Dir` and `Exec_Dir` as scalar
+directory attributes, unlike list-valued `Source_Dirs` and `Main`.
+
+Both project files now use quoted scalar directory names. They also request
+`Create_Missing_Dirs` for the generated `obj` and `bin` directories.
+The offline source gate and regression tests check these exact declarations
+before the actual prover runs. These checks are limited GPR syntax guards,
+**not** substitutes for GPRbuild or GNATprove execution.
+
+The previously recorded `FAILED_OR_UNPROVED` result was a project-parser
+error, not a discharged or failed mathematical proof obligation. On a trusted
+toolchain, rerun from the repository root:
+
+    export PATH="$HOME/opt/edgewalk-spark-toolchain/bin:$PATH"
+    python3 scripts/check_spark_reference.py --require-proved --output spark-evidence.json
+
+Do not mark Ada contracts proved until that command's actual GNATprove
+output reports the proof outcome and all obligations are resolved.

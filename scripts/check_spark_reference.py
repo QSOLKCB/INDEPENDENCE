@@ -43,6 +43,20 @@ def inspect_sources(root: Path = ROOT):
                 raise ValueError("unreviewed proof exemption in " + name)
     if "Pre => Valid_Edge" not in src["reference_kernel.ads"].decode():
         raise ValueError("edge step must require validated endpoints")
+    # GPR single-valued attributes must use a quoted scalar, never ("list").
+    # Reject this project grammar error before optionally invoking GNATprove.
+    for project, attributes in (
+        ("kernel.gpr", {"Object_Dir": "obj"}),
+        ("cli.gpr", {"Object_Dir": "obj", "Exec_Dir": "bin"}),
+    ):
+        project_text = src[project].decode("utf-8")
+        for attribute, directory in attributes.items():
+            clause = f'for {attribute} use "{directory}";'
+            if project_text.count(clause) != 1:
+                raise ValueError("GPR single-valued directory attribute invalid: " +
+                                 project + ": " + attribute)
+        if project_text.count('for Create_Missing_Dirs use "True";') != 1:
+            raise ValueError("GPR missing-directory creation flag absent: " + project)
     return {"spec": data["protocol"], "files_sha256": {
         key: hashlib.sha256(value).hexdigest() for key, value in sorted(src.items())
     }, "static_contracts": "INSPECTED_ONLY", "ada_contracts": "NOT_RUN"}
