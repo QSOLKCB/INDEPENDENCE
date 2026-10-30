@@ -135,7 +135,10 @@ class MuseumTests(unittest.TestCase):
         audit = (ROOT / "scripts/audit.py").read_text(encoding="utf-8")
         self.assertIn('id="museum"', html)
         self.assertIn("mountMuseum();", js)
-        self.assertIn('cp museum/core.js museum/ui.js museum/museum.css "$site/museum/"', workflow)
+        from site_bundle import SITE_FILES
+        self.assertIn('python3 scripts/site_bundle.py stage --source .', workflow)
+        for filename in ("museum/core.js", "museum/ui.js", "museum/museum.css"):
+            self.assertIn(filename, SITE_FILES)
         for name in ("museum/core.js", "museum/ui.js", "museum/museum.css"):
             self.assertTrue((ROOT / name).is_file())
             self.assertIn('"' + name + '"', audit)

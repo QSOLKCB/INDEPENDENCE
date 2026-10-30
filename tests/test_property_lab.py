@@ -129,7 +129,10 @@ class PropertyLabTests(unittest.TestCase):
         self.assertIn('textContent', ui)
         self.assertIn('id="property-lab"', page)
         self.assertIn('mountPropertyLab();', app)
-        self.assertIn('cp property/core.js property/tests.js property/ui.js property/property.css "$site/property/"', deploy)
+        from site_bundle import SITE_FILES
+        self.assertIn('python3 scripts/site_bundle.py stage --source .', deploy)
+        for filename in ("property/core.js","property/tests.js","property/ui.js","property/property.css"):
+            self.assertIn(filename, SITE_FILES)
         for filename in ('property/core.js','property/tests.js','property/ui.js','property/property.css'):
             self.assertIn('"'+filename+'"', audit)
 

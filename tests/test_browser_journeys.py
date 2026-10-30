@@ -12,7 +12,7 @@ import run_browser_journeys as browser
 class BrowserJourneysTests(unittest.TestCase):
     def test_script_is_standalone_actual_browser_module(self):
         text = (ROOT / "scripts/browser_harness.js").read_text()
-        for snippet in ("frame.contentWindow", "'#top'", "getElementById('run-tests')",
+        for snippet in ("frame.contentWindow", "'/#top'", "getElementById('run-tests')",
                         "getElementById('formal-lab-run')", "getElementById('property-run')",
                         "__independence_inline_probe", "getEntriesByType('resource')"):
             self.assertIn(snippet, text)

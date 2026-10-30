@@ -117,8 +117,10 @@ class BreedingTests(unittest.TestCase):
         audit = (ROOT / "scripts/audit.py").read_text(encoding="utf-8")
         self.assertIn('id="breeding"', html)
         self.assertIn("mountBreeding();", app)
-        self.assertIn('cp breeding/core.js breeding/ui.js breeding/breeding.css "$site/breeding/"',
-                      workflow)
+        from site_bundle import SITE_FILES
+        self.assertIn('python3 scripts/site_bundle.py stage --source .', workflow)
+        for filename in ("breeding/core.js", "breeding/ui.js", "breeding/breeding.css"):
+            self.assertIn(filename, SITE_FILES)
         for name in ("breeding/core.js", "breeding/ui.js", "breeding/breeding.css"):
             self.assertTrue((ROOT / name).is_file())
             self.assertIn('"' + name + '"', audit)

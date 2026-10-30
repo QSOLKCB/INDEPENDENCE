@@ -104,9 +104,10 @@ class WorkflowTests(unittest.TestCase):
             with self.subTest(file=file):
                 self.assertTrue((ROOT / file).is_file())
                 self.assertIn('"' + file + '"', audit)
-        self.assertIn(
-            'cp workflow/core.js workflow/ui.js workflow/workflow.css "$site/workflow/"',
-            workflow)
+        from site_bundle import SITE_FILES
+        self.assertIn('python3 scripts/site_bundle.py stage --source .', workflow)
+        for filename in ("workflow/core.js", "workflow/ui.js", "workflow/workflow.css"):
+            self.assertIn(filename, SITE_FILES)
         self.assertIn("mountWorkflow();", self.app)
 
     def test_no_external_runtime_css_or_script(self):
