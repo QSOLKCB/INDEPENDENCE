@@ -24,7 +24,7 @@ not a mathematical proof.
 
 The optional Ada CLI differential runner actually invokes the supplied
 executable for a seeded deterministic selection (default 128 valid cases,
-including all seven operations), plus all 16 numeric-invalid cases and six lexical-invalid Ada strings, or any larger
+including all seven operations), plus all 16 rejected cases and six lexical-invalid Ada strings, or any larger
 requested finite prefix/sample. It fails on a mismatch, abnormal exit, stderr,
 or timeout. Missing executable means NOT_RUN, not a fabricated match.
 
