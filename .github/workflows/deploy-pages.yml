@@ -108,7 +108,8 @@ jobs:
             echo "Deployment action: **SUCCESS**"
             echo "Published URL: $PUBLISHED_URL"
             if [[ "$PUBLIC_OBSERVATION_OUTCOME" == "success" ]]; then
-              echo "Public asset observation: **REMOTE_BYTES_MATCHED_UNATTESTED**"
+              echo "Public HTTP asset observation: **REMOTE_HTTP_ASSETS_MATCHED_MARKER_UNOBSERVED**"
+              echo "Note: .nojekyll is required in staged artifact but not remotely byte-observed."
             else
               echo "Public asset observation: **NOT_VERIFIED**"
               echo "This does not roll back the successful publish. Check the observation artifact and run the separate manual verification workflow with this deployment run ID."

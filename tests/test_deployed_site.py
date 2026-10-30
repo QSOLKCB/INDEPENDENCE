@@ -27,13 +27,74 @@ class DeployObservationTests(unittest.TestCase):
         bundle.stage(self.source, self.site, "f" * 40)
 
     def fake(self, uri):
+        # Mirror the uploaded Pages observation: this control marker 404s,
+        # even while ordinary HTTP assets can be fetched.
+        if uri.endswith("/.nojekyll"):
+            raise AssertionError(".nojekyll must never be fetched over HTTP")
         return (self.site / uri.removeprefix(remote.BASE)).read_bytes()
 
     def test_local_fake_cdn_verifies_consistency_not_authorship(self):
         with patch.object(remote, "fetch_bytes", side_effect=self.fake):
             report = remote.verify(self.site / bundle.MANIFEST)
-        self.assertEqual(report["status"], "REMOTE_BYTES_MATCHED_UNATTESTED")
-        self.assertEqual(report["files"], len(bundle.SITE_FILES))
+        self.assertEqual(report["status"], "REMOTE_HTTP_ASSETS_MATCHED_MARKER_UNOBSERVED")
+        self.assertEqual(report["files"], len(bundle.SITE_FILES) - 1)
+        self.assertTrue(report["manifest_verified"])
+        self.assertEqual(report["non_http_markers_unobserved"], [".nojekyll"])
+        self.assertEqual(report["non_http_marker_staged_sha256"][".nojekyll"],
+                         bundle.hash_bytes((self.site / ".nojekyll").read_bytes()))
+
+
+    def test_dotfile_is_required_in_staging_but_not_fetched_remotely(self):
+        manifest = json.loads((self.site / bundle.MANIFEST).read_text())
+        self.assertIn(".nojekyll", bundle.SITE_FILES)
+        self.assertIn(".nojekyll", manifest["files"])
+        requested = []
+
+        def fetch(uri):
+            requested.append(uri)
+            return self.fake(uri)
+
+        with patch.object(remote, "fetch_bytes", side_effect=fetch):
+            result = remote.verify_once(self.site / bundle.MANIFEST)
+        self.assertNotIn(remote.BASE + ".nojekyll", requested)
+        self.assertEqual(set(requested),
+                         {remote.BASE + bundle.MANIFEST}
+                         | {remote.BASE + name for name in remote.PUBLIC_HTTP_ASSETS})
+        self.assertEqual(result["status"], "REMOTE_HTTP_ASSETS_MATCHED_MARKER_UNOBSERVED")
+
+    def test_missing_or_wrong_real_remote_file_still_fails_closed(self):
+        for mismatch in (False, True):
+            with self.subTest(mismatch=mismatch):
+                def observed(uri):
+                    if uri.endswith("/index.html"):
+                        if mismatch:
+                            return b"<html>tampered</html>"
+                        raise remote.DeploymentError("public asset HTTP 404 at " + uri)
+                    return self.fake(uri)
+                with patch.object(remote, "fetch_bytes", side_effect=observed):
+                    with self.assertRaisesRegex(remote.DeploymentError, "index.html"):
+                        remote.verify_once(self.site / bundle.MANIFEST)
+
+    def test_remote_manifest_cannot_omit_or_rehash_control_marker(self):
+        path = self.site / bundle.MANIFEST
+        record = json.loads(path.read_text())
+        for mode in ("missing", "rehashed"):
+            with self.subTest(mode=mode):
+                forged = json.loads(json.dumps(record))
+                if mode == "missing":
+                    forged["files"].pop(".nojekyll")
+                else:
+                    forged["files"][".nojekyll"] = "0" * 64
+                path.write_text(json.dumps(forged))
+                with patch.object(remote, "fetch_bytes") as fetch:
+                    # Missing marker inventory fails in the existing strict
+                    # bundle schema; changed marker digest fails in the
+                    # observation's manifest-envelope check. Both fail closed.
+                    with self.assertRaises((remote.DeploymentError,
+                                            bundle.BundleError)):
+                        remote.verify_once(path)
+                    fetch.assert_not_called()
+        path.write_text(json.dumps(record))
 
     def test_rejects_wrong_remote_public_asset(self):
         def bad(uri):
@@ -86,6 +147,7 @@ class DeployObservationTests(unittest.TestCase):
                 remote.BASE + "../private",
                 remote.BASE + "app.js?leak=1",
                 remote.BASE + "unlisted.js",
+                remote.BASE + ".nojekyll",
             ):
                 with self.subTest(url=url), self.assertRaises(remote.DeploymentError):
                     remote.fetch_bytes(url)
@@ -133,7 +195,7 @@ class DeployObservationTests(unittest.TestCase):
         self.assertEqual(result["protocol"], remote.PROTOCOL)
         self.assertEqual(result["status"], "NOT_VERIFIED")
         self.assertIn("deployment-manifest.json", result["reason"])
-        self.assertNotIn("REMOTE_BYTES_MATCHED_UNATTESTED", output.read_text())
+        self.assertNotIn("REMOTE_HTTP_ASSETS_MATCHED_MARKER_UNOBSERVED", output.read_text())
 
     def test_workflows_separate_publish_from_remote_byte_observation(self):
         deploy = (ROOT / ".github/workflows/deploy-pages.yml").read_text()
