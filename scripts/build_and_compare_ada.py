@@ -116,6 +116,9 @@ def execute(root: Path = ROOT, sample_count: int = 128, full: bool = False,
         if not binary.is_file() or not os.access(binary, os.X_OK):
             raise ExecutionError("BUILD", "compiled Ada CLI executable missing or not executable")
         binary_sha = sha(binary)
+        build_output = result.stdout + "\n" + result.stderr
+        if len(build_output.encode("utf-8")) > 100_000:
+            raise ExecutionError("BUILD", "compiler output too large for complete archival receipt")
         try:
             # Reuses the independent Python oracle and the verified report format.
             report = build_report(ada_binary=binary, ada_cases=count, seed=seed)
@@ -138,8 +141,8 @@ def execute(root: Path = ROOT, sample_count: int = 128, full: bool = False,
             "tool_versions": versions,
             "build_command": BUILD_COMMAND,
             "build_exit_code": result.returncode,
-            "build_output_sha256": hashlib.sha256(
-                (result.stdout + "\n" + result.stderr).encode("utf-8")).hexdigest(),
+            "build_output": build_output,
+            "build_output_sha256": hashlib.sha256(build_output.encode("utf-8")).hexdigest(),
             "binary_sha256": binary_sha,
             "seed": seed,
             "mode": "FULL_FINITE_SET" if full else "SEEDED_SAMPLE",
