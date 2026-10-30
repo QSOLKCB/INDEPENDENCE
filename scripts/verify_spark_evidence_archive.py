@@ -47,6 +47,7 @@ MANIFEST_KEYS = {
     "execution_attested_independently", "reported_execution_local_date",
     "reported_checkout", "corresponding_merge_commit", "reported_python_unittest",
     "gnatprove", "source_hashes_sha256", "evidence_file", "limitations",
+    "historical_source_snapshot",
 }
 
 
@@ -125,9 +126,26 @@ def verify(root: Path = ROOT):
         raise EvidenceError("GNATprove toolchain version mismatch")
     if type(report["files_sha256"]) is not dict or report["files_sha256"] != SOURCE_SHA:
         raise EvidenceError("reported source hash inventory mismatch")
+    snapshot = manifest["historical_source_snapshot"]
+    expected_source_dir = (FOLDER / "source").as_posix()
+    if (type(snapshot) is not dict or set(snapshot) != {
+        "path", "files", "hashes_sha256", "spec_snapshot_path",
+        "spec_git_blob_sha1", "source_checkout_git_sha",
+    } or snapshot["path"] != expected_source_dir
+        or snapshot["files"] != list(SOURCE_SHA)
+        or snapshot["hashes_sha256"] != SOURCE_SHA
+        or snapshot["source_checkout_git_sha"] != BASE_SHA
+        or snapshot["spec_snapshot_path"] != (FOLDER / "source/kernel-v1.json").as_posix()
+        or snapshot["spec_git_blob_sha1"] != "aebdb9ca058b27adb71264b74a87cfafac0b8310"):
+        raise EvidenceError("historical SPARK source snapshot metadata mismatch")
     for relative, expected in SOURCE_SHA.items():
-        if digest((root / "formal/spark" / relative).read_bytes()) != expected:
-            raise EvidenceError("SPARK source bytes differ from reported proof checkout: " + relative)
+        path = directory / "source" / relative
+        if digest(path.read_bytes()) != expected:
+            raise EvidenceError("historical SPARK source bytes differ from reported proof checkout: " + relative)
+    spec_bytes = (directory / "source" / "kernel-v1.json").read_bytes()
+    git_blob = b"blob " + str(len(spec_bytes)).encode("ascii") + b"\\0" + spec_bytes
+    if hashlib.sha1(git_blob).hexdigest() != snapshot["spec_git_blob_sha1"]:
+        raise EvidenceError("historical kernel specification Git blob mismatch")
     tool = manifest["gnatprove"]
     if (type(tool) is not dict or set(tool) != {
         "status", "reported_checks_proved", "exit_code", "tool_version", "command",
