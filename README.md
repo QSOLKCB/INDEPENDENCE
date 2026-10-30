@@ -140,3 +140,16 @@ The new static browser guide includes eight selectable workflow stages, eight se
 
 Full method and copyable adversarial-review/fix prompts:
 [docs/AI-HUMAN-WORKFLOW.md](docs/AI-HUMAN-WORKFLOW.md).
+
+## v0.7.0 — PROOF CONTRACTS: Evidence Before Proof
+
+[Run the proof-contract dashboard](https://qsolkcb.github.io/INDEPENDENCE/#proof) after merging and manually publishing.
+
+The machine-readable [proof registry](proof/contracts.json) declares eight obligations. **Every one remains NOT_PROVED formally.** The browser executes bounded checks against the real first-party source: 130,560 elementary cellular-automaton transitions (all rules across all 1..8-wide binary rows), 918,016 output-cell comparisons, BigInt geometric-sum fixtures, seeded replay and SHA validation. A fifth observation is a real COUNTEREXAMPLE: the frozen automaton wrapper holds mutable cells, so a returned fingerprint can become stale.
+
+Reproduce the registry check and verify a downloaded receipt with Python stdlib:
+
+    python3 scripts/check_proof_contracts.py --json
+    python3 scripts/verify_proof_receipt.py proof-contracts-<hash>.json --json
+
+Hash verification does not attest execution. No Lean or SPARK proof has yet been constructed or discharged. The proof tools remain planned as optional development-only components, not runtime dependencies. Read [docs/PROOF-CONTRACTS.md](docs/PROOF-CONTRACTS.md) and [the formal programme through v1.1.0 Zenodo](docs/FORMAL-ROADMAP.md).

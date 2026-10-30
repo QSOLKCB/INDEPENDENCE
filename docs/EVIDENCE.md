@@ -67,3 +67,11 @@ The exact text of the report is SHA-256 hashed by browser WebCrypto. The Python 
 The Secret Source documents the *engineering process* used to develop this project: human-directed tasks, AI-assisted implementation, scoped repository invariants, available test execution, adversarial review, Git HEAD checks and human-controlled merges/releases. Five actual merged PR URLs support the historical project progression. This evidence does not quantify the proportion of code written by AI, AI productivity, comparative accuracy, or a causal reduction in drift.
 
 The static browser section explains eight stages and eight optional self-report checks. Its plain-text prompt generator requires an observable goal and provides an explicit negative scope, invariants, tests, disclosure of unrun checks and a human-only merge gate. Generating a prompt or checking a box performs no tests, repo operations, LLM inference or external verification. The slogan "AI + WEB TECH = UNLIMITED POTENTIAL" is rhetorical and has no numerical or literal basis. See docs/AI-HUMAN-WORKFLOW.md.
+
+## v0.7 — Proof Contracts
+
+The machine-readable proof/contracts.json specifies eight obligations, all formally NOT_PROVED, tied to the tagged v0.6.0 source baseline. The first four browser checks exercise actual production JavaScript against separate reference implementations: all 130,560 binary rows/rules for widths 1..8 (918,016 cell checks), 463 bounded exact-integer sum cases, 36 replay/FNV cases, and 12 SHA format fixtures.
+
+A fifth result is a deliberate COUNTEREXAMPLE: a frozen return wrapper contains a mutable Uint8Array, so the stored fingerprint can be invalidated by client mutation. It is not a security exploit claim. Lean, SPARK and independent receipt execution attestation are PENDING, not passed.
+
+scripts/check_proof_contracts.py validates the contract registry using stdlib, and scripts/verify_proof_receipt.py checks exact browser report integrity and fixed results. Neither is a full proof or attestation of source execution. See docs/PROOF-CONTRACTS.md and docs/FORMAL-ROADMAP.md.
