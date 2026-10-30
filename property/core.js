@@ -72,7 +72,8 @@ export function mismatches(input, candidate = injectedWraparoundStep) {
   const bits = bitsOf(input);
   const expected = transitionOracle(bits, input.rule);
   const actual = candidate(bits, input.rule);
-  if (!Array.isArray(actual) || !actual.every(v => v === 0 || v === 1) ||
+  if ((!Array.isArray(actual) && !(actual instanceof Uint8Array)) ||
+      !actual.every(v => v === 0 || v === 1) ||
       actual.length !== expected.length) throw new RangeError('candidate returned invalid row');
   return !equal(expected, actual);
 }

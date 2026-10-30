@@ -21,6 +21,9 @@ export function runPropertySelfTests() {
       }
       return true;
     }],
+    ['candidate may return a Uint8Array like the real function', () =>
+      !mismatches({width: 1, rule: 4, mask: 1}, (bits, rule) =>
+        new Uint8Array(transitionOracle(bits, rule)))],
     ['known zero-boundary oracle result', () =>
       String(transitionOracle([0, 0, 1, 0, 0], 90)) === '0,1,0,1,0'],
     ['deliberate wraparound mutant has a real mismatch', () =>
