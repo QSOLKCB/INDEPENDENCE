@@ -110,6 +110,19 @@ def rejected_cases():
     ]
 
 
+def lexical_cases():
+    # Text rejected by the shared ASCII-decimal grammar before Ada Natural'Value.
+    # These are NOT integer operands: their raw spelling must remain unchanged.
+    return [
+        ("PARITY_ADD", ("2#1#", "0")),
+        ("PARITY_ADD", ("+1", "0")),
+        ("PARITY_MUL", ("1_0", "0")),
+        ("PHASE_ADD", ("3#2#", "0")),
+        ("ADDR", ("0", "0", "16#10#")),
+        ("EDGE_STEP", ("0", "1", "4", "2#1#", "0")),
+    ]
+
+
 def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -173,7 +186,7 @@ def build_report(ada_binary: Path | None = None, ada_cases: int = 128, seed: int
         binary = Path(ada_binary).resolve()
         if not binary.is_file():
             raise FileNotFoundError("Ada executable not found: " + str(binary))
-        ada = run_ada(binary, sample_ada_cases(finite, ada_cases, seed) + negative)
+        ada = run_ada(binary, sample_ada_cases(finite, ada_cases, seed) + negative + lexical_cases())
     unresolved = ["Lean mathematical theorems NOT_RUN", "GNATprove Ada contracts NOT_RUN",
                   "Existing application Python/JavaScript conformance NOT_ESTABLISHED",
                   "Actual Ada compiler/CLI execution NOT_RUN" if ada["status"] == "NOT_RUN" else
