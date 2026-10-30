@@ -26,12 +26,12 @@ from run_browser_journeys import MODES, PROTOCOL, BrowserError, parse_html, serv
 from site_bundle import verify
 
 
-def post(url: str, body: dict | None = None, method: str = "POST") -> dict:
+def post(url: str, body: dict | None = None, method: str = "POST", timeout: int = 45) -> dict:
     data = json.dumps(body or {}).encode("utf-8") if method == "POST" else None
     req = Request(url, data=data, method=method,
                   headers={"Content-Type": "application/json"})
     try:
-        with urlopen(req, timeout=15) as response:
+        with urlopen(req, timeout=timeout) as response:
             packet = response.read(1_000_000)
         result = json.loads(packet)
         if type(result) is not dict or "value" not in result:
@@ -76,24 +76,29 @@ def run(site: Path, *, require_browser: bool = True, modes=MODES) -> dict:
     endpoint = "http://127.0.0.1:" + str(port)
     process = None
     session = None
+    phase = "START"
+    log_file = None
     try:
         ver = subprocess.run([driver, "--version"], text=True, capture_output=True,
                              check=False, timeout=15)
         if ver.returncode:
             raise BrowserError("geckodriver version query failed")
-        process = subprocess.Popen([driver, "--port", str(port)],
-                                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        log_file = tempfile.TemporaryFile(mode="w+t", encoding="utf-8")
+        process = subprocess.Popen([driver, "--port", str(port), "--log", "info"],
+                                   stdout=log_file, stderr=subprocess.STDOUT)
+        phase = "WAIT_DRIVER_READY"
         for _ in range(100):
             if process.poll() is not None:
                 raise BrowserError("geckodriver stopped before readiness")
             try:
-                if post(endpoint + "/status", method="GET")["value"].get("ready"):
+                if post(endpoint + "/status", method="GET", timeout=3)["value"].get("ready"):
                     break
             except BrowserError:
                 pass
             time.sleep(0.15)
         else:
             raise BrowserError("geckodriver did not become ready")
+        phase = "START_FIREFOX_SESSION"
         started = post(endpoint + "/session", {
             "capabilities": {"alwaysMatch": {
                 "browserName": "firefox",
@@ -101,12 +106,14 @@ def run(site: Path, *, require_browser: bool = True, modes=MODES) -> dict:
             }}
         })
         session = started["value"]["sessionId"]
+        phase = "SESSION_READY"
         caps = started["value"].get("capabilities", {})
         report["browser_version"] = ("Firefox " + str(caps.get("browserVersion", "unknown")) +
                                      "; " + ver.stdout.strip().split("\n")[0])
         post(endpoint + "/session/" + session + "/window/rect",
              {"width": 1280, "height": 900})
         for mode in modes:
+            phase = "RUN_" + mode
             server = serve(site.resolve(), mode)
             thread = threading.Thread(target=server.serve_forever, daemon=True)
             thread.start()
@@ -143,7 +150,14 @@ def run(site: Path, *, require_browser: bool = True, modes=MODES) -> dict:
                                     else "FIREFOX_LOCAL_EXECUTED_FAIL")
     except (OSError, ValueError, KeyError, subprocess.TimeoutExpired) as exc:
         report["actual_browser"] = "FIREFOX_LOCAL_EXECUTED_FAIL"
-        report["reason"] = str(exc)
+        report["reason"] = phase + ": " + str(exc)
+        if log_file:
+            try:
+                log_file.flush()
+                log_file.seek(0)
+                report["driver_log_tail"] = log_file.read()[-2500:]
+            except (OSError, UnicodeError):
+                pass
     finally:
         if session:
             try:
@@ -157,6 +171,8 @@ def run(site: Path, *, require_browser: bool = True, modes=MODES) -> dict:
             except subprocess.TimeoutExpired:
                 process.kill()
                 process.wait()
+        if log_file:
+            log_file.close()
     return report
 
 
