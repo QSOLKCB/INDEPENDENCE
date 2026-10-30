@@ -56,7 +56,7 @@ def verify(document, root: Path = ROOT):
         "protocol", "status", "historical_source_commit", "source_sha256",
         "tool_versions", "build_command", "build_exit_code", "build_output",
         "build_output_sha256", "binary_sha256", "seed", "mode",
-        "finite_cases_checked", "numeric_invalid_checked",
+        "finite_cases_checked", "rejected_fixture_checked",
         "lexical_invalid_checked", "ada_processes_checked", "vectors_sha256",
         "python_bridge_receipt", "bridge_receipt_verification",
         "independent_execution_attestation", "limitations",
@@ -104,8 +104,8 @@ def verify(document, root: Path = ROOT):
         or (document["mode"] == "FULL_FINITE_SET") != (checked == finite)):
         raise EvidenceError("finite-case mode or count inconsistent")
     neg, lex = len(rejected_cases()), len(lexical_cases())
-    if (type(document["numeric_invalid_checked"]) is not int
-        or document["numeric_invalid_checked"] != neg
+    if (type(document["rejected_fixture_checked"]) is not int
+        or document["rejected_fixture_checked"] != neg
         or type(document["lexical_invalid_checked"]) is not int
         or document["lexical_invalid_checked"] != lex
         or type(document["ada_processes_checked"]) is not int
