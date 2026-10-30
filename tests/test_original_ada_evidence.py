@@ -57,6 +57,65 @@ class OriginalAdaEvidenceTests(unittest.TestCase):
                                                 "manifest contradicts"):
                         archived.validate(root)
 
+    def test_comparison_build_and_spec_digests_must_match_receipts(self):
+        # Codex P2 reproduction: mutating either publication-summary hash
+        # cannot pass when the original runtime JSONs remain unchanged.
+        for field in ("compiler_build_output_sha256", "source_spec_sha256"):
+            with self.subTest(field=field):
+                tmp, root = self.fixture()
+                with tmp:
+                    path = root / archived.FOLDER / "manifest.json"
+                    obj = json.loads(path.read_text(encoding="utf-8"))
+                    obj["comparison"][field] = "0" * 64
+                    path.write_text(json.dumps(obj), encoding="utf-8")
+                    with self.assertRaisesRegex(
+                        archived.OriginalEvidenceError, "cross-record comparison"
+                    ):
+                        archived.validate(root)
+
+    def test_both_comparison_hashes_corrupted_together_rejected(self):
+        tmp, root = self.fixture()
+        with tmp:
+            path = root / archived.FOLDER / "manifest.json"
+            obj = json.loads(path.read_text(encoding="utf-8"))
+            for field in ("compiler_build_output_sha256", "source_spec_sha256"):
+                obj["comparison"][field] = "0" * 64
+            path.write_text(json.dumps(obj), encoding="utf-8")
+            with self.assertRaisesRegex(
+                archived.OriginalEvidenceError, "cross-record comparison"
+            ):
+                archived.validate(root)
+
+    def test_comparison_summary_schema_rejects_missing_and_extra_hashes(self):
+        for mode in ("missing", "extra"):
+            with self.subTest(mode=mode):
+                tmp, root = self.fixture()
+                with tmp:
+                    path = root / archived.FOLDER / "manifest.json"
+                    obj = json.loads(path.read_text(encoding="utf-8"))
+                    if mode == "missing":
+                        del obj["comparison"]["source_spec_sha256"]
+                    else:
+                        obj["comparison"]["unproven_extra_certification"] = True
+                    path.write_text(json.dumps(obj), encoding="utf-8")
+                    with self.assertRaisesRegex(
+                        archived.OriginalEvidenceError, "cross-record comparison"
+                    ):
+                        archived.validate(root)
+
+    def test_comparison_test_count_rejects_boolean(self):
+        # bool is an int subclass in Python; false must not impersonate 0.
+        tmp, root = self.fixture()
+        with tmp:
+            path = root / archived.FOLDER / "manifest.json"
+            obj = json.loads(path.read_text(encoding="utf-8"))
+            obj["comparison"]["reported_python_unit_tests"] = True
+            path.write_text(json.dumps(obj), encoding="utf-8")
+            with self.assertRaisesRegex(
+                archived.OriginalEvidenceError, "cross-record comparison"
+            ):
+                archived.validate(root)
+
     def test_relabel_old_lean_as_original_rejected(self):
         tmp, root = self.fixture()
         with tmp:
