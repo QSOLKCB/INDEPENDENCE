@@ -75,6 +75,14 @@ v1.0.1 — Original PR Browser Evidence Preservation (implementation PR)
 - Keep original PR-run evidence distinct from v1.0.0 production Pages observations, WCAG certification and mathematical proof discharge.
 - Add CI archive restoration/artifact publishing with no new production dependencies.
 
+
+v1.0.2 — Rocq Independent Semantic Verification (implementation PR)
+- A second mathematical interpretation of Wolfram rule bits using an explicit eight-pattern truth table.
+- Arbitrary finite-width structural models; output length, Rule 0/255, Rule 90 XOR, zero-exterior boundary and model-equivalence theorem obligations.
+- Width-four model specialisation to AUTOMATA4/1, plus independent 4,096-case Python differential bridge.
+- Rocq 9.2.0 pin; strict source inventory/assumption audit and optional real compiler gate. Missing Rocq remains NOT_RUN, not PROVED.
+- Preserve proof/refinement boundaries and existing original browser archive; no new website/runtime dependencies.
+
 v1.1.0 — Zenodo formalization of repository (planned)
 - Exact tagged sources, executable proof artefacts and logs, assumptions, partial gaps, SHA manifest and transparent research report.
 

@@ -79,3 +79,30 @@ deployment, using the packaged manifest and exact asset hashes. No localhost
 test is passed off as a remote browser run, and no manifest hash establishes
 independent authorship, continuous uptime or full WCAG compliance.
 See docs/BROWSER-DEPLOYMENT.md.
+
+## v1.0.2 — Rocq Independent Semantic Verification
+
+A new independent list/boolean model under `formal/rocq/Automata.v` extends
+the prior four-cell theorem scope to *any finite row length*, including
+empty and singleton rows. Its two cell semantics are weighted arithmetic
+and an explicit 8-pattern truth table; its two row transitions are separately
+defined by structural recursion. Mathematical equivalence of those row
+evaluators is the principal new theorem obligation. Additional lemmas cover
+length preservation, boundary conditions, Rule 0, Rule 255, Rule 90 XOR,
+and the width-four model specialisation.
+
+The compiled proof must run using Rocq **9.2.0** and pass every named
+`Print Assumptions` audit, with exit 0 and an actual compiled .vo.
+Standard PR CI intentionally records `rocq.status = NOT_RUN` because
+not every standard runner has that pinned toolchain. Static inspection,
+Python differential data and claimed proof success remain **separate**
+evidence classes. To earn a checked proof receipt, run:
+
+```sh
+python3 scripts/check_rocq_semantics.py --require-rocq --output rocq-executed.json
+```
+
+This is a proof of mathematical-model properties **only**, not verified
+refinement of the existing `lab/core.js` production automaton, arbitrary
+browser inputs, or Ada program. Existing successful local Lean/GNATprove
+evidence and original v1.0.1 browser archive are not modified or conflated.

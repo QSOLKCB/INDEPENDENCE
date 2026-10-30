@@ -40,6 +40,14 @@ jobs:
           else
             echo "NOT_RUN: Node unavailable; no JS execution evidence claimed."
           fi
+      - name: Inspect v1.0.2 Rocq source and independent finite-model bridge (NOT_RUN unless compiled)
+        run: python3 scripts/check_rocq_semantics.py --output "$RUNNER_TEMP/rocq-static-evidence.json"
+      - name: Preserve Rocq source-level evidence and explicit NOT_RUN status
+        uses: actions/upload-artifact@v4
+        with:
+          name: independence-v1.0.2-rocq-static-evidence
+          path: ${{ runner.temp }}/rocq-static-evidence.json
+          if-no-files-found: error
       - name: Verify first-party dependency audit
         run: python3 scripts/audit.py --json
 

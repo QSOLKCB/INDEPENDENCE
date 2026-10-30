@@ -335,3 +335,32 @@ The preserved evidence belongs to a **PR test checkout**, not the v1.0.0
 tagged production deployment. SHA-256 and internally consistent receipts
 do not independently attest browser execution. See
 [the preservation manifest and method](formal/evidence/browser/v1.0.1/README.md).
+
+## v1.0.2 — Independent Rocq arbitrary-width automaton semantics
+
+The new mathematical model under
+[`formal/rocq/Automata.v`](formal/rocq/Automata.v) uses two structurally
+independent transition functions: weighted arithmetic neighbourhood bit lookup
+and an explicit eight-pattern rule table. It states fifteen theorem/example
+obligations covering equivalence for **all finite rows**, equal output length,
+Rule 0 and 255 identities, Rule 90 XOR, boundary handling, and the
+width-four AUTOMATA4/1 specialisation.
+
+Rocq 9.2.0 is an **optional developer tool**, not a website dependency.
+CI performs strict source fingerprint inspection and a separate 4,096-vector
+finite Python bridge, but explicitly records `NOT_RUN` for the Rocq compiler
+unless the actual pinned toolchain is executed. No Rocq theorem is claimed
+checked merely by merging this PR.
+
+```sh
+python3 scripts/check_rocq_semantics.py --output rocq-static.json
+rocq --version  # requires exactly Rocq 9.2.0
+python3 scripts/check_rocq_semantics.py --require-rocq --output rocq-executed.json
+```
+
+The second command exits nonzero on missing, wrong-version or failed Rocq;
+a successful run must produce a compiled `.vo` and report all fifteen
+theorem assumption audits closed. The `.vo` and logs are generated in a
+fresh temporary directory; the evidence JSON is written only on request.
+The finite bridge is not a formal refinement proof of JavaScript or SPARK.
+See [Rocq developer verification](docs/ROCQ-SEMANTICS.md).
