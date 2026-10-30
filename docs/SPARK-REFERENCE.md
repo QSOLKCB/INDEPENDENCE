@@ -1,0 +1,55 @@
+# v0.7.1 — SPARK Ada Reference Kernel
+
+This is a narrowly scoped **reference implementation**, not a declaration of
+formally proved JavaScript or Python. The versioned authority is
+`formal/spec/kernel-v1.json`. The package `Reference_Kernel` is marked
+`SPARK_Mode => On`; the input/output CLI is explicitly outside that proof boundary.
+
+Functions include rectangular address + decode (width 1..16, rows 0..15),
+GF(2) parity addition and multiplication, cyclic modulo-3 phase addition,
+endpoint validation (distinct, in-range endpoints), and a parity edge step
+requiring validated endpoints.
+
+**Limits:** Address is not Chinese remainder bijection. Edge validity is not
+adjacency in an arbitrary graph or Penrose patch. Modulo-3 phase closure is
+not a quantum qutrit proof. Lean theorems and the actual production Python/
+JavaScript semantics remain separate obligations.
+
+## Verification / GNATprove
+
+The repository's ordinary Python tests validate files, versioned specs,
+absence of certain proof-escape pragmas, and fail-closed status reporting.
+They DO NOT compile Ada or prove the bodies.
+
+To run SPARK proof checks in an environment with a compatible GNATprove:
+
+    python3 scripts/check_spark_reference.py --prove --output spark-evidence.json
+
+Strict blocking version:
+
+    python3 scripts/check_spark_reference.py --require-proved --output spark-evidence.json
+
+The runner uses --mode=all, --checks-as-errors=on, --warnings=error,
+--report=all, --level=2, and selects the reference kernel unit. It records
+tool version, command, exit code and output. An exit code alone is NOT treated
+as proof if the tool reports unresolved or missing checks. **Inspect actual
+GNATprove output before claiming verified contracts**; a checked proof is
+conditional on explicit preconditions and tool semantics. No unapproved
+Assume, Skip_Proof or annotated justifications are allowed.
+
+To compile the non-SPARK CLI with a matching GNAT toolchain:
+
+    gprbuild -P formal/spark/cli.gpr
+
+The CLI accepts ADDR, DECODE, PARITY_ADD, PARITY_MUL, PHASE_ADD,
+EDGE_VALID and EDGE_STEP plus numeric arguments, returns OK:<value> or
+ERR:INVALID. Input checks are outside the verified kernel and must be
+separately tested (including modular-range validation).
+
+Current recorded environment (development): GNAT/GNATprove unavailable,
+so **ADA_CONTRACT_VERIFIED remains NOT_RUN** and any obligations remain
+unproved until real tool output is supplied.
+
+The next phase, v0.7.2, adds a separate Python/Ada conformance bridge using
+fixed versioned input/output semantics. Ada proof is not evidence that Python
+or JavaScript conforms.

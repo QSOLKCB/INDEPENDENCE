@@ -58,3 +58,10 @@ The browser test button runs a separate native-JavaScript suite.
 41. The stdlib registry gate rejects false proof statuses, malformed obligations, missing target symbols and missing provenance/limitations.
 42. Proof dashboard results must come from user-triggered execution against real first-party functions, and be rendered only with inert textContent.
 43. Lean, SPARK, GNATprove and other optional proof toolchains remain development-only and cannot become GitHub Pages or Python-stdlib runtime dependencies.
+
+44. SPARK-REFERENCE-KERNEL/1 uses a human-reviewable shared versioned specification and pure Ada functions. The CLI and all input/output concerns remain outside the SPARK proof boundary.
+45. A declared Ada Pre/Post contract is NOT a discharged proof. Never report ADA_CONTRACT_VERIFIED unless actual GNATprove output at an exact source revision and recorded toolchain is verified.
+46. Never treat rectangular addresses as CRT bijection, in-range distinct endpoints as proven graph adjacency, or modular phase closure as quantum phase behaviour.
+47. Explicit modular integer input checking must occur before converting CLI parameters to Ada mod-2 or mod-3 types; invalid inputs must be rejected, not silently wrapped.
+48. Keep GNATprove, GNAT, Ada compiler and CLI out of the GitHub Pages runtime and default Python-only deployment gate.
+49. Python and JavaScript remain separate, unresolved conformance obligations until differential execution evidence exists.

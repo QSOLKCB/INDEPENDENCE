@@ -1,0 +1,27 @@
+{
+  "protocol": "INDEPENDENCE-KERNEL-SPEC/1",
+  "schema_version": 1,
+  "semantics": {
+    "address": "width 1..16; row 0..15; column 0..width-1; address = row * width + column; max 255",
+    "decode": "index 0..255 and index < 16 * width; row = index // width, column = index % width",
+    "parity_add": "inputs 0..1; (left + right) modulo 2",
+    "parity_mul": "inputs 0..1; (left * right) modulo 2",
+    "phase_add": "inputs 0..2; (left + right) modulo 3; cyclic phase closure only",
+    "edge_valid": "count 2..256, source/target 0..255; valid iff distinct and both < count",
+    "edge_step": "requires edge_valid and current/influence in 0..1; (current + influence) modulo 2; does not prove graph adjacency"
+  },
+  "input_policy": "Only natural decimal inputs with documented bounds; invalid inputs rejected before SPARK precondition calls",
+  "outputs": "OK:<decimal integer>, OK:<row>,<column>, or ERR:INVALID; no implicit truncation of unbounded integers",
+  "proof_status": "NOT_RUN",
+  "assumptions": [
+    "finite rectangular addressing, not CRT bijection",
+    "edge validity means bounded distinct endpoints, not membership in an adjacency relation",
+    "phase closure is Z/3Z addition, not a quantum phase theorem",
+    "SPARK CLI I/O is outside proof scope"
+  ],
+  "limitations": [
+    "Lean/CRT/monomial-order proofs remain separate",
+    "GNATprove must actually run and discharge contracts before ADA_CONTRACT_VERIFIED",
+    "Ada verification alone does not verify Python or JS"
+  ]
+}

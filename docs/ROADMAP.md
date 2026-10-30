@@ -59,3 +59,13 @@ v1.1.0 — Zenodo formalization of repository (planned)
 - Exact tagged sources, executable proof artefacts and logs, assumptions, partial gaps, SHA manifest and transparent research report.
 
 Each phase requires deterministic tests and a documented limitation statement.
+
+v0.7.1 — SPARK Ada Reference Kernel (reviewable patch)
+- Narrow pure Ada reference for finite addressing, GF(2), cyclic mod-3 phase and bounded distinct-endpoint transitions.
+- Versioned shared contract and development-only GNATprove proof runner; no unobserved proof success.
+- v0.7.2 will separately compare Python/Ada behaviour using identical versioned fixtures.
+
+v0.7.2 — Proof-Conformance Bridge (stacked phase)
+- Exhaustive practical finite cases, independent Python oracle and optional executed Ada CLI comparison.
+- Split receipt statuses for mathematical proof, Ada contracts, tested Python and unresolved source-execution gaps.
+- No Ada compilation means NOT_RUN Ada differential conformance, never simulated proof success.
