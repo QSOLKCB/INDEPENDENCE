@@ -126,6 +126,25 @@ class TribunalReceiptTests(unittest.TestCase):
     def test_python_bootstrap_known_constant(self):
         self.assertEqual(bootstrap_interval([1.0] * 8), [1.0, 1.0])
 
+    def test_cross_language_fixture_vectors(self):
+        self.assertEqual(phase_fingerprints(1, 100), {
+            "initial": "cd03fdfa", "update": "262c209e", "reorder": "4da3f3bf"
+        })
+        self.assertEqual(phase_fingerprints(314159, 200), {
+            "initial": "1fe43890", "update": "d437f12c", "reorder": "aff9394c"
+        })
+
+    def test_cross_language_bootstrap_vectors(self):
+        self.assertEqual(bootstrap_interval([1,2,-1,4,6,-3,3,1]), [-1, 4])
+        self.assertEqual(bootstrap_interval([(i % 5) - 2.25 for i in range(12)]),
+                         [-1.75, 0.75])
+
+    def test_bad_methodology_type_rejected(self):
+        report = json.loads(fixture()["payload_text"])
+        report["methodology"] = "bad"
+        with self.assertRaisesRegex(ReceiptError, "attribution"):
+            verify_receipt(seal(report))
+
     def test_tribunal_static_site_integration(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         app = (ROOT / "app.js").read_text(encoding="utf-8")
