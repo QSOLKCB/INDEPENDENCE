@@ -19,3 +19,8 @@ Verification commands (no installation):
     python3 -m http.server 8000
 
 The browser test button runs a separate native-JavaScript suite.
+
+11. Public ledger claims are scoped to GitHub metadata and Git tree filenames; a container/manifest marker alone does not establish a runtime dependency. Never turn unknown/partial into a negative finding.
+12. QSOL-IMC catalogue categories are editorial. QSOL-CONTEXT is private and must never be queried, ingested, linked as public evidence, or exposed through the ledger. Its high-level provenance design is inspiration only.
+13. Browser ledger code accesses only packaged same-origin static JSON. Only Python collector and manual deployment contact GitHub REST. No browser token.
+14. Preserve canonical snapshot hashing. The receipt SHA-256 must exclude the digest itself. Regression tests must be able to run offline.

@@ -1,4 +1,5 @@
 import {xorshift32, evolve, fnv1a, buildAutomaton, dependencyExposure} from './core.js';
+import {validTreeSha, validReceiptSha} from '../ledger/ledger.js';
 
 // No testing framework: assertions intentionally use only native JavaScript.
 export function runTests() {
@@ -16,7 +17,13 @@ export function runTests() {
     ['rule validation rejects out-of-range', () => { try { buildAutomaton(256, 1); return false; } catch (e) { return e instanceof RangeError; } }],
     ['seed validation rejects zero', () => { try { buildAutomaton(30, 0); return false; } catch (e) { return e instanceof RangeError; } }],
     ['synthetic tree arithmetic', () => dependencyExposure(2, 3, 2) === 26],
-    ['zero-depth counts direct only', () => dependencyExposure(7, 3, 0) === 7]
+    ['zero-depth counts direct only', () => dependencyExposure(7, 3, 0) === 7],
+    ['SHA-256 receipts accept exactly 64 hex characters', () =>
+      validReceiptSha('a'.repeat(64)) && !validReceiptSha('a'.repeat(40)) &&
+      !validReceiptSha('g'.repeat(64)) && !validReceiptSha(null)],
+    ['Git tree IDs accept exactly 40 hex characters', () =>
+      validTreeSha('b'.repeat(40)) && !validTreeSha('b'.repeat(64)) &&
+      !validTreeSha('g'.repeat(40)) && !validTreeSha(undefined)]
   ];
   return checks.map(([name, check]) => {
     try { return { name, passed: check() === true }; }

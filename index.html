@@ -8,6 +8,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
   <title>INDEPENDENCE — No Masters. No Dependencies.</title>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./ledger/ledger.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -18,6 +19,7 @@
       <a href="#declaration">Declaration</a>
       <a href="#lab">Live lab</a>
       <a href="#evidence">Evidence</a>
+      <a href="#ledger">Ledger</a>
       <a class="nav-github" href="https://github.com/QSOLKCB/INDEPENDENCE">Source ↗</a>
     </nav>
   </header>
@@ -100,9 +102,33 @@
       <div class="tradeoff"><span>IMPORTANT DISTINCTION</span><p><strong>Zero third-party packages is not zero trust.</strong> The browser, operating system, Python interpreter, GitHub Pages hosting, and their supply chains remain real dependencies. This project reduces avoidable application dependencies; it does not claim invulnerability.</p></div>
     </section>
 
+    <section id="ledger" class="section ledger-section">
+      <div class="wrap">
+        <span class="kicker">04 / SOFTWARE INDEPENDENCE EVIDENCE LEDGER</span>
+        <h2>THE RECEIPTS.<br><span class="accent">NOT THE RHETORIC.</span></h2>
+        <p class="ledger-intro">A public, source-linked inventory of QSOLKCB repositories, with filename evidence collected from their default-branch Git trees. Browse observed package manifests, container markers and workflow files. <strong>No known manifest observed does not mean zero dependencies.</strong> Unknown and truncated scans stay unknown.</p>
+        <div class="ledger-summary" id="ledger-summary" aria-label="Evidence snapshot statistics"></div>
+        <p id="ledger-method" class="ledger-method">Loading evidence metadata…</p>
+        <p id="ledger-receipt" class="ledger-receipt"></p>
+        <div class="ledger-tools">
+          <input id="ledger-search" type="search" aria-label="Search repositories or categories" placeholder="SEARCH REPOSITORIES / CATEGORIES">
+          <select id="ledger-filter" aria-label="Filter by evidence state">
+            <option value="all">ALL EVIDENCE STATES</option>
+            <option value="signals">MANIFEST SIGNALS OBSERVED</option>
+            <option value="no-manifest">NO KNOWN MANIFEST OBSERVED</option>
+            <option value="unknown">UNKNOWN / INCOMPLETE</option>
+          </select>
+        </div>
+        <p id="ledger-message" class="ledger-message" role="status" aria-live="polite"></p>
+        <div id="ledger-list" class="ledger-list" aria-label="Public repository evidence records"></div>
+        <button type="button" id="ledger-more" class="ledger-more" hidden>LOAD MORE RECORDS +</button>
+        <div class="ledger-disclaimer"><strong>Evidence boundary:</strong> This ledger does not run project tests, trace dependency imports, inspect private repositories, or assign vulnerability scores. Package manifests may describe development tooling; their absence does not prove independence. The public catalogue is curated, while the ledger targets a reproducible public repository listing. Inspect <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/LEDGER.md">the methodology</a>, <a href="https://github.com/QSOLKCB/QSOL-IMC">QSOL-IMC</a>. The private QSOL-CONTEXT source is not imported or exposed.</div>
+      </div>
+    </section>
+
     <section class="section impact-section">
       <div class="wrap impact-grid">
-        <div><span class="kicker">04 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
+        <div><span class="kicker">05 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
         <div class="impact-panel">
           <label for="direct">Direct packages <output id="direct-value">3</output></label><input type="range" id="direct" min="1" max="10" value="3">
           <label for="fanout">New children per package <output id="fanout-value">3</output></label><input type="range" id="fanout" min="1" max="5" value="3">
@@ -113,7 +139,7 @@
     </section>
 
     <section class="closing wrap">
-      <div class="kicker">05 / THE SIGNATURE</div>
+      <div class="kicker">06 / THE SIGNATURE</div>
       <h2>WE DID NOT LEAVE<br>SOFTWARE ENGINEERING.<br><em>SOFTWARE ENGINEERING LEFT US.</em></h2>
       <div class="signature"><div><strong>QSOL-IMC</strong><span>Independent Software Sovereignty Initiative</span></div><a class="action primary" href="https://github.com/QSOLKCB/INDEPENDENCE">READ THE SOURCE ↗</a></div>
     </section>

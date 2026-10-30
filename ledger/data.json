@@ -1,0 +1,1135 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-30",
+  "scope": "Public QSOLKCB repositories returned by connected GitHub search",
+  "method": "GitHub repository search and recursive default-branch git tree inspection; filename evidence, not full dependency audits",
+  "sources": {
+    "catalog": "https://github.com/QSOLKCB/QSOL-IMC/blob/main/app.js",
+    "repositories": "https://github.com/orgs/QSOLKCB/repositories"
+  },
+  "coverage": {
+    "total": 103,
+    "scanned": 7,
+    "unknown": 96,
+    "with_manifest_signals": 4,
+    "without_manifest_signals": 3,
+    "catalogued": 99
+  },
+  "limitations": [
+    "Absence of a known manifest filename is not proof of zero dependencies.",
+    "A manifest may describe tooling without third-party runtime requirements.",
+    "The list captures public repositories in a time-bounded search; fork/archival status and scan currency may change.",
+    "Individual project tests and import graphs are not executed or analysed.",
+    "QSOL-CONTEXT is private; no private-context data was ingested or published."
+  ],
+  "repositories": [
+    {
+      "name": "486",
+      "url": "https://github.com/QSOLKCB/486",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "AI-CONTEXT",
+      "url": "https://github.com/QSOLKCB/AI-CONTEXT",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "ARCADE",
+      "url": "https://github.com/QSOLKCB/ARCADE",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "scanned",
+        "tree_sha": "847b0dacb39dd97812f8ec7eaedf0aedf46d795b",
+        "files_seen": 48,
+        "manifest_count": 1,
+        "manifest_paths": [
+          "package.json"
+        ],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 0,
+        "container_marker_paths": [],
+        "vendored_file_count": 0,
+        "workflow_count": 1
+      }
+    },
+    {
+      "name": "AUSTRALIAN-FOR-AIS",
+      "url": "https://github.com/QSOLKCB/AUSTRALIAN-FOR-AIS",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "BLOAT-OPS",
+      "url": "https://github.com/QSOLKCB/BLOAT-OPS",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "BLOCH",
+      "url": "https://github.com/QSOLKCB/BLOCH",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "BRAINROTLLM",
+      "url": "https://github.com/QSOLKCB/BRAINROTLLM",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "C64",
+      "url": "https://github.com/QSOLKCB/C64",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "cbt",
+      "url": "https://github.com/QSOLKCB/cbt",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "ChatGPT",
+      "url": "https://github.com/QSOLKCB/ChatGPT",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "coin",
+      "url": "https://github.com/QSOLKCB/coin",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "CONSTRAINT-SHIFT",
+      "url": "https://github.com/QSOLKCB/CONSTRAINT-SHIFT",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "CorpoWars",
+      "url": "https://github.com/QSOLKCB/CorpoWars",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "COSMO",
+      "url": "https://github.com/QSOLKCB/COSMO",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "CTC",
+      "url": "https://github.com/QSOLKCB/CTC",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "deepseekc64",
+      "url": "https://github.com/QSOLKCB/deepseekc64",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "DORK",
+      "url": "https://github.com/QSOLKCB/DORK",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "E8",
+      "url": "https://github.com/QSOLKCB/E8",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "E8_MUSIC",
+      "url": "https://github.com/QSOLKCB/E8_MUSIC",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "EDGEWALK",
+      "url": "https://github.com/QSOLKCB/EDGEWALK",
+      "branch": "main",
+      "archived": false,
+      "category": null,
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "ETHICS",
+      "url": "https://github.com/QSOLKCB/ETHICS",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "GALAXY",
+      "url": "https://github.com/QSOLKCB/GALAXY",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "GAMES",
+      "url": "https://github.com/QSOLKCB/GAMES",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "ghostit",
+      "url": "https://github.com/QSOLKCB/ghostit",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "GLUBALL",
+      "url": "https://github.com/QSOLKCB/GLUBALL",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "GREEN_PR",
+      "url": "https://github.com/QSOLKCB/GREEN_PR",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "HERESY",
+      "url": "https://github.com/QSOLKCB/HERESY",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "HERESY-API",
+      "url": "https://github.com/QSOLKCB/HERESY-API",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "HERESY-SEC",
+      "url": "https://github.com/QSOLKCB/HERESY-SEC",
+      "branch": "main",
+      "archived": false,
+      "category": "Security",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "igm",
+      "url": "https://github.com/QSOLKCB/igm",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "INDEPENDENCE",
+      "url": "https://github.com/QSOLKCB/INDEPENDENCE",
+      "branch": "main",
+      "archived": false,
+      "category": null,
+      "scan": {
+        "state": "scanned",
+        "tree_sha": "3dddf67cb89dd85b9675477c8758b84baac81467",
+        "files_seen": 15,
+        "manifest_count": 0,
+        "manifest_paths": [],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 0,
+        "container_marker_paths": [],
+        "vendored_file_count": 0,
+        "workflow_count": 1
+      }
+    },
+    {
+      "name": "jitterbug",
+      "url": "https://github.com/QSOLKCB/jitterbug",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "LATTICE",
+      "url": "https://github.com/QSOLKCB/LATTICE",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "LCOS",
+      "url": "https://github.com/QSOLKCB/LCOS",
+      "branch": "master",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "LHC",
+      "url": "https://github.com/QSOLKCB/LHC",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "LOWBLOWLEGENDS",
+      "url": "https://github.com/QSOLKCB/LOWBLOWLEGENDS",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "NEXUS",
+      "url": "https://github.com/QSOLKCB/NEXUS",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "NOTEBOOK",
+      "url": "https://github.com/QSOLKCB/NOTEBOOK",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "NS",
+      "url": "https://github.com/QSOLKCB/NS",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "NS-LLM",
+      "url": "https://github.com/QSOLKCB/NS-LLM",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "NS-SIM",
+      "url": "https://github.com/QSOLKCB/NS-SIM",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "OPT",
+      "url": "https://github.com/QSOLKCB/OPT",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "scanned",
+        "tree_sha": "7556dd36acd53ed3ed538fd03b1db44e5c1ec869",
+        "files_seen": 96,
+        "manifest_count": 0,
+        "manifest_paths": [],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 0,
+        "container_marker_paths": [],
+        "vendored_file_count": 0,
+        "workflow_count": 3
+      }
+    },
+    {
+      "name": "phalpern",
+      "url": "https://github.com/QSOLKCB/phalpern",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "PROVENANCE",
+      "url": "https://github.com/QSOLKCB/PROVENANCE",
+      "branch": "main",
+      "archived": false,
+      "category": "Security",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "PSYCLE-LINUX",
+      "url": "https://github.com/QSOLKCB/PSYCLE-LINUX",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "PULL",
+      "url": "https://github.com/QSOLKCB/PULL",
+      "branch": "main",
+      "archived": false,
+      "category": null,
+      "scan": {
+        "state": "scanned",
+        "tree_sha": "c97a5035acaf7119c08956e7b1aed15f1d2a223e",
+        "files_seen": 32,
+        "manifest_count": 1,
+        "manifest_paths": [
+          "package.json"
+        ],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 0,
+        "container_marker_paths": [],
+        "vendored_file_count": 0,
+        "workflow_count": 1
+      }
+    },
+    {
+      "name": "QAI-UFT",
+      "url": "https://github.com/QSOLKCB/QAI-UFT",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QEC",
+      "url": "https://github.com/QSOLKCB/QEC",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "scanned",
+        "tree_sha": "4ad55333f888ca33200f0e6f062cb7afd20f1eec",
+        "files_seen": 2577,
+        "manifest_count": 4,
+        "manifest_paths": [
+          "package.json",
+          "pyproject.toml",
+          "tui/Cargo.lock",
+          "tui/Cargo.toml"
+        ],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 1,
+        "container_marker_paths": [
+          "Dockerfile"
+        ],
+        "vendored_file_count": 0,
+        "workflow_count": 16
+      }
+    },
+    {
+      "name": "QNTOY",
+      "url": "https://github.com/QSOLKCB/QNTOY",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-ARK",
+      "url": "https://github.com/QSOLKCB/QSOL-ARK",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-BLUE-FORGE",
+      "url": "https://github.com/QSOLKCB/QSOL-BLUE-FORGE",
+      "branch": "main",
+      "archived": false,
+      "category": "Security",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-CONTROL",
+      "url": "https://github.com/QSOLKCB/QSOL-CONTROL",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-FED",
+      "url": "https://github.com/QSOLKCB/QSOL-FED",
+      "branch": "main",
+      "archived": false,
+      "category": "Security",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-GEO-REASON",
+      "url": "https://github.com/QSOLKCB/QSOL-GEO-REASON",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-IBAE",
+      "url": "https://github.com/QSOLKCB/QSOL-IBAE",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "scanned",
+        "tree_sha": "2f9c3e826ee177a75cf12ca0eeb7d5a97070cff9",
+        "files_seen": 108,
+        "manifest_count": 3,
+        "manifest_paths": [
+          "pyproject.toml",
+          "rust/Cargo.lock",
+          "rust/Cargo.toml"
+        ],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 0,
+        "container_marker_paths": [],
+        "vendored_file_count": 0,
+        "workflow_count": 2
+      }
+    },
+    {
+      "name": "QSOL-IMC",
+      "url": "https://github.com/QSOLKCB/QSOL-IMC",
+      "branch": "main",
+      "archived": false,
+      "category": null,
+      "scan": {
+        "state": "scanned",
+        "tree_sha": "21f6a7d3efd512b8a7f1d07a5bca27004cf3fd70",
+        "files_seen": 11,
+        "manifest_count": 0,
+        "manifest_paths": [],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 0,
+        "container_marker_paths": [],
+        "vendored_file_count": 0,
+        "workflow_count": 2
+      }
+    },
+    {
+      "name": "QSOL-IMPORT",
+      "url": "https://github.com/QSOLKCB/QSOL-IMPORT",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-INT",
+      "url": "https://github.com/QSOLKCB/QSOL-INT",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-MACH",
+      "url": "https://github.com/QSOLKCB/QSOL-MACH",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-MAP",
+      "url": "https://github.com/QSOLKCB/QSOL-MAP",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-MESH",
+      "url": "https://github.com/QSOLKCB/QSOL-MESH",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-MORPH",
+      "url": "https://github.com/QSOLKCB/QSOL-MORPH",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-NEXUS",
+      "url": "https://github.com/QSOLKCB/QSOL-NEXUS",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-ORACLE",
+      "url": "https://github.com/QSOLKCB/QSOL-ORACLE",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-QEC-BRIDGE",
+      "url": "https://github.com/QSOLKCB/QSOL-QEC-BRIDGE",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-SEMANTIC-RELAY",
+      "url": "https://github.com/QSOLKCB/QSOL-SEMANTIC-RELAY",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-SUBSTRATE",
+      "url": "https://github.com/QSOLKCB/QSOL-SUBSTRATE",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-SYNTHESIS",
+      "url": "https://github.com/QSOLKCB/QSOL-SYNTHESIS",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOL-THOTH",
+      "url": "https://github.com/QSOLKCB/QSOL-THOTH",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOLAI",
+      "url": "https://github.com/QSOLKCB/QSOLAI",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QSOLQEC",
+      "url": "https://github.com/QSOLKCB/QSOLQEC",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QUICKSCOPER",
+      "url": "https://github.com/QSOLKCB/QUICKSCOPER",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "QwakeTF",
+      "url": "https://github.com/QSOLKCB/QwakeTF",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "RANDO",
+      "url": "https://github.com/QSOLKCB/RANDO",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "RECEIPTS",
+      "url": "https://github.com/QSOLKCB/RECEIPTS",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "res-rag",
+      "url": "https://github.com/QSOLKCB/res-rag",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "res-rag-viz",
+      "url": "https://github.com/QSOLKCB/res-rag-viz",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "RIVET",
+      "url": "https://github.com/QSOLKCB/RIVET",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "ROADRUNNER",
+      "url": "https://github.com/QSOLKCB/ROADRUNNER",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "RSH",
+      "url": "https://github.com/QSOLKCB/RSH",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "RUNE",
+      "url": "https://github.com/QSOLKCB/RUNE",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "sabine-gpt",
+      "url": "https://github.com/QSOLKCB/sabine-gpt",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "SAW-1",
+      "url": "https://github.com/QSOLKCB/SAW-1",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "SDMT-TATE-LAB",
+      "url": "https://github.com/QSOLKCB/SDMT-TATE-LAB",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "SONIFICATION",
+      "url": "https://github.com/QSOLKCB/SONIFICATION",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "SPECTRAL",
+      "url": "https://github.com/QSOLKCB/SPECTRAL",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "substratism",
+      "url": "https://github.com/QSOLKCB/substratism",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "syn-son",
+      "url": "https://github.com/QSOLKCB/syn-son",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "synergetics",
+      "url": "https://github.com/QSOLKCB/synergetics",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "synergetics-viz",
+      "url": "https://github.com/QSOLKCB/synergetics-viz",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "synergetics2",
+      "url": "https://github.com/QSOLKCB/synergetics2",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "TAS",
+      "url": "https://github.com/QSOLKCB/TAS",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "TFT",
+      "url": "https://github.com/QSOLKCB/TFT",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "TONELAB",
+      "url": "https://github.com/QSOLKCB/TONELAB",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "Trinite",
+      "url": "https://github.com/QSOLKCB/Trinite",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "TrustMeBro",
+      "url": "https://github.com/QSOLKCB/TrustMeBro",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "UFF",
+      "url": "https://github.com/QSOLKCB/UFF",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "UFT-ID-3.0",
+      "url": "https://github.com/QSOLKCB/UFT-ID-3.0",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "VIZ",
+      "url": "https://github.com/QSOLKCB/VIZ",
+      "branch": "main",
+      "archived": false,
+      "category": "Audio",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "WHOAMI-18437",
+      "url": "https://github.com/QSOLKCB/WHOAMI-18437",
+      "branch": "main",
+      "archived": false,
+      "category": "AI",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "WORKBENCH",
+      "url": "https://github.com/QSOLKCB/WORKBENCH",
+      "branch": "main",
+      "archived": false,
+      "category": "Research",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "YANG-MILLS",
+      "url": "https://github.com/QSOLKCB/YANG-MILLS",
+      "branch": "main",
+      "archived": false,
+      "category": "Physics",
+      "scan": {
+        "state": "not_scanned"
+      }
+    },
+    {
+      "name": "ZERO-DAY-DREAD",
+      "url": "https://github.com/QSOLKCB/ZERO-DAY-DREAD",
+      "branch": "main",
+      "archived": false,
+      "category": "Games",
+      "scan": {
+        "state": "not_scanned"
+      }
+    }
+  ]
+}

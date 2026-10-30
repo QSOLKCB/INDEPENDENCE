@@ -1,5 +1,6 @@
 import {buildAutomaton, dependencyExposure} from './lab/core.js';
 import {runTests} from './lab/tests.js';
+import {mountLedger} from './ledger/ledger.js';
 
 const $ = id => document.getElementById(id);
 const canvas = $('automaton');
@@ -89,3 +90,4 @@ $('run-tests').addEventListener('click', () => {
 });
 updateTree();
 generate();
+mountLedger();
