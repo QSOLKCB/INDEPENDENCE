@@ -7,6 +7,7 @@ import {mountBreeding} from './breeding/ui.js';
 import {mountWorkflow} from './workflow/ui.js';
 import {mountProof} from './proof/ui.js';
 import {mountPropertyLab} from './property/ui.js';
+import {mountAutomataFormalLab} from './formal-lab/ui.js';
 
 const $ = id => document.getElementById(id);
 const canvas = $('automaton');
@@ -103,3 +104,4 @@ mountBreeding();
 mountWorkflow();
 mountProof();
 mountPropertyLab();
+mountAutomataFormalLab();

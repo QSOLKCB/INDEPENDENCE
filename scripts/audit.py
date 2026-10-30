@@ -23,6 +23,7 @@ WEB_FILES = (
     "workflow/core.js", "workflow/ui.js", "workflow/workflow.css",
     "proof/core.js", "proof/ui.js", "proof/proof.css", "proof/contracts.json",
     "property/core.js", "property/tests.js", "property/ui.js", "property/property.css",
+    "formal-lab/core.js", "formal-lab/ui.js", "formal-lab/tests.js", "formal-lab/formal-lab.css",
 )
 FORBIDDEN_MANIFESTS = frozenset({
     "package.json", "package-lock.json", "npm-shrinkwrap.json", "yarn.lock",
