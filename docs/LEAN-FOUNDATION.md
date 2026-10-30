@@ -7,17 +7,17 @@ available here, and download access is blocked.
 
 ## Trust boundary
 
-- Lean version is **exactly** \`leanprover/lean4:v4.35.0\` in the root
-  \`lean-toolchain\` file. Do not substitute \`stable\` or a floating release.
-- \`formal/lean/FiniteFoundation.lean\` imports only the Lean distribution
-  (\`import Lean\`). No Mathlib, npm, pip or application runtime dependencies.
-- Proof execution uses \`lean --trust=0 formal/lean/FiniteFoundation.lean\`.
-  Source uses \`decide +kernel\` for finite closed propositions and \`omega\`
-  for natural-number ordering lemmas; no \`native_decide\`.
-- Every theorem has a \`#print axioms\` command. The runner fails closed on
+- Lean version is **exactly** `leanprover/lean4:v4.35.0` in the root
+  `lean-toolchain` file. Do not substitute `stable` or a floating release.
+- `formal/lean/FiniteFoundation.lean` imports only the Lean distribution
+  (`import Lean`). No Mathlib, npm, pip or application runtime dependencies.
+- Proof execution uses `lean --trust=0 formal/lean/FiniteFoundation.lean`.
+  Source uses `decide +kernel` for finite closed propositions and `omega`
+  for natural-number ordering lemmas; no `native_decide`.
+- Every theorem has a `#print axioms` command. The runner fails closed on
   unexpected/missing statements, tool version, tool exit code, or axiom output.
   The only permitted transitive axioms are the standard
-  \`propext\`, \`Quot.sound\`, and \`Classical.choice\`.
+  `propext`, `Quot.sound`, and `Classical.choice`.
 - The Python source audit detects some common proof escapes and checks a
   fixed theorem inventory. It is **not** Lean compilation or a proof itself.
 - A successful Lean run proves statements about **this Lean model**, subject
@@ -28,10 +28,10 @@ available here, and download access is blocked.
 
 | Group | Theorem obligations | Scope |
 | --- | --- | --- |
-| CRT | \`crt_left_inverse\`, \`crt_right_inverse\` | Explicit isomorphism between Fin 6 and Fin 2 × Fin 3; coprime 2,3 only |
-| GF(2) | \`gf2_add_comm\`, \`gf2_add_assoc\`, \`gf2_add_self\`, \`gf2_mul_comm\`, \`gf2_left_distrib\` | Bool-based XOR/AND |
-| Cyclic ternary phase | \`phase_add_comm\`, \`phase_add_assoc\`, \`phase_zero\` | Addition modulo 3, no quantum physics claim |
-| Monomial degree-lex | \`monomial_irrefl\`, \`monomial_trans\`, \`monomial_translate\` | Strict degree-lex properties on pairs of natural exponents |
+| CRT | `crt_left_inverse`, `crt_right_inverse` | Explicit isomorphism between Fin 6 and Fin 2 × Fin 3; coprime 2,3 only |
+| GF(2) | `gf2_add_comm`, `gf2_add_assoc`, `gf2_add_self`, `gf2_mul_comm`, `gf2_left_distrib` | Bool-based XOR/AND |
+| Cyclic ternary phase | `phase_add_comm`, `phase_add_assoc`, `phase_zero` | Addition modulo 3, no quantum physics claim |
+| Monomial degree-lex | `monomial_irrefl`, `monomial_trans`, `monomial_translate` | Strict degree-lex properties on pairs of natural exponents |
 
 The monomial relation's full well-foundedness, totality/trichotomy, and
 admissibility as a complete monomial order are **outstanding**. CRT for
@@ -40,7 +40,7 @@ semantics and a formal relation between Lean and Ada remain outstanding.
 
 ## How to check using a trusted local installation
 
-Install the official Lean version manager (\`elan\`) separately, then from
+Install the official Lean version manager (`elan`) separately, then from
 the repository root verify the pinned toolchain:
 
     cat lean-toolchain
@@ -55,7 +55,7 @@ Or inspect the raw command:
 
     lean --trust=0 formal/lean/FiniteFoundation.lean
 
-On a missing or incompatible toolchain \`--require-checked\` exits nonzero,
+On a missing or incompatible toolchain `--require-checked` exits nonzero,
 the proof status is NOT_RUN or VERSION_MISMATCH, and **no theorem is
 represented as successfully checked**. Real compilation errors, timeouts,
 and unwanted axioms also block success. Retain the raw output alongside the
