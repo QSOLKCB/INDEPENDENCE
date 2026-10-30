@@ -4,6 +4,7 @@ import {mountLedger} from './ledger/ledger.js';
 import {mountTribunal} from './tribunal/ui.js';
 import {mountMuseum} from './museum/ui.js';
 import {mountBreeding} from './breeding/ui.js';
+import {mountWorkflow} from './workflow/ui.js';
 
 const $ = id => document.getElementById(id);
 const canvas = $('automaton');
@@ -97,3 +98,4 @@ mountLedger();
 mountTribunal();
 mountMuseum();
 mountBreeding();
+mountWorkflow();

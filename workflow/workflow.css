@@ -1,0 +1,47 @@
+/* AI–HUMAN-WORKFLOW/1: static educational interface, no external assets */
+.workflow-section{background:#0c1715;border-top:1px solid #45544b}
+.workflow-hero{max-width:1050px}
+.workflow-claim{font-size:clamp(30px,5vw,68px);letter-spacing:-.055em;line-height:1.08;margin:20px 0;font-weight:900;text-transform:uppercase}
+.workflow-claim em{font-style:normal;color:#ff7055}
+.workflow-lead{max-width:900px;font-size:clamp(16px,1.7vw,21px);line-height:1.65;color:#d4ddcf}
+.workflow-qualification{max-width:900px;color:#b4beb6;font-size:13px;line-height:1.7;border-left:3px solid #f2df9f;padding:12px 19px;background:#1b2320}
+.workflow-heading{font-size:clamp(23px,3vw,34px);margin:42px 0 17px;letter-spacing:-.04em}
+.workflow-shell{border:1px solid #536057;display:grid;grid-template-columns:minmax(210px,290px) minmax(0,1fr);margin:25px 0}
+.workflow-stage-nav{background:#121d18;border-right:1px solid #536057;display:flex;flex-direction:column}
+.workflow-stage-button{border:0;border-bottom:1px solid #3c4940;background:transparent;color:#d5e1d7;text-align:left;cursor:pointer;font:bold 11px/1.5 "Courier New",monospace;padding:18px}
+.workflow-stage-button[aria-pressed=true]{background:#ff563d;color:#181b17}
+.workflow-stage-detail{padding:29px;min-width:0}
+.workflow-stage-detail h3{font-size:clamp(23px,3vw,37px);line-height:1.12;letter-spacing:-.045em}
+.workflow-owner,.workflow-stage-detail strong{font:700 11px "Courier New",monospace;letter-spacing:.04em}
+.workflow-owner{color:#ff957f}.workflow-stage-description{font-size:16px;line-height:1.7;color:#e5eae1}
+.workflow-drift,.workflow-proof,.workflow-example{margin:20px 0;padding:17px 20px;background:#15231a;border-left:3px solid #899689}
+.workflow-drift{border-left-color:#ff563d}.workflow-proof{border-left-color:#a6d6a2}.workflow-example{border-left-color:#f2df9f}
+.workflow-drift p,.workflow-proof p,.workflow-example p{font-size:14px;line-height:1.6;margin:8px 0 0;color:#c7d2c9}
+.workflow-gate-note{font:12px/1.7 "Courier New",monospace;color:#c7d0ca;max-width:850px}
+.workflow-gate-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:19px 0}
+.workflow-gate{border:1px solid #4b5c50;background:#15211a;padding:17px;display:flex;align-items:flex-start;gap:11px;cursor:pointer}
+.workflow-gate input{accent-color:#ff563d;flex:0 0 auto;width:20px;height:20px;margin:0}
+.workflow-gate-label{display:flex;flex-direction:column;gap:7px}
+.workflow-gate strong{font:700 12px/1.5 "Courier New",monospace;color:#ebf2ea}
+.workflow-gate small{color:#b1beb4;font:12px/1.5 Arial,sans-serif}
+.workflow-gate-status,.workflow-builder-status{color:#d7e0d5;font:12px/1.7 "Courier New",monospace}
+.workflow-builder{border:1px solid #536057;padding:24px;background:#121c17}
+.workflow-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.workflow-inputs label{display:flex;flex-direction:column;gap:9px;color:#f2de9a;font:700 11px "Courier New",monospace}
+.workflow-inputs textarea{min-height:88px;resize:vertical;background:#07110e;color:#eff4ee;border:1px solid #58675b;padding:13px;line-height:1.5;font:13px "Courier New",monospace;max-width:100%}
+.workflow-inputs label:first-child{grid-column:1/-1}
+.workflow-buttons{display:flex;gap:11px;flex-wrap:wrap;margin:20px 0}
+.workflow-buttons button{padding:14px 20px;background:#ff563d;color:#121712;border:1px solid #ff563d;font:900 11px "Courier New",monospace;cursor:pointer}
+.workflow-buttons button.secondary{background:transparent;color:#f3eab4;border-color:#9eaa9c}
+.workflow-buttons button:disabled{opacity:.5;cursor:not-allowed}
+.workflow-prompt{background:#060e0a;border:1px solid #465347;min-height:115px;max-height:360px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;color:#cdddcf;font:12px/1.55 "Courier New",monospace;padding:18px}
+.workflow-error{color:#ff987d}
+.workflow-cases{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.workflow-case{border:1px solid #526056;background:#172019;padding:18px}
+.workflow-case-version{font:700 12px "Courier New",monospace;color:#ff8a73}
+.workflow-case h4{font-size:19px;line-height:1.15;margin:13px 0;letter-spacing:-.035em}
+.workflow-case p{font-size:12px;line-height:1.65;color:#c7d0c7}
+.workflow-case a{display:inline-block;margin-top:8px;color:#f2df9f;text-decoration:none;font:bold 10px "Courier New",monospace}
+@media(max-width:1050px){.workflow-cases{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){.workflow-shell{grid-template-columns:1fr}.workflow-stage-nav{border-right:0;border-bottom:1px solid #536057}.workflow-stage-detail{padding:19px}.workflow-gate-grid,.workflow-inputs{grid-template-columns:1fr}.workflow-inputs label:first-child{grid-column:auto}.workflow-cases{grid-template-columns:1fr 1fr}}
+@media(max-width:465px){.workflow-cases{grid-template-columns:1fr}}

@@ -61,3 +61,9 @@ Every specimen has explicit legacy and corrected behaviours and meaningful deter
 GREMLIN-BREEDING/1 implements five isolated pure-function targets and 15 deliberately changed versions. Each is known to diverge from a full, fixed oracle. The small smoke suite and extended fixture suite illustrate how detection capacity changes. Their mutation scores describe **only this fixed catalogue**, not application-wide coverage.
 
 The exact text of the report is SHA-256 hashed by browser WebCrypto. The Python standard-library verifier independently encodes expected witness cases, operators, outcomes and seeded order, then checks the receipt. A valid digest plus expected report does not prove a real execution occurred, certify code quality or represent a security assessment. No dynamic source mutation is performed.
+
+## v0.6 — AI–Human GitHub Workflow
+
+The Secret Source documents the *engineering process* used to develop this project: human-directed tasks, AI-assisted implementation, scoped repository invariants, available test execution, adversarial review, Git HEAD checks and human-controlled merges/releases. Five actual merged PR URLs support the historical project progression. This evidence does not quantify the proportion of code written by AI, AI productivity, comparative accuracy, or a causal reduction in drift.
+
+The static browser section explains eight stages and eight optional self-report checks. Its plain-text prompt generator requires an observable goal and provides an explicit negative scope, invariants, tests, disclosure of unrun checks and a human-only merge gate. Generating a prompt or checking a box performs no tests, repo operations, LLM inference or external verification. The slogan "AI + WEB TECH = UNLIMITED POTENTIAL" is rhetorical and has no numerical or literal basis. See docs/AI-HUMAN-WORKFLOW.md.

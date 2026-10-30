@@ -33,4 +33,11 @@ v0.5 — The Gremlin Breeding Laboratory (implemented in this PR)
 - SHA-256 local receipt export and Python stdlib verifier with independently encoded expected outcomes.
 - No repository-wide mutation coverage, external vulnerability scanning, or real-world attack claims.
 
+v0.6 — The Secret Source: AI–Human GitHub Workflow (implemented in this PR)
+- Public, human-owned eight-stage AI + GitHub engineering loop; show evidence and human/AI division of responsibility.
+- Interactive drift-prevention checklist; self-assessment only, never a fabricated verification or automatic approval.
+- Local, plain-text bounded prompt composer with explicit negative scope, invariants, test requirements, latest HEAD and stop conditions.
+- Real PR #1–#5 case studies; no invented AI accuracy metrics, comparison benchmarks or claims of infinite capability.
+- First-party static HTML/CSS/JavaScript only, offline Python tests, manual Pages deployment; no third-party packages, telemetry or LLM API calls.
+
 Each phase requires deterministic tests and a documented limitation statement.

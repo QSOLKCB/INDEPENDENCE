@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="./tribunal/tribunal.css">
   <link rel="stylesheet" href="./museum/museum.css">
   <link rel="stylesheet" href="./breeding/breeding.css">
+  <link rel="stylesheet" href="./workflow/workflow.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -26,6 +27,7 @@
       <a href="#tribunal">Tribunal</a>
       <a href="#museum">Museum</a>
       <a href="#breeding">Breeding Lab</a>
+      <a href="#workflow">The Secret</a>
       <a class="nav-github" href="https://github.com/QSOLKCB/INDEPENDENCE">Source ↗</a>
     </nav>
   </header>
@@ -211,9 +213,71 @@
       </div>
     </section>
 
+    <section id="workflow" class="section workflow-section">
+      <div class="wrap">
+        <div class="workflow-hero">
+          <span class="kicker">08 / THE SECRET SOURCE — AI × HUMAN × GITHUB</span>
+          <h2>THE SOFTWARE DOESN'T<br><span class="accent">BUILD ITSELF.</span></h2>
+          <p class="workflow-claim">AI + WEB TECH = <em>UNLIMITED POTENTIAL.</em></p>
+          <p class="workflow-lead">Here's the part the previous five releases didn't tell you: an independent human with an idea, AI engineering assistance, first-party web standards, GitHub pull requests, persistent source history, adversarial review, and the willingness to say <strong>NO</strong> when a change drifts off mission.</p>
+          <p class="workflow-qualification"><strong>The slogan is aspirational, not literal:</strong> AI has failure modes, finite context and capability limits; humans and computers have budgets, platform limits and responsibilities. The method creates leverage, not automatic correctness. This section describes our working practice, not a measured productivity experiment or proof that AI is infallible.</p>
+        </div>
+
+        <h3 class="workflow-heading">THE EIGHT-STEP HUMAN–AI GITHUB LOOP</h3>
+        <p class="workflow-gate-note">Select each stage. The human directs and approves; AI helps design, implement and troubleshoot; source-control records and tests provide independently inspectable evidence. No stage below executes an AI model or GitHub operation.</p>
+        <div class="workflow-shell">
+          <div id="workflow-stage-nav" class="workflow-stage-nav" role="group" aria-label="Workflow stages"></div>
+          <div id="workflow-stage-detail" class="workflow-stage-detail" role="region" aria-label="Selected workflow stage" aria-live="polite"></div>
+        </div>
+
+        <h3 class="workflow-heading">HOW TO GET AI MORE CORRECT — AND MAKE IT DRIFT LESS</h3>
+        <p class="workflow-gate-note">Treat each item as a guardrail that you can verify. Ticking a box is only your acknowledgement; it does not inspect a repository, run tests, certify code, or authorise a merge.</p>
+        <div id="workflow-gate-list" class="workflow-gate-grid" role="group" aria-label="Drift prevention checklist"></div>
+        <p id="workflow-gate-status" class="workflow-gate-status" role="status" aria-live="polite"></p>
+
+        <h3 class="workflow-heading">MAKE A BOUNDED AGENT HANDOFF — NO PROMPT MAGIC</h3>
+        <p class="workflow-gate-note">Supply a concrete goal, explicit boundaries, invariants and acceptance tests. Generate a reusable handoff contract you can inspect and copy. All fields stay in this browser page: there is no submission, backend, saved session or LLM API call.</p>
+        <div class="workflow-builder">
+          <div class="workflow-inputs">
+            <label for="workflow-goal">OBSERVABLE GOAL (REQUIRED)
+              <textarea id="workflow-goal" maxlength="1200" rows="3" placeholder="What should a person be able to observe or do when this PR is merged?"></textarea>
+            </label>
+            <label for="workflow-scope">EXACT IN-SCOPE WORK
+              <textarea id="workflow-scope" maxlength="1200" rows="3" placeholder="Name intended files, surfaces, behaviours and constraints."></textarea>
+            </label>
+            <label for="workflow-excluded">EXPLICITLY OUT OF SCOPE
+              <textarea id="workflow-excluded" maxlength="1200" rows="3" placeholder="No unrelated refactors, new dependencies, network, extra features..."></textarea>
+            </label>
+            <label for="workflow-invariants">NON-NEGOTIABLE INVARIANTS
+              <textarea id="workflow-invariants" maxlength="1200" rows="3" placeholder="Data formats, determinism, security, privacy, compatibility..."></textarea>
+            </label>
+            <label for="workflow-acceptance">ACCEPTANCE AND ADVERSARIAL TESTS
+              <textarea id="workflow-acceptance" maxlength="1200" rows="3" placeholder="Positive, negative, boundary and regression cases with evidence."></textarea>
+            </label>
+          </div>
+          <div class="workflow-buttons">
+            <button id="workflow-load-example" class="secondary" type="button">LOAD EXAMPLE MISSION</button>
+            <button id="workflow-build" type="button">GENERATE HANDOFF CONTRACT ↗</button>
+            <button id="workflow-copy" class="secondary" type="button" disabled>COPY PROMPT ↓</button>
+          </div>
+          <p id="workflow-builder-status" class="workflow-builder-status" role="status" aria-live="polite">No handoff generated.</p>
+          <pre id="workflow-prompt" class="workflow-prompt" aria-label="Generated agent handoff prompt">No handoff generated.</pre>
+        </div>
+
+        <h3 class="workflow-heading">THE FIVE RELEASES ARE THE CASE STUDY</h3>
+        <p class="workflow-gate-note">These are links to the project's actual merged pull requests, not invented speed or accuracy benchmarks. The lesson is the repeatable *review discipline* — not that every AI-produced patch was correct on the first try.</p>
+        <div id="workflow-case-studies" class="workflow-cases" aria-label="Versioned GitHub workflow case studies"></div>
+        <div class="tribunal-links">
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/AI-HUMAN-WORKFLOW.md">THE FULL METHOD ↗</a>
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/INVARIANTS.md">REPOSITORY INVARIANTS ↗</a>
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/pulls?q=is%3Apr+is%3Amerged">INSPECT MERGED PULL REQUESTS ↗</a>
+        </div>
+      </div>
+    </section>
+
     <section class="section impact-section">
       <div class="wrap impact-grid">
-        <div><span class="kicker">08 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
+        <div><span class="kicker">09 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
         <div class="impact-panel">
           <label for="direct">Direct packages <output id="direct-value">3</output></label><input type="range" id="direct" min="1" max="10" value="3">
           <label for="fanout">New children per package <output id="fanout-value">3</output></label><input type="range" id="fanout" min="1" max="5" value="3">
@@ -224,7 +288,7 @@
     </section>
 
     <section class="closing wrap">
-      <div class="kicker">09 / THE SIGNATURE</div>
+      <div class="kicker">10 / THE SIGNATURE</div>
       <h2>WE DID NOT LEAVE<br>SOFTWARE ENGINEERING.<br><em>SOFTWARE ENGINEERING LEFT US.</em></h2>
       <div class="signature"><div><strong>QSOL-IMC</strong><span>Independent Software Sovereignty Initiative</span></div><a class="action primary" href="https://github.com/QSOLKCB/INDEPENDENCE">READ THE SOURCE ↗</a></div>
     </section>

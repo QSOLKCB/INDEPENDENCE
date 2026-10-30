@@ -6,6 +6,7 @@ import {createAdapter as keyedAdapter} from '../tribunal/keyed.js';
 import {validateConfig} from '../tribunal/bench.js';
 import {EXHIBITS,runExhibit,runAll,assembleReport,encodeHtml,finiteJSON} from '../museum/core.js';
 import {TARGETS,runMutationLab,validateConfig as validateMutationConfig} from '../breeding/core.js';
+import {STAGES, CONTROLS, CASE_STUDIES, validateMission, makeHandoff, gateStatus} from '../workflow/core.js';
 
 // No testing framework: assertions intentionally use only native JavaScript.
 export function runTests() {
@@ -111,7 +112,45 @@ export function runTests() {
       try { validateMutationConfig({seed:0,suite:'full'});return false; }catch(e){return e instanceof RangeError;}
     }],
     ['breeding catalogue contains five targets and fifteen mutants', () =>
-      TARGETS.length===5 && TARGETS.reduce((n,t)=>n+t.mutants.length,0)===15]
+      TARGETS.length===5 && TARGETS.reduce((n,t)=>n+t.mutants.length,0)===15],
+    ['workflow eight ordered human/AI stages', () =>
+      STAGES.length===8 && STAGES[0].id==='intent' && STAGES.at(-1).id==='ship' &&
+      STAGES.every(s=>s.instruction&&s.drift&&s.evidence&&s.owner)],
+    ['workflow five merged PR records', () =>
+      CASE_STUDIES.length===5 && CASE_STUDIES.every((c,i)=>
+        c.pr===i+1 && c.source==='https://github.com/QSOLKCB/INDEPENDENCE/pull/'+(i+1))],
+    ['workflow drift controls are unique', () => CONTROLS.length===8 &&
+      new Set(CONTROLS.map(c=>c.id)).size===CONTROLS.length],
+    ['workflow requires explicit goal', () => {
+      try{makeHandoff({goal:'',scope:'x',excluded:'x',invariants:'x',acceptance:'x'});return false;}
+      catch(e){return e instanceof RangeError;}
+    }],
+    ['workflow handoff preserves exact supplied boundaries', () => {
+      const s=makeHandoff({goal:'Deliver A',scope:'Only B',excluded:'Never C',invariants:'Keep D',acceptance:'Check E'});
+      return s.includes('Deliver A') && s.includes('Only B') && s.includes('Never C') &&
+        s.includes('Keep D') && s.includes('Check E') && s.includes('exact PR HEAD');
+    }],
+    ['workflow handoff never fabricates verification', () => {
+      const s=makeHandoff({goal:'A',scope:'',excluded:'',invariants:'',acceptance:''});
+      return s.includes('NOT a completed review') && s.includes('unavailable tooling') &&
+        s.includes('HUMAN MUST DEFINE');
+    }],
+    ['workflow rejects oversized mission content', () => {
+      try{validateMission({goal:'a'.repeat(1201),scope:'',excluded:'',invariants:'',acceptance:''});return false;}
+      catch(e){return e instanceof RangeError;}
+    }],
+    ['workflow guards need exact checked booleans', () => {
+      const all=Object.fromEntries(CONTROLS.map(c=>[c.id,true]));
+      const yes=gateStatus(all);
+      all.human='true';
+      const no=gateStatus(all);
+      return yes.acknowledged===8 && yes.allAcknowledged && no.acknowledged===7 &&
+        !no.allAcknowledged && no.selfReportedOnly;
+    }],
+    ['workflow accepts inert user text without interpretation', () => {
+      const s=makeHandoff({goal:'<script>just text</script>',scope:'',excluded:'',invariants:'',acceptance:''});
+      return s.includes('<script>just text</script>') && s.includes('Do not merge');
+    }]
   ];
   return checks.map(([name, check]) => {
     try { return { name, passed: check() === true }; }
