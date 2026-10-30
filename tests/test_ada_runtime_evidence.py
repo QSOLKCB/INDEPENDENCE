@@ -53,7 +53,7 @@ class AdaRuntimeEvidenceTests(unittest.TestCase):
             "seed": 314159,
             "mode": "SEEDED_SAMPLE",
             "finite_cases_checked": 7,
-            "numeric_invalid_checked": 16,
+            "rejected_fixture_checked": 16,
             "lexical_invalid_checked": 6,
             "ada_processes_checked": len(cases),
             "vectors_sha256": vectors,
