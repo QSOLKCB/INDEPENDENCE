@@ -146,6 +146,30 @@ class EvidenceLedgerTests(unittest.TestCase):
         report["coverage"]["total"] = 2
         self.assertNotEqual(token, receipt_hash(report))
 
+    def test_api_restriction_stops_additional_tree_requests(self):
+        client = FixtureClient(
+            [repository("Alpha"), repository("Beta")],
+            {
+                "Alpha": HTTPError("https://api.github.com", 403, "limited", {}, None),
+                "Beta": tree(["package.json"]),
+            }
+        )
+        original = client.get
+        calls = []
+
+        def tracked_get(path):
+            calls.append(path)
+            return original(path)
+
+        client.get = tracked_get
+        report = collection(client, "2026-10-30")
+        self.assertEqual(report["coverage"]["scanned"], 0)
+        self.assertEqual(report["coverage"]["unknown"], 2)
+        self.assertEqual(report["repositories"][1]["scan"]["reason"],
+                         "api_restriction_stopped_collection")
+        self.assertEqual(sum("/git/trees/" in path for path in calls), 1)
+        self.assertTrue(report["references"]["collection_stopped_due_to_api_restriction"])
+
     def test_collector_does_not_read_private_context(self):
         client = FixtureClient(
             [repository("Alpha")], {"Alpha": tree([])},
