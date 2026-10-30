@@ -137,9 +137,35 @@ def verify(root: Path = ROOT) -> dict:
             expected_line = "'" + name + "' does not depend on any axioms"
         if output.splitlines().count(expected_line) != 1:
             raise ArchiveError("axiom audit log differs from JSON: " + theorem)
-    tests = manifest.get("checks", {}).get("python_unittest_reported", {})
-    if tests != {"ran": 169, "failed": 0}:
+    # A publication manifest must not contradict the pinned evidence it
+    # summarizes. Enforce every check field, the exact schema, and exact types:
+    # Python bool compares equal to 0/1 unless checked explicitly.
+    checks = manifest.get("checks")
+    expected_keys = {
+        "python_unittest_reported", "lean_kernel_reported",
+        "lean_exit_code_reported", "theorems_declared", "axiom_audits",
+        "unapproved_axioms_reported",
+    }
+    if type(checks) is not dict or set(checks) != expected_keys:
+        raise ArchiveError("manifest checks schema mismatch")
+    tests = checks["python_unittest_reported"]
+    if (type(tests) is not dict or set(tests) != {"ran", "failed"}
+        or type(tests["ran"]) is not int or tests["ran"] != 169
+        or type(tests["failed"]) is not int or tests["failed"] != 0):
         raise ArchiveError("reported unittest metadata changed")
+    lean_expected = {
+        "lean_kernel_reported": report["kernel_check"],
+        "lean_exit_code_reported": report["exit_code"],
+        "theorems_declared": len(report["theorems_declared"]),
+        "axiom_audits": len(audit),
+        "unapproved_axioms_reported": sum(
+            axiom not in ALLOWED for values in audit.values() for axiom in values
+        ),
+    }
+    for name, expected in lean_expected.items():
+        actual = checks[name]
+        if type(actual) is not type(expected) or actual != expected:
+            raise ArchiveError("manifest Lean result mismatch: " + name)
     return {
         "archive_integrity": "PASS",
         "source_commit": SOURCE_COMMIT,
