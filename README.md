@@ -85,3 +85,17 @@ Regenerate using Python's standard library (GitHub REST network required):
     GITHUB_TOKEN=... python3 scripts/build_ledger.py --as-of 2026-10-30 --output ledger/data.json
 
 The existing manually triggered Pages workflow now refreshes the snapshot before testing and packaging the site. Visitors load static JSON from GitHub Pages; **their browsers do not query the GitHub API**. See [ledger methodology](docs/LEDGER.md) for evidence scope, unknown states, failure handling, and receipt hashing.
+
+## v0.3.0 — The Dependency Tribunal
+
+[Open the experiment](https://qsolkcb.github.io/INDEPENDENCE/#tribunal) after merging and manually deploying.
+
+DOM-TRIBUNAL/1 compares **direct DOM replacement** with a tiny **first-party keyed adapter**, both performing identical seeded list render, update and reorder operations on detached DOM elements. The latter is illustrative, NOT an actual React/Vue/Svelte or third-party framework benchmark. No default winning figures are provided: results only exist when the visitor explicitly runs the workload.
+
+Every trial has matching output assertions, alternating execution order and warmups. The browser reports paired medians, seeded bootstrap 95% percentile intervals and first-party adapter source byte counts. SHA-256 receipts are downloadable locally, not sent to QSOL-IMC.
+
+Verify an exported file with Python stdlib:
+
+    python3 scripts/verify_tribunal.py /path/to/tribunal-receipt.json --json
+
+Verification checks exact UTF-8 payload integrity and internal sample/summary consistency, not the authenticity of measured timings. Read [the protocol](docs/TRIBUNAL.md) for scope and limitations.
