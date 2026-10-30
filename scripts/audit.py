@@ -16,6 +16,8 @@ import sys
 WEB_FILES = (
     "index.html", "styles.css", "app.js", "lab/core.js", "lab/tests.js",
     "ledger/ledger.js", "ledger/ledger.css", "ledger/data.json",
+    "tribunal/core.js", "tribunal/direct.js", "tribunal/keyed.js",
+    "tribunal/bench.js", "tribunal/ui.js", "tribunal/tribunal.css",
 )
 FORBIDDEN_MANIFESTS = frozenset({
     "package.json", "package-lock.json", "npm-shrinkwrap.json", "yarn.lock",
