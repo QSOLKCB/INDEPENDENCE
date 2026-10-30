@@ -131,7 +131,7 @@ class SparkEvidenceArchiveTests(unittest.TestCase):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         self.assertIn('class="pest-control-declaration"', page)
-        self.assertIn("This Isn't War, <strong>This Is Pest Control.</strong>", page)
+        self.assertIn("This Isn't War, <strong>This Is Pest Control</strong>", page)
         self.assertLess(page.index('class="divorce-declaration"'),
                         page.index('class="pest-control-declaration"'))
         self.assertIn("GNATprove FSF 16.1.0 reported all 21 checks proved", page)
