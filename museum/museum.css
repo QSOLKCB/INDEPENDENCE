@@ -1,0 +1,22 @@
+.museum-section{background:#121713;border-block:1px solid #404840}
+.museum-intro{color:#b8c4bb;line-height:1.75;max-width:900px;font-size:16px}
+.museum-notice{border-left:4px solid #ff563d;padding:18px 24px;margin:25px 0;background:#29231f;font:12px/1.7 "Courier New",monospace;color:#f1e5d5}
+.museum-shell{display:grid;grid-template-columns:minmax(190px,260px) minmax(0,1fr);border:1px solid #3b473d;margin-top:32px}
+.museum-specimens{display:flex;flex-direction:column;align-items:stretch;gap:0;background:#101511;border-right:1px solid #3b473d}
+.museum-specimen{background:transparent;border:0;border-bottom:1px solid #364039;text-align:left;padding:19px 16px;color:#cbd8ce;font:bold 12px/1.5 "Courier New",monospace}
+.museum-specimen[aria-pressed=true]{background:#ff563d;color:#10120e}
+.museum-stage{padding:27px;min-width:0}
+.museum-exhibit-meta{color:#ff917d;font:10px/1.6 "Courier New",monospace;text-transform:uppercase}
+.museum-exhibit-title{font-size:28px;letter-spacing:-.04em;margin:14px 0}
+.museum-lesson{color:#b2beb4;line-height:1.6;max-width:640px}
+.museum-stage h4{font:700 11px "Courier New",monospace;letter-spacing:.07em;color:#f3eab4;margin:26px 0 9px}
+.museum-code{white-space:pre-wrap;overflow-wrap:anywhere;background:#090c0a;color:#d9e2d6;border:1px solid #37433b;padding:16px;font:12px/1.65 "Courier New",monospace;min-height:50px}
+.museum-before{border-left:3px solid #ff563d}.museum-after{border-left:3px solid #9ad9a1}
+.museum-assertions{color:#c2c9c0;font:12px/1.6 "Courier New",monospace;margin:20px 0}.museum-pass{color:#9ad9a1}.museum-fail{color:#ff8c73}
+.museum-execute,.museum-action{border:1px solid #ff563d;background:#ff563d;color:#111;padding:14px 20px;cursor:pointer;font:900 11px "Courier New",monospace}
+.museum-source{display:block;margin:22px 0 0;color:#f3eab4;font:11px "Courier New",monospace;text-decoration:none}
+.museum-action-row{display:flex;gap:13px;flex-wrap:wrap;margin:23px 0}
+.museum-action.secondary{background:transparent;color:#f3eab4;border-color:#898f86}
+.museum-action:disabled{opacity:.5;cursor:not-allowed}
+.museum-status,.museum-hash{font:12px/1.8 "Courier New",monospace;color:#c5d0c6;overflow-wrap:anywhere}
+@media(max-width:740px){.museum-shell{grid-template-columns:1fr}.museum-specimens{border-right:0;border-bottom:1px solid #3b473d}.museum-stage{padding:18px}.museum-specimen{padding:13px 15px}}
