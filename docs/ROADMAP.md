@@ -83,8 +83,12 @@ v1.0.2 — Rocq Independent Semantic Verification (implementation PR)
 - Rocq 9.2.0 pin; strict source inventory/assumption audit and optional real compiler gate. Missing Rocq remains NOT_RUN, not PROVED.
 - Preserve proof/refinement boundaries and existing original browser archive; no new website/runtime dependencies.
 
-v1.1.0 — Zenodo formalization of repository (planned)
-- Exact tagged sources, executable proof artefacts and logs, assumptions, partial gaps, SHA manifest and transparent research report.
+v1.1.0 — Formalisation Report & Original Evidence Preservation (implementation PR)
+- Full research report integrating Lean 4, SPARK/GNATprove, fresh Ada, production JavaScript, arbitrary-finite-width Rocq mathematical models and dual-browser observations.
+- Two original user-supplied proof archives preserved byte-for-byte with source commit, internal SHA-256 inventories and pinned original archive hashes; no reserialization/recompression.
+- Independent Python standard-library evidence verification, explicit claim-boundary statuses and adversarial tests; no fabricated execution or proof attestations.
+- Reproducibility procedures, known open refinement obligations and proposed Zenodo metadata; DOI reserved by author, public published record not independently confirmed.
+- Retain historical v1.0.1 browser ZIP and source provenance; no new website dependencies or application runtime changes.
 
 Each phase requires deterministic tests and a documented limitation statement.
 

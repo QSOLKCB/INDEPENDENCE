@@ -48,6 +48,14 @@ jobs:
           name: independence-v1.0.2-rocq-static-evidence
           path: ${{ runner.temp }}/rocq-static-evidence.json
           if-no-files-found: error
+      - name: Verify original v1.1.0 formalisation archives and bounded evidence receipts
+        run: python3 scripts/verify_formalisation_archive.py --output "$RUNNER_TEMP/formalisation-integrity.json"
+      - name: Preserve explicit integrity-not-attestation result
+        uses: actions/upload-artifact@v4
+        with:
+          name: independence-v1.1.0-research-integrity
+          path: ${{ runner.temp }}/formalisation-integrity.json
+          if-no-files-found: error
       - name: Verify first-party dependency audit
         run: python3 scripts/audit.py --json
 

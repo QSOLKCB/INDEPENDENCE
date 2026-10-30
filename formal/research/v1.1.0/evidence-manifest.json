@@ -1,0 +1,108 @@
+{
+  "protocol": "INDEPENDENCE-RESEARCH-EVIDENCE/1",
+  "report_version": "1.1.0",
+  "source_baseline": {
+    "repository": "QSOLKCB/INDEPENDENCE",
+    "main_commit_at_preparation": "065cc1f1015d3e2faa4c1257fa7efa32f2ca2395",
+    "v1_0_0_tag_commit": "764aec4bda8381de2aed620037d5ff992dba25ea",
+    "rocq_proof_run_branch_commit": "00c093ce56071813b815805c86559b8b4b303cab",
+    "v1_0_2_proof_runner_merge_commit": "065cc1f1015d3e2faa4c1257fa7efa32f2ca2395"
+  },
+  "zenodo": {
+    "doi": "10.5281/zenodo.23816739",
+    "status": "user-reported_minted_not_independently_confirmed_as_published",
+    "do_not_claim_report_published": true
+  },
+  "evidence_archives": {
+    "automata4-proof-archive.tar.gz": {
+      "bytes": 3473,
+      "sha256": "05990c6b614d463e973bdee55b20159b59a37844fe03d81f75927f729de99457",
+      "members": {
+        "automata4-proof-archive/GNATPROVE_VERSION.txt": {
+          "bytes": 351,
+          "sha256": "71d7a9a216f2a9d59b744796e31c00b682a3d79eef2554866cfb385cbb656e58"
+        },
+        "automata4-proof-archive/GPRBUILD_VERSION.txt": {
+          "bytes": 235,
+          "sha256": "1b8e012ae0c0a5ec3979231f67666ff60523da207d7548048a7f276a32feb61f"
+        },
+        "automata4-proof-archive/LEAN_VERSION.txt": {
+          "bytes": 106,
+          "sha256": "eb22144228dd41cd51a0c84af4f976cd0cef473102dcf99b60be756b11f2b95a"
+        },
+        "automata4-proof-archive/NODE_VERSION.txt": {
+          "bytes": 9,
+          "sha256": "3908ef42602f8742fa1b947ab741a18df5ac716313cd30eb020712b7f45dab24"
+        },
+        "automata4-proof-archive/SHA256SUMS.txt": {
+          "bytes": 711,
+          "sha256": "f209892bc07dbb03bffd87e8cc72c803420d6259c2ec5f386849780b00d53a38"
+        },
+        "automata4-proof-archive/SOURCE_COMMIT.txt": {
+          "bytes": 41,
+          "sha256": "1e1372f36fe6a8ee98b9d982fef324b6136d08249c6aa4aa2e34982b30aee6e5"
+        },
+        "automata4-proof-archive/WORKTREE_STATUS.txt": {
+          "bytes": 156,
+          "sha256": "8ba096bdd86353baf3a28076082ce9dd5c1831799edd90bb3808d14b162ad742"
+        },
+        "automata4-proof-archive/automata4-complete-evidence.json": {
+          "bytes": 6029,
+          "sha256": "262a34696a9d81aa4587e56ecfc9633c83b4870a7172e84b9be3836493e84091"
+        },
+        "automata4-proof-archive/automata4-lean-spark-evidence.json": {
+          "bytes": 4741,
+          "sha256": "6f0453b609342ad585d248b2945ab062fdfda26af7da2fe9c9944da235e61adf"
+        }
+      }
+    },
+    "INDEPENDENCE-rocq-proof-evidence.tar.gz": {
+      "bytes": 3658,
+      "sha256": "c7a28f450c0cb50df51f16cec6190cbcfef850dcf88042e88911bb6167796d6f",
+      "members": {
+        "INDEPENDENCE-rocq-proof-evidence/Automata.v": {
+          "bytes": 6189,
+          "sha256": "6f814063141fbed564db239c3e5abaf4bdd833e2819889d7a6be005ee937ada1"
+        },
+        "INDEPENDENCE-rocq-proof-evidence/OPAM_INSTALLED.txt": {
+          "bytes": 1301,
+          "sha256": "f95388592f8aa0589c7137bdac3cd5e5aa4d198cabfbe4866ea20e168bd056ea"
+        },
+        "INDEPENDENCE-rocq-proof-evidence/ROCQ_VERSION.txt": {
+          "bytes": 56,
+          "sha256": "307af1b4a460c148e60dcf08f607e77e6f93fe2e04d5a16b299aae991a5f3e76"
+        },
+        "INDEPENDENCE-rocq-proof-evidence/SHA256SUMS.txt": {
+          "bytes": 423,
+          "sha256": "5e45614b7de3f1f3c463f80da7247b6e49678c011adbb53ea7f9bfc61dc3b7df"
+        },
+        "INDEPENDENCE-rocq-proof-evidence/SOURCE_COMMIT.txt": {
+          "bytes": 41,
+          "sha256": "88c13a6ca4f2aa9ecf63170970605d42573ac3d9e8250a174fd4c9d1a415b0d5"
+        },
+        "INDEPENDENCE-rocq-proof-evidence/rocq-executed-evidence.json": {
+          "bytes": 2691,
+          "sha256": "b147b60bc46683d1ae08ef5d9a265932cb17c273bee1a2399f9a22a8075ca5dc"
+        }
+      }
+    }
+  },
+  "historical_browser_evidence": {
+    "in_repo_path": "formal/evidence/browser/v1.0.1/base64/",
+    "original_actions_run_id": 41112613136,
+    "zip_sha256": "76514017982d86c95003bd4f86ccdcf4404502ede4609ba8f7767b89ee6c396a",
+    "reported_checks": 92,
+    "execution_attestation": "NOT_INDEPENDENTLY_ESTABLISHED"
+  },
+  "scope_policy": {
+    "lean": "MODEL_KERNEL_CHECKED_REPORTED",
+    "spark": "GNATPROVE_CONTRACTS_DISCHARGED_REPORTED",
+    "ada": "FINITE_EXECUTION_REPORTED",
+    "javascript": "FINITE_EXECUTION_REPORTED",
+    "rocq": "MODEL_KERNEL_CHECKED_REPORTED",
+    "independent_execution_attestation": false,
+    "js_formal_refinement": "NOT_ESTABLISHED",
+    "public_github_pages_byte_integrity": "NOT_ESTABLISHED_BY_THESE_RECEIPTS",
+    "full_wide_automaton_correctness": "NOT_ESTABLISHED"
+  }
+}
