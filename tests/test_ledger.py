@@ -212,6 +212,31 @@ class EvidenceLedgerTests(unittest.TestCase):
         self.assertIn("ledger/data.json", workflow)
         self.assertNotIn("api.github.com", browser)
         self.assertNotIn("GITHUB_TOKEN", browser)
+        self.assertIn("validReceiptSha(report.receipt_sha256)", browser)
+        self.assertIn("validTreeSha(scan.tree_sha)", browser)
+
+    def test_optional_catalogue_network_failure_does_not_block_collection(self):
+        for error in (TimeoutError("read timed out"), ConnectionResetError("reset by peer")):
+            with self.subTest(error=type(error).__name__):
+                client = FixtureClient([repository("Alpha")], {"Alpha": tree(["README.md"])})
+
+                def failed_catalogue(owner, repo, filename):
+                    raise error
+
+                client.get_text = failed_catalogue
+                report = collection(client, "2026-10-30")
+                self.assertEqual(report["coverage"]["scanned"], 1)
+                self.assertEqual(report["coverage"]["unknown"], 0)
+                self.assertEqual(report["coverage"]["catalogued"], 0)
+                self.assertIsNone(report["repositories"][0]["category"])
+                self.assertEqual(report["references"]["catalogue_status"],
+                                 "unavailable:" + type(error).__name__)
+                self.assertEqual(report["receipt_sha256"], receipt_hash(report))
+
+    def test_receipt_hash_is_64_lowercase_hex_digits(self):
+        digest = receipt_hash({"schema_version": 1})
+        self.assertEqual(len(digest), 64)
+        self.assertTrue(all(letter in "0123456789abcdef" for letter in digest))
 
     def test_seed_snapshot_not_mistaken_for_verified(self):
         data = json.loads((ROOT / "ledger/data.json").read_text(encoding="utf-8"))

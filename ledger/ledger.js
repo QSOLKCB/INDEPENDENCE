@@ -7,7 +7,9 @@ const make = (tag, cls, value) => {
   return element;
 };
 const safeName = name => typeof name === 'string' && /^[A-Za-z0-9_.-]+$/.test(name);
-const validSha = sha => typeof sha === 'string' && /^[a-f0-9]{40}$/.test(sha);
+// Git object IDs are 40 hex characters; SHA-256 evidence receipts are 64.
+export const validTreeSha = sha => typeof sha === 'string' && /^[a-f0-9]{40}$/.test(sha);
+export const validReceiptSha = sha => typeof sha === 'string' && /^[a-f0-9]{64}$/.test(sha);
 const status = row => {
   const scan = row.scan || {};
   if (scan.state !== 'scanned' || !Number.isSafeInteger(scan.manifest_count) ||
@@ -69,7 +71,7 @@ export function mountLedger() {
         indicators.append(make('span', '', 'Not certified: ' + (scan.reason || scan.state || 'no scan')));
       }
       card.append(indicators);
-      if (validSha(scan.tree_sha)) {
+      if (validTreeSha(scan.tree_sha)) {
         const path = make('a', 'ledger-tree-link', 'Inspect tree ' + scan.tree_sha.slice(0, 12) + ' ↗');
         path.href = 'https://github.com/QSOLKCB/' + row.name + '/tree/' + scan.tree_sha;
         path.rel = 'noopener noreferrer';
@@ -128,9 +130,11 @@ export function mountLedger() {
       }
       const text = 'Snapshot: ' + report.as_of + ' · ' + report.method + '.';
       byId('ledger-method').textContent = text;
-      receipt.textContent = validSha(report.receipt_sha256)
+      receipt.textContent = validReceiptSha(report.receipt_sha256)
         ? 'Canonical JSON SHA-256 receipt: ' + report.receipt_sha256
-        : 'Seed inventory only · no canonical SHA-256 receipt until a collected deployment.';
+        : report.receipt_sha256 == null
+          ? 'Seed inventory only · no SHA-256 receipt until a collected deployment.'
+          : 'Invalid SHA-256 receipt value · inspect the source dataset.';
       repaint();
     })
     .catch(error => {

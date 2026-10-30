@@ -168,7 +168,8 @@ def collection(client, as_of: str, owner: str = OWNER) -> dict:
     category_state = "available"
     try:
         catalog = curated_categories(client.get_text(owner, "QSOL-IMC", "app.js"))
-    except (HTTPError, URLError, ValueError, KeyError, UnicodeError) as error:
+    except (HTTPError, URLError, ValueError, KeyError, UnicodeError, OSError) as error:
+        # Optional metadata must not block collection on socket/read timeouts.
         catalog = {}
         category_state = "unavailable:" + type(error).__name__
     rows = []
