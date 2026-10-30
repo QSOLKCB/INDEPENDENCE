@@ -51,11 +51,16 @@ jobs:
       - name: Execute real browser smoke and ledger fault journeys
         run: python3 scripts/run_browser_journeys.py --site "$RUNNER_TEMP/independence-pages" --require-browser --output "$RUNNER_TEMP/pages-browser-evidence.json"
 
+      - name: Run real Firefox WebDriver journeys before deploying
+        run: python3 scripts/firefox_journeys.py --site "$RUNNER_TEMP/independence-pages" --require-browser --output "$RUNNER_TEMP/pages-firefox-evidence.json"
+
       - name: Preserve pre-deployment browser evidence
         uses: actions/upload-artifact@v4
         with:
           name: independence-pages-preflight
-          path: ${{ runner.temp }}/pages-browser-evidence.json
+          path: |
+            ${{ runner.temp }}/pages-browser-evidence.json
+            ${{ runner.temp }}/pages-firefox-evidence.json
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
