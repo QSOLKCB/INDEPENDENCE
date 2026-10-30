@@ -1,0 +1,92 @@
+{
+  "protocol": "INDEPENDENCE-AUTOMATA4-SPEC/1",
+  "schema_version": 1,
+  "domain": {
+    "width": 4,
+    "rule_min": 0,
+    "rule_max": 255,
+    "cell_values": [
+      0,
+      1
+    ],
+    "row_count": 16,
+    "cases": 4096
+  },
+  "semantics": {
+    "neighborhood_index": "4*left + 2*center + right, with left/right=0 outside row",
+    "rule_bit": "(rule // 2**neighborhood_index) % 2",
+    "step": "simultaneous update of four cells, using the pre-step row with fixed-zero boundaries",
+    "bit_order": "first cell at left; vectors [cell1,cell2,cell3,cell4]",
+    "input_mutation": "input row must remain unchanged"
+  },
+  "expected_vectors": [
+    {
+      "rule": 0,
+      "bits": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "output": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "rule": 255,
+      "bits": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "output": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "rule": 90,
+      "bits": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "output": [
+        0,
+        1,
+        0,
+        1
+      ]
+    },
+    {
+      "rule": 90,
+      "bits": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "output": [
+        0,
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "formal_status": "NOT_RUN",
+  "execution_status": "NOT_RUN",
+  "boundaries": [
+    "Lean theorem statements cover the independent finite model, not the implementation in JS, Ada or Python.",
+    "GNATprove must discharge new Ada contracts before any SPARK proof success is claimed.",
+    "An exhaustive 4096-vector comparison is not a proof of all automata widths or arbitrary JS inputs.",
+    "Proof toolchains are optional developer tools, not website runtime dependencies."
+  ]
+}
