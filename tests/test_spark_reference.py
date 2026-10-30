@@ -61,6 +61,15 @@ class SparkReferenceTests(unittest.TestCase):
                         "not K.Valid_Edge"):
             self.assertIn(snippet, code)
 
+    def test_cli_restricts_numeric_grammar_to_ascii_decimal(self):
+        source = (ROOT / "formal/spark/reference_cli.adb").read_text()
+        self.assertIn("Text : constant String := CLI.Argument (Index)", source)
+        self.assertIn("Text'Length = 0", source)
+        self.assertIn("for C of Text loop", source)
+        self.assertIn("C not in '0' .. '9'", source)
+        self.assertIn("return Natural'Value (Text)", source)
+        self.assertNotIn("Natural'Value (CLI.Argument", source)
+
     def test_missing_tool_reports_not_run(self):
         result = run_gnatprove(ROOT, executable="/missing/gnatprove")
         self.assertEqual(result["ada_contracts"], "NOT_RUN")
