@@ -93,3 +93,9 @@ With an actual supplied Ada executable the same script executes matching vectors
 ## v0.7.3 — Lean 4 proof candidate and axiom-auditing boundary
 
 The source at formal/lean/FiniteFoundation.lean contains 13 theorem declarations with no deliberate admitted proofs, each accompanied by a transitive #print axioms request. Toolchain identity is locked in lean-toolchain. The Python runner can fail closed on absent Lean, incompatible versions, a failed kernel pass or unauthorized axioms; source-only validation is NOT a mathematical proof. The authoring environment has no Lean executable, so a real kernel-check output is not yet available and no proved theorem is claimed. See docs/LEAN-FOUNDATION.md.
+
+## Archived v0.7.3 successful local Lean evidence (Zenodo v1.1.0 input)
+
+A user-provided terminal transcript reports 169 passing Python tests and `KERNEL_CHECKED` from pinned Lean 4.35.0 with `--trust=0`, exit code zero and 13/13 checked theorem/axiom reports. The archive in `formal/evidence/lean/v0.7.3` preserves the recovered JSON output, exact Lean source snapshot, root toolchain pin snapshot, SHA-256 checksums and source Git commit `68351489e8bbbb879efdcac19d02869124fcf724`. The source SHA-256 is `0a71bba7fa1d8e81a73051c9c5e508126ba97242bf88537d2e55779019e2756d`; the recovered JSON SHA-256 is `ef3edf6cbfb7ac0b02ca6c30e3c9bfd3b21e89382f3ec0436f31093c5e4355a7`. The original JSON file was not provided as a separate attachment, so original-file byte identity is not independently established.
+
+Run `python3 scripts/verify_lean_evidence_archive.py` to check internal consistency and detect changed source or evidence bytes. This is **not independently attested execution**, nor proof of production Ada, Python or JavaScript. Future Zenodo materials must retain that distinction.
