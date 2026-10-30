@@ -57,6 +57,50 @@ class SparkReferenceTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "proof exemption"):
                 inspect_sources(root)
 
+    def test_gpr_directory_attributes_are_scalar_strings(self):
+        projects = {
+            "kernel.gpr": ("Object_Dir",),
+            "cli.gpr": ("Object_Dir", "Exec_Dir"),
+        }
+        for name, attributes in projects.items():
+            with self.subTest(project=name):
+                source = (ROOT / "formal/spark" / name).read_text(encoding="utf-8")
+                for attr in attributes:
+                    directory = "bin" if attr == "Exec_Dir" else "obj"
+                    self.assertIn(f'for {attr} use "{directory}";', source)
+                    self.assertNotIn(f'for {attr} use ("{directory}");', source)
+                self.assertIn('for Create_Missing_Dirs use "True";', source)
+
+    def test_static_gate_rejects_old_object_dir_list_syntax(self):
+        temp, root = self.fixture_dir()
+        with temp:
+            path = root / "formal/spark/kernel.gpr"
+            path.write_text(path.read_text().replace(
+                'for Object_Dir use "obj";', 'for Object_Dir use ("obj");'
+            ), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "GPR single-valued directory"):
+                inspect_sources(root)
+
+    def test_static_gate_rejects_old_exec_dir_list_syntax(self):
+        temp, root = self.fixture_dir()
+        with temp:
+            path = root / "formal/spark/cli.gpr"
+            path.write_text(path.read_text().replace(
+                'for Exec_Dir use "bin";', 'for Exec_Dir use ("bin");'
+            ), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "GPR single-valued directory"):
+                inspect_sources(root)
+
+    def test_static_gate_rejects_missing_directory_creation_policy(self):
+        temp, root = self.fixture_dir()
+        with temp:
+            path = root / "formal/spark/kernel.gpr"
+            path.write_text(path.read_text().replace(
+                'for Create_Missing_Dirs use "True";', ''
+            ), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "missing-directory creation"):
+                inspect_sources(root)
+
     def test_cli_validates_modular_input_before_conversion(self):
         code = (ROOT / "formal/spark/reference_cli.adb").read_text()
         for snippet in ("N (2) > 1", "N (2) > 2", "C >= W",
