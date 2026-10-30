@@ -236,3 +236,15 @@ The user uploaded the **original ZIP and checksum** following the actual Ada/Pyt
     python3 scripts/verify_original_ada_evidence.py
 
 File-byte identity and internal consistency are now established; independent authentication of local compiler execution is **not** asserted. The full set is finite, not a general formal proof of CLI or application behaviour.
+
+## v0.8 — Deterministic Property Lab and Counterexample Minimisation
+
+The deployed first-party [Property Lab](https://qsolkcb.github.io/INDEPENDENCE/#property-lab) generates up to 512 replayable seeded automaton cases, compares the real transition implementation against an independent oracle, exposes a **deliberately injected boundary-condition mutant**, and shrinks a failing 8-cell witness to its canonical 1-cell reproducer. It also reproduces the existing real mutable `Uint8Array`/fingerprint counterexample and provides an **opt-in defensive-copy snapshot API** without changing the legacy automaton interface. The browser exports exact SHA-256 property receipts, independently checked for consistency with Python stdlib:
+
+```sh
+python3 -m unittest discover -s tests -v
+python3 scripts/audit.py --json
+python3 scripts/verify_property_receipt.py /path/to/property-lab-<hash>.json
+```
+
+The injected mutant is intentionally faulty, **not a discovered production defect**. Finite tests, self-hashed receipts and opt-in ownership guards establish no universal proof or independent browser execution attestation. See [docs/PROPERTY-LAB.md](docs/PROPERTY-LAB.md).

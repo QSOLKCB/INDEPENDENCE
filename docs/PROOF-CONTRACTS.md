@@ -47,3 +47,7 @@ The offline Python verifier checks exact payload SHA-256, fixed expected classif
 - Every new formal success needs the actual proof artifact, toolchain, assumptions, command log and full source SHA.
 
 See docs/FORMAL-ROADMAP.md for the planned v0.8–v1.1 formalization programme.
+
+## v0.8 addendum — property generation and shrinkage (separate evidence)
+
+The versioned v0.7 Proof Contracts registry and its **mutable fingerprint counterexample** remain intact; no prior formal status is silently changed. v0.8 exposes a new opt-in ownership interface and a separate deterministic browser property lab at `#property-lab`. It demonstrates a deliberately injected boundary bug, with canonical bounded shrinking, alongside a genuine legacy mutable-typed-array defect. An independent Python stdlib verifier checks generated property receipt content and SHA-256 integrity; this **does not** prove global correctness or attest real browser execution. See [PROPERTY-LAB.md](PROPERTY-LAB.md).

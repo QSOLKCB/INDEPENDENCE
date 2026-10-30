@@ -46,8 +46,12 @@ v0.7 — Proof Contracts (implemented in this PR)
 - Fail-closed Python registry check and offline receipt verification, negative/adversarial regression tests, local-only browser UI.
 - No Lean or SPARK proof or execution attestation is claimed.
 
-v0.8 — Property generation and counterexample minimization (planned)
-- Deterministic generative inputs, fault injection and cross-language fixtures; resolve typed-array ownership contract.
+v0.8 — Deterministic Property Generation and Counterexample Minimisation (implementation in PR)
+- First-party xorshift32-generated automaton property cases with independent oracle and exported SHA-256 receipts.
+- Deliberately injected wraparound-boundary mutant; canonical bounded width/rule/mask minimisation from an 8-cell to a 1-cell witness.
+- Real legacy typed-array/fingerprint counterexample retained; guardedSnapshot opt-in defensive-copy ownership contract without changing the original API.
+- Python stdlib independent fixture/replay receipt checker, adversarial tests, browser dashboard, Pages and audit integration.
+- No general fuzzing claim, formal proof, arbitrary counterexample shrinking, or independent browser-execution attestation.
 
 v0.9 — Lean 4 + SPARK Ada proof laboratory (planned)
 - Human-reviewed specification, Lean kernel-checked theorems, SPARK reference and GNATprove obligations, documented semantic bridge.
