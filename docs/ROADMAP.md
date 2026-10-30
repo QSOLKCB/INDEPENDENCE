@@ -75,3 +75,9 @@ v0.7.2 — Proof-Conformance Bridge (stacked PR)
 - Exhaustive practical 8,881-case finite sweep plus 16 invalid inputs.
 - Optional real Ada CLI comparisons using deterministic selections; no Ada compiler means NOT_RUN, not fabricated agreement.
 - SHA-256 receipts distinguish mathematical proof, Ada contract discharge, Python tests, Ada runtime comparison and unresolved obligations.
+
+v0.7.3 — Lean Mathematical Foundation (proof candidate; actual Lean run pending)
+- Pin Lean 4.35.0 and declare 13 axiom-audited proof obligations.
+- Finite CRT 2×3, GF(2), cyclic modulo-3 identities and partial degree-lex ordering properties.
+- Strict local kernel check with no unapproved proof holes, no new axioms, exact toolchain version and recorded logs.
+- Do not promote any theorem to PROVED before actual Lean 4 kernel verification; general CRT and complete monomial-order results remain open.

@@ -46,3 +46,7 @@ The scoped SPARK/Ada kernel precedes the larger v0.9 Lean+SPARK proof laboratory
 ## v0.7.2 — Conformance bridge, independent of proofs
 
 A new Python reference and separately coded oracle now enable practical exhaustive finite checks. Ada CLI differential comparisons remain an optional **actual execution** gate when a GNAT binary exists. No Lean mathematical theorem, GNATprove contract or production Python/JS correctness claim is inferred from the reference comparison. Versioned receipts retain pending fields for the v1.1.0 formalization.
+
+## v0.7.3 — Lean 4 Mathematical Foundation (pending actual compiler run)
+
+A pinned, no-Mathlib Lean proof source and fail-closed stdlib kernel runner cover specific finite CRT (2,3), GF(2), cyclic phase and degree-lex properties. This release prepares but does not automatically establish kernel-checked theorems. General CRT, monomial well-foundedness/totality and correspondence with existing Ada/Python/JS implementations remain outstanding. Execute the locked Lean toolchain and preserve the actual output before the v1.1.0 formalization.

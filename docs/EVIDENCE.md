@@ -89,3 +89,7 @@ A subsequent v0.7.2 conformance layer must separately compare Python/Ada results
 formal/spec/kernel-v1.json remains the shared versioned specification. scripts/run_kernel_conformance.py independently checks formal/python/kernel.py against a second Python oracle for 8,881 finite valid inputs plus 16 invalid/negative samples. The source is a new Python reference, not all existing application Python. No claim about production JavaScript follows from it.
 
 With an actual supplied Ada executable the same script executes matching vectors and records source/spec and binary hashes; when missing, Ada differential comparison remains NOT_RUN. No Lean kernel proof or GNATprove discharge is asserted by this bridge. The resulting SHA-256 receipt and verifier separate MATHEMATICAL_PROOF, ADA_CONTRACTS, PYTHON_CONFORMANCE, ADA_CLI_CONFORMANCE and UNRESOLVED evidence and explicitly disclaim independent execution attestation. See docs/PROOF-CONFORMANCE.md.
+
+## v0.7.3 — Lean 4 proof candidate and axiom-auditing boundary
+
+The source at formal/lean/FiniteFoundation.lean contains 13 theorem declarations with no deliberate admitted proofs, each accompanied by a transitive #print axioms request. Toolchain identity is locked in lean-toolchain. The Python runner can fail closed on absent Lean, incompatible versions, a failed kernel pass or unauthorized axioms; source-only validation is NOT a mathematical proof. The authoring environment has no Lean executable, so a real kernel-check output is not yet available and no proved theorem is claimed. See docs/LEAN-FOUNDATION.md.
