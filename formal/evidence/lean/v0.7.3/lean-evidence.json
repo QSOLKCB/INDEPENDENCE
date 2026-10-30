@@ -1,0 +1,64 @@
+{
+  "axiom_audit": {
+    "crt_left_inverse": [],
+    "crt_right_inverse": [],
+    "gf2_add_assoc": [],
+    "gf2_add_comm": [],
+    "gf2_add_self": [],
+    "gf2_left_distrib": [],
+    "gf2_mul_comm": [],
+    "monomial_irrefl": [
+      "propext",
+      "Quot.sound"
+    ],
+    "monomial_trans": [
+      "propext",
+      "Quot.sound"
+    ],
+    "monomial_translate": [
+      "propext",
+      "Quot.sound"
+    ],
+    "phase_add_assoc": [],
+    "phase_add_comm": [],
+    "phase_zero": []
+  },
+  "command": [
+    "lean",
+    "--trust=0",
+    "formal/lean/FiniteFoundation.lean"
+  ],
+  "exit_code": 0,
+  "kernel_check": "KERNEL_CHECKED",
+  "limitations": [
+    "Formal proof execution is separately required; source inspection is not proof.",
+    "CRT is restricted to moduli 2 and 3, not general coprime moduli.",
+    "Monomial well-foundedness and totality remain unproved in this phase.",
+    "This does not verify Ada, Python, JavaScript or Penrose graph geometry."
+  ],
+  "note": "Checking this Lean model does NOT establish Ada/Python/JS conformance.",
+  "protocol": "LEAN-FOUNDATION-EVIDENCE/1",
+  "raw_output": "'IndependenceLean.crt_left_inverse' does not depend on any axioms\n'IndependenceLean.crt_right_inverse' does not depend on any axioms\n'IndependenceLean.gf2_add_comm' does not depend on any axioms\n'IndependenceLean.gf2_add_assoc' does not depend on any axioms\n'IndependenceLean.gf2_add_self' does not depend on any axioms\n'IndependenceLean.gf2_mul_comm' does not depend on any axioms\n'IndependenceLean.gf2_left_distrib' does not depend on any axioms\n'IndependenceLean.phase_add_comm' does not depend on any axioms\n'IndependenceLean.phase_add_assoc' does not depend on any axioms\n'IndependenceLean.phase_zero' does not depend on any axioms\n'IndependenceLean.monomial_irrefl' depends on axioms: [propext, Quot.sound]\n'IndependenceLean.monomial_trans' depends on axioms: [propext, Quot.sound]\n'IndependenceLean.monomial_translate' depends on axioms: [propext, Quot.sound]\n\n",
+  "raw_output_sha256": "4a7103d532ffc078e714882184b74fe86ea53683e3147d64f0c7ac0f8b8239ca",
+  "scope": "Finite CRT (2,3), Boolean GF(2), cyclic Z/3Z and degree-lex order properties",
+  "source": "formal/lean/FiniteFoundation.lean",
+  "source_audit": "PASSED",
+  "source_sha256": "0a71bba7fa1d8e81a73051c9c5e508126ba97242bf88537d2e55779019e2756d",
+  "theorems_declared": [
+    "crt_left_inverse",
+    "crt_right_inverse",
+    "gf2_add_comm",
+    "gf2_add_assoc",
+    "gf2_add_self",
+    "gf2_mul_comm",
+    "gf2_left_distrib",
+    "phase_add_comm",
+    "phase_add_assoc",
+    "phase_zero",
+    "monomial_irrefl",
+    "monomial_trans",
+    "monomial_translate"
+  ],
+  "tool_version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "toolchain": "leanprover/lean4:v4.35.0"
+}

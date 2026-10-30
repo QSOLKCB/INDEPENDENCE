@@ -1,0 +1,46 @@
+{
+  "protocol": "INDEPENDENCE-LEAN-EVIDENCE-ARCHIVE/1",
+  "archive_purpose": "Preservation for proposed v1.1.0 Zenodo formalization",
+  "evidence_origin": "USER_SHARED_TERMINAL_TRANSCRIPT",
+  "evidence_provenance": "RECOVERED_COMPLETE_JSON_FROM_TERMINAL_OUTPUT_NOT_ORIGINAL_FILE_UPLOAD",
+  "independently_attested_execution": false,
+  "evidence_created_on": "2026-10-30",
+  "reported_local_time": "21:35 Australia/Adelaide (from user terminal prompt; not independently timestamped)",
+  "source": {
+    "repository": "QSOLKCB/INDEPENDENCE",
+    "git_commit": "68351489e8bbbb879efdcac19d02869124fcf724",
+    "git_ref_at_reported_run": "main",
+    "file": "formal/lean/FiniteFoundation.lean",
+    "sha256": "0a71bba7fa1d8e81a73051c9c5e508126ba97242bf88537d2e55779019e2756d"
+  },
+  "toolchain": {
+    "file": "lean-toolchain",
+    "pinned_value": "leanprover/lean4:v4.35.0",
+    "reported_version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)"
+  },
+  "artifact": {
+    "path": "formal/evidence/lean/v0.7.3/lean-evidence.json",
+    "sha256": "ef3edf6cbfb7ac0b02ca6c30e3c9bfd3b21e89382f3ec0436f31093c5e4355a7",
+    "origin_transcript_sha256": "c3e9cd181dfe079205db5070f14de106b0e7594349718467bbd0b809b0491627",
+    "serialized_from": "Full JSON block printed to user terminal; exact visible JSON formatting plus final LF",
+    "original_file_byte_identity": "NOT_INDEPENDENTLY_CONFIRMED",
+    "raw_lean_output_sha256": "4a7103d532ffc078e714882184b74fe86ea53683e3147d64f0c7ac0f8b8239ca"
+  },
+  "checks": {
+    "python_unittest_reported": {
+      "ran": 169,
+      "failed": 0
+    },
+    "lean_kernel_reported": "KERNEL_CHECKED",
+    "lean_exit_code_reported": 0,
+    "theorems_declared": 13,
+    "axiom_audits": 13,
+    "unapproved_axioms_reported": 0
+  },
+  "limitations": [
+    "User-submitted terminal evidence; not an independently authenticated remote build or Lean execution.",
+    "The recovered JSON is not a byte-verified upload of the user's original lean-evidence.json file.",
+    "Only statements of the pinned Lean model are in scope; not Ada/Python/JS conformance.",
+    "General CRT and complete monomial-order properties remain outside verified scope."
+  ]
+}
