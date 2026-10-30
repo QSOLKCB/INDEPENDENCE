@@ -146,6 +146,49 @@ class EvidenceLedgerTests(unittest.TestCase):
         report["coverage"]["total"] = 2
         self.assertNotEqual(token, receipt_hash(report))
 
+    def test_collector_does_not_read_private_context(self):
+        client = FixtureClient(
+            [repository("Alpha")], {"Alpha": tree([])},
+            'const REPOS = [{ name: "Alpha", category: "Research", description: "A" }];'
+        )
+        original = client.get_text
+        calls = []
+
+        def guarded_get_text(owner, repo, filename):
+            calls.append((repo, filename))
+            if repo != "QSOL-IMC":
+                raise AssertionError("private repository read forbidden")
+            return original(owner, repo, filename)
+
+        client.get_text = guarded_get_text
+        result = collection(client, "2026-10-30")
+        self.assertEqual(result["coverage"]["scanned"], 1)
+        self.assertEqual(calls, [("QSOL-IMC", "app.js")])
+        self.assertNotIn("context", result["sources"])
+
+    def test_public_only_inventory(self):
+        private = repository("PrivateSample")
+        private["private"] = True
+        private["visibility"] = "private"
+        client = FixtureClient(
+            [repository("PublicSample"), private],
+            {"PublicSample": tree([])}
+        )
+        report = collection(client, "2026-10-30")
+        self.assertEqual([row["name"] for row in report["repositories"]], ["PublicSample"])
+
+    def test_static_browser_deployment_includes_ledger(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        app = (ROOT / "app.js").read_text(encoding="utf-8")
+        workflow = (ROOT / ".github/workflows/deploy-pages.yml").read_text(encoding="utf-8")
+        browser = (ROOT / "ledger/ledger.js").read_text(encoding="utf-8")
+        self.assertIn('id="ledger"', html)
+        self.assertIn("mountLedger();", app)
+        self.assertIn("build_ledger.py", workflow)
+        self.assertIn("ledger/data.json", workflow)
+        self.assertNotIn("api.github.com", browser)
+        self.assertNotIn("GITHUB_TOKEN", browser)
+
     def test_seed_snapshot_not_mistaken_for_verified(self):
         data = json.loads((ROOT / "ledger/data.json").read_text(encoding="utf-8"))
         self.assertEqual(data["schema_version"], 1)
