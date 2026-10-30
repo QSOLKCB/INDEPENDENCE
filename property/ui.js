@@ -8,6 +8,7 @@ const node = (tag, cls, text) => {
   return element;
 };
 let envelope = null;
+let generation = 0;
 
 function render(report) {
   const target = $('property-results');
@@ -56,6 +57,7 @@ export function mountPropertyLab() {
   const seed = $('property-seed'), trials = $('property-trials'), run = $('property-run');
   const exportButton = $('property-export'), status = $('property-status'), hash = $('property-hash');
   const reset = () => {
+    generation += 1;
     envelope = null;
     exportButton.disabled = true;
     hash.textContent = 'No receipt for the current inputs.';
@@ -66,6 +68,7 @@ export function mountPropertyLab() {
   exportButton.disabled = true;
   run.addEventListener('click', async () => {
     reset();
+    const currentGeneration = generation;
     run.disabled = true;
     status.textContent = 'Running bounded deterministic properties and shrinking witnesses…';
     try {
@@ -75,10 +78,17 @@ export function mountPropertyLab() {
       render(report);
       status.textContent = 'Finite properties passed. One injected mutant and one legacy ownership defect exposed; neither is a formal proof.';
       try {
-        envelope = await seal(report);
-        hash.textContent = 'SHA-256 of exact report bytes: ' + envelope.sha256;
-        exportButton.disabled = false;
-      } catch (error) { hash.textContent = 'Receipt unavailable: ' + error.message; }
+        const sealed = await seal(report);
+        // Input can change while WebCrypto awaits: never export a stale result.
+        if (currentGeneration === generation) {
+          envelope = sealed;
+          hash.textContent = 'SHA-256 of exact report bytes: ' + sealed.sha256;
+          exportButton.disabled = false;
+        }
+      } catch (error) {
+        if (currentGeneration === generation)
+          hash.textContent = 'Receipt unavailable: ' + error.message;
+      }
     } catch (error) {
       status.textContent = 'FAILED: ' + error.message + '. No valid receipt issued.';
       hash.textContent = 'No valid receipt.';
