@@ -6,10 +6,11 @@ v0.1 — Working declaration (this PR)
 - Labelled synthetic dependency graph experiment.
 - Offline Python standard-library audit, adversarial fixtures, and documentation.
 
-v0.2 — Public evidence ledger
-- Opt-in, rate-aware repository inventory with per-repo scope.
-- Snapshot artifacts with verified counts, dependency classifications, SHA-256 digests, and run provenance.
-- Separate self-reported figures from externally verifiable findings.
+v0.2 — Public evidence ledger (implemented in this PR)
+- Paginated public-only repository inventory, curated category correlation, and scoped Git tree filename indicators.
+- Snapshot receipt, reproducible offline regression fixtures and explicit unknown handling.
+- Static browser search/filter; no browser-side GitHub API calls.
+- Import/dependency graph resolution and immutable historical archive are future work.
 
 v0.3 — Comparative experiments
 - Paired workloads, identical behavior and target hardware, warmup, repetitions, medians, confidence bounds.

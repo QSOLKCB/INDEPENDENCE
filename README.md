@@ -71,3 +71,17 @@ Open http://localhost:8000/ for local development. The browser uses relative ECM
 See docs/INVARIANTS.md, docs/EVIDENCE.md, and docs/ROADMAP.md. The scope and limitations are intentional: zero third-party packages is not zero platform dependencies, not an all-repositories audit, and not proof of invulnerability.
 
 **The revolution will not be containerised.**
+
+## v0.2.0 — Software Independence Evidence Ledger
+
+[Browse the public evidence ledger](https://qsolkcb.github.io/INDEPENDENCE/#ledger) after this PR is merged and manually deployed.
+
+The public catalogue at [QSOL-IMC](https://github.com/QSOLKCB/QSOL-IMC) provides curated categories. [QSOL-CONTEXT](https://github.com/QSOLKCB/QSOL-CONTEXT) informs snapshot/provenance design; only its public manifest snapshot date is read. The ledger **never** publishes personal context records.
+
+This is a *filename-signal inventory*, not a declaration that every repo is package-free. It distinguishes observed manifests, inspected trees without known manifests, truncated trees and failed scans. Counts come from the packaged JSON, not hard-coded website constants.
+
+Regenerate using Python's standard library (GitHub REST network required):
+
+    GITHUB_TOKEN=... python3 scripts/build_ledger.py --as-of 2026-10-30 --output ledger/data.json
+
+The existing manually triggered Pages workflow now refreshes the snapshot before testing and packaging the site. Visitors load static JSON from GitHub Pages; **their browsers do not query the GitHub API**. See [ledger methodology](docs/LEDGER.md) for evidence scope, unknown states, failure handling, and receipt hashing.

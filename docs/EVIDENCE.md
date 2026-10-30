@@ -35,3 +35,11 @@ Review the source in lab/core.js, read the pure-JS tests in lab/tests.js, run th
 ## Audit design limits
 
 The manifest list is finite and can miss unconventional build tools; source scanning covers five named runtime files. The report avoids timestamps to make identical source inputs produce identical JSON output. Filesystem-specific content (e.g., cached directories) is excluded from audit interpretation as described by scripts/audit.py. No CI provider is required to reproduce the command locally.
+
+## v0.2 — Public organisation-wide filename evidence
+
+The standard-library collector (scripts/build_ledger.py) queries the GitHub public repository listing with pagination, reads the optional QSOL-IMC curated catalogue for categories, reads only the public QSOL-CONTEXT manifest snapshot date, and fetches recursive default-branch Git trees. This is **not** a dependency import graph or project test.
+
+A successful untruncated tree is labelled scanned. A negative filename finding is labelled no known manifest and is **never** interpreted as dependency-free. Truncation, HTTP failures, and missing branches are always unknown. Canonical SHA-256 receipts exclude their own digest member. No private GitHub repositories or personal context contents are intentionally collected.
+
+The committed ledger/data.json is a source-labelled bootstrap inventory; the manually triggered GitHub Pages workflow regenerates an up-to-date published snapshot, without writing it back to main. See docs/LEDGER.md.
