@@ -4,9 +4,11 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
+import run_kernel_conformance as bridge
 from run_kernel_conformance import (build_report, finite_cases, rejected_cases,
     oracle, sample_ada_cases, make_receipt, run_ada)
 from verify_kernel_receipt import (InvalidReceipt, verify, strict_json)
@@ -52,6 +54,15 @@ class ConformanceTests(unittest.TestCase):
     def test_too_small_ada_sample_rejected(self):
         with self.assertRaises(ValueError):
             sample_ada_cases(list(finite_cases()), 3)
+
+    def test_spec_digest_lock_rejects_unreviewed_semantic_changes(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "kernel-v1.json"
+            original = (ROOT / "formal/spec/kernel-v1.json").read_text()
+            path.write_text(original.replace("modulo 3", "modulo 5"))
+            with patch.object(bridge, "SPEC", path):
+                with self.assertRaisesRegex(ValueError, "specification changed"):
+                    build_report()
 
     def test_valid_receipt(self):
         self.assertTrue(verify(make_receipt(self.report))["valid"])
