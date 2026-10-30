@@ -27,6 +27,11 @@ jobs:
       - name: Check out main
         uses: actions/checkout@v4
 
+      - name: Collect GitHub public evidence snapshot
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/build_ledger.py --output ledger/data.json
+
       - name: Run Python standard-library tests
         run: python3 -m unittest discover -s tests -v
 
@@ -38,12 +43,14 @@ jobs:
         run: |
           set -euo pipefail
           site="$RUNNER_TEMP/independence-pages"
-          mkdir -p "$site/lab"
+          mkdir -p "$site/lab" "$site/ledger"
           cp index.html styles.css app.js .nojekyll "$site/"
           cp lab/core.js lab/tests.js "$site/lab/"
+          cp ledger/ledger.js ledger/ledger.css ledger/data.json "$site/ledger/"
           test -s "$site/index.html"
           test -s "$site/app.js"
           test -s "$site/lab/core.js"
+          test -s "$site/ledger/data.json"
           echo "Static Pages artifact ready; no build required."
 
       - name: Configure GitHub Pages

@@ -8,6 +8,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
   <title>INDEPENDENCE — No Masters. No Dependencies.</title>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./ledger/ledger.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -18,6 +19,7 @@
       <a href="#declaration">Declaration</a>
       <a href="#lab">Live lab</a>
       <a href="#evidence">Evidence</a>
+      <a href="#ledger">Ledger</a>
       <a class="nav-github" href="https://github.com/QSOLKCB/INDEPENDENCE">Source ↗</a>
     </nav>
   </header>
@@ -98,6 +100,30 @@
         <article class="evidence-card"><span class="card-number">03 / OFFLINE AUDIT</span><h3>Python. No pip install.</h3><p>Run the repository scanner and unittest suite using the Python standard library. It searches for dependency manifests, remote executable assets, and hashes first-party browser files.</p><div class="command">python3 scripts/audit.py --json</div><div class="command">python3 -m unittest discover -s tests -v</div><a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/EVIDENCE.md">Audit specification ↗</a></article>
       </div>
       <div class="tradeoff"><span>IMPORTANT DISTINCTION</span><p><strong>Zero third-party packages is not zero trust.</strong> The browser, operating system, Python interpreter, GitHub Pages hosting, and their supply chains remain real dependencies. This project reduces avoidable application dependencies; it does not claim invulnerability.</p></div>
+    </section>
+
+    <section id="ledger" class="section ledger-section">
+      <div class="wrap">
+        <span class="kicker">04 / SOFTWARE INDEPENDENCE EVIDENCE LEDGER</span>
+        <h2>THE RECEIPTS.<br><span class="accent">NOT THE RHETORIC.</span></h2>
+        <p class="ledger-intro">A public, source-linked inventory of QSOLKCB repositories, with filename evidence collected from their default-branch Git trees. Browse observed package manifests, container markers and workflow files. <strong>No known manifest observed does not mean zero dependencies.</strong> Unknown and truncated scans stay unknown.</p>
+        <div class="ledger-summary" id="ledger-summary" aria-label="Evidence snapshot statistics"></div>
+        <p id="ledger-method" class="ledger-method">Loading evidence metadata…</p>
+        <p id="ledger-receipt" class="ledger-receipt"></p>
+        <div class="ledger-tools">
+          <input id="ledger-search" type="search" aria-label="Search repositories or categories" placeholder="SEARCH REPOSITORIES / CATEGORIES">
+          <select id="ledger-filter" aria-label="Filter by evidence state">
+            <option value="all">ALL EVIDENCE STATES</option>
+            <option value="signals">MANIFEST SIGNALS OBSERVED</option>
+            <option value="no-manifest">NO KNOWN MANIFEST OBSERVED</option>
+            <option value="unknown">UNKNOWN / INCOMPLETE</option>
+          </select>
+        </div>
+        <p id="ledger-message" class="ledger-message" role="status" aria-live="polite"></p>
+        <div id="ledger-list" class="ledger-list" aria-label="Public repository evidence records"></div>
+        <button type="button" id="ledger-more" class="ledger-more" hidden>LOAD MORE RECORDS +</button>
+        <div class="ledger-disclaimer"><strong>Evidence boundary:</strong> This ledger does not run project tests, trace dependency imports, inspect private repositories, or assign vulnerability scores. Package manifests may describe development tooling; their absence does not prove independence. The public catalogue is curated, while the ledger targets a reproducible public repository listing. Inspect <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/LEDGER.md">the methodology</a>, <a href="https://github.com/QSOLKCB/QSOL-IMC">QSOL-IMC</a>, and <a href="https://github.com/QSOLKCB/QSOL-CONTEXT">QSOL-CONTEXT</a>.</div>
+      </div>
     </section>
 
     <section class="section impact-section">

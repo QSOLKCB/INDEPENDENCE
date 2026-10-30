@@ -13,7 +13,10 @@ from pathlib import Path
 import re
 import sys
 
-WEB_FILES = ("index.html", "styles.css", "app.js", "lab/core.js", "lab/tests.js")
+WEB_FILES = (
+    "index.html", "styles.css", "app.js", "lab/core.js", "lab/tests.js",
+    "ledger/ledger.js", "ledger/ledger.css", "ledger/data.json",
+)
 FORBIDDEN_MANIFESTS = frozenset({
     "package.json", "package-lock.json", "npm-shrinkwrap.json", "yarn.lock",
     "pnpm-lock.yaml", "bun.lock", "bun.lockb", "requirements.txt",
