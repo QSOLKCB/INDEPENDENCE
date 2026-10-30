@@ -53,8 +53,12 @@ v0.8 — Deterministic Property Generation and Counterexample Minimisation (impl
 - Python stdlib independent fixture/replay receipt checker, adversarial tests, browser dashboard, Pages and audit integration.
 - No general fuzzing claim, formal proof, arbitrary counterexample shrinking, or independent browser-execution attestation.
 
-v0.9 — Lean 4 + SPARK Ada proof laboratory (planned)
-- Human-reviewed specification, Lean kernel-checked theorems, SPARK reference and GNATprove obligations, documented semantic bridge.
+v0.9 — Lean 4 + SPARK Ada Automaton Proof Laboratory (implementation in PR)
+- Versioned fixed-zero automaton model with five Lean theorem candidates and transitive axiom audit.
+- Pure SPARK/Ada bit evaluator, postcondition, and separately input-validating CLI.
+- Python independent 2,048-vector oracle and 512 boundary checks, optional real 128-vector Ada differential.
+- Native browser checks against actual evolve(), exportable receipt, independent stdlib validator.
+- Proof tools remain optional; source is not proof and finite agreement is not universal refinement.
 
 v1.0 — Real-browser and deployment verification (planned)
 - Cross-browser journeys, CSP, accessibility, fault handling and deploy artifact checks.

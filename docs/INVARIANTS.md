@@ -83,3 +83,10 @@ The browser test button runs a separate native-JavaScript suite.
 62. Preserve the original mutable Uint8Array/fingerprint counterexample. The new guardedSnapshot is opt-in, defensively copies typed arrays and rejects stale fingerprints; never silently rewrite the v0.7 public API.
 63. Property receipts must be SHA-256 over the exact JSON payload, and the independent Python verifier must reject status/provenance inflation, forged generated cases, malformed receipts and self-inconsistent witnesses.
 64. Property-sample results are not mathematical proofs, independent browser execution attestation, or proof of the previously archived Lean/SPARK/Ada results. UI must render only inert textContent and must fail closed on any property mismatch.
+
+
+65. AUTOMATON-SEMANTICS/1 defines a finite elementary-automaton model only, with rule 0..255, binary bits and fixed-zero row boundaries.
+66. Lean theorem statuses for v0.9 require actual pinned Lean 4.35.0 trust-zero checking and all five transitive-axiom audits. Source inspection is never a proof.
+67. GNATprove must genuinely execute for v0.9 Ada contracts; Ada CLI input parsing is outside SPARK and must be separately compared.
+68. Browser evidence requires direct execution of the first-party evolve() against an independent reference, exact result checking and no mutated typed-array inputs.
+69. Finite comparison and SHA-256 receipts do not attest authentic browser execution or full model-to-code refinement; no proof toolchain is required to deploy the static site.

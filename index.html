@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="./workflow/workflow.css">
   <link rel="stylesheet" href="./proof/proof.css">
   <link rel="stylesheet" href="./property/property.css">
+  <link rel="stylesheet" href="./formal-lab/formal-lab.css"
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -32,6 +33,7 @@
       <a href="#workflow">The Secret</a>
       <a href="#proof">Proof Contracts</a>
       <a href="#property-lab">Property Lab</a>
+      <a href="#formal-lab">Formal Lab</a>
       <a class="nav-github" href="https://github.com/QSOLKCB/INDEPENDENCE">Source ↗</a>
     </nav>
   </header>
@@ -331,6 +333,24 @@
           <div id="property-results" class="property-results" aria-label="Generated properties and minimized counterexamples"></div>
           <p id="property-hash">No receipt issued.</p>
           <p class="property-note"><a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/PROPERTY-LAB.md">METHOD &amp; LIMITATIONS ↗</a> · <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/scripts/verify_property_receipt.py">OFFLINE RECEIPT VERIFIER ↗</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="formal-lab" class="section formal-lab-section">
+      <div class="wrap">
+        <span class="kicker">09C / LEAN + SPARK / FINITE SEMANTIC BRIDGE</span>
+        <h2>PROVE THE MODEL.<br><span class="accent">TEST THE IMPLEMENTATION.</span></h2>
+        <p>The v0.9 browser laboratory checks the real first-party automaton against independent bit-extraction arithmetic over 2,048 neighbourhood inputs and 512 fixed-zero singleton boundaries. Lean 4 and SPARK/Ada are separate optional developer-only proof tools.</p>
+        <div class="formal-lab-panel">
+          <div class="formal-lab-actions">
+            <button id="formal-lab-run" type="button">RUN FINITE SEMANTIC BRIDGE ↗</button>
+            <button id="formal-lab-export" type="button" disabled>EXPORT SHA-256 RECEIPT ↓</button>
+          </div>
+          <p id="formal-lab-status" role="status" aria-live="polite">Not executed. No browser or formal verification is claimed.</p>
+          <p id="formal-lab-hash">No receipt issued.</p>
+          <p class="formal-lab-scope">FINITE TESTS ≠ FORMAL REFINEMENT. SHA-256 ≠ EXECUTION ATTESTATION. An ordinary browser cannot certify a Lean or GNATprove run.</p>
+          <p><a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/AUTOMATON-PROOF-LAB.md">SPECIFICATION, EVIDENCE AND LIMITATIONS ↗</a></p>
         </div>
       </div>
     </section>

@@ -54,3 +54,13 @@ A pinned, no-Mathlib Lean proof source and fail-closed stdlib kernel runner cove
 ## v0.7.3 Lean evidence preservation (reported successful run)
 
 After the v0.7.3 CRT-right-inverse correction merged in PR #11, the user supplied a terminal transcript reporting Lean 4.35.0 exit 0, `KERNEL_CHECKED`, 13 theorem axiom audits, no `sorryAx`, and 169 passing Python tests. A self-contained copy of the specific historical Lean source, toolchain pin, recovered JSON report and a provenance manifest is archived under `formal/evidence/lean/v0.7.3` for the proposed v1.1.0 Zenodo package. The evidence source is a user-reported local run; the original file was not uploaded and byte-identical provenance is not independently verified. This record proves neither Ada contract discharge nor Python/JS conformance.
+
+
+## v0.9.0 implementation addendum — automaton bit semantics
+
+The planned v0.9 formal laboratory now has an executable, independently
+versioned automaton specification, Lean theorem candidates, SPARK/Ada
+reference, CLI differential checks, and Python/browser finite vector bridge.
+New theorem and GNATprove statuses are NOT_RUN unless genuinely executed by
+trusted local development tools. Finite agreement does not establish formal
+refinement of JavaScript. See docs/AUTOMATON-PROOF-LAB.md.

@@ -248,3 +248,16 @@ python3 scripts/verify_property_receipt.py /path/to/property-lab-<hash>.json
 ```
 
 The injected mutant is intentionally faulty, **not a discovered production defect**. Finite tests, self-hashed receipts and opt-in ownership guards establish no universal proof or independent browser execution attestation. See [docs/PROPERTY-LAB.md](docs/PROPERTY-LAB.md).
+
+
+## v0.9.0 — Lean 4 + SPARK/Ada Automaton Proof Laboratory
+
+The new first-party [browser proof laboratory](https://qsolkcb.github.io/INDEPENDENCE/#formal-lab) executes the actual JavaScript automaton on 2,048 three-bit neighbourhoods and 512 single-cell fixed-zero cases. It compares results with separately implemented numeric arithmetic, checks source-input ownership and can export a SHA-256 receipt.
+
+The development-only formal track provides a versioned automaton specification, five Lean 4 theorem candidates, an SPARK/Ada kernel with explicit postcondition, and a separately compiled CLI for finite comparison. Proof statuses remain NOT_RUN until an actual pinned toolchain runs; neither source inspection nor finite test coverage establishes a formal model-to-code refinement.
+
+    python3 scripts/automaton_proof_lab.py --output automaton-evidence.json
+    python3 scripts/automaton_proof_lab.py --prove --require-proofs
+    python3 scripts/automaton_proof_lab.py --ada-cli formal/spark/bin/automaton_cli --require-ada
+
+See [the v0.9 protocol, semantic bridge and limitations](docs/AUTOMATON-PROOF-LAB.md).
