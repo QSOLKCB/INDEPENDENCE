@@ -73,6 +73,8 @@ def validate(root: Path = ROOT) -> dict:
         raise OriginalEvidenceError("runtime receipt inventory mismatch")
     seen = set()
     statuses = {}
+    build_output_digests = set()
+    specification_digests = set()
     for item in items:
         if type(item) is not dict or set(item) != {
             "path", "original_zip_member", "sha256", "git_blob_sha1",
@@ -105,6 +107,12 @@ def validate(root: Path = ROOT) -> dict:
             or document["mode"] != mode or document["vectors_sha256"] != vectors
             or document["independent_execution_attestation"] is not False):
             raise OriginalEvidenceError("runtime receipt result contradiction: " + name)
+        # The original receipts have already passed their strict runtime
+        # integrity check. Keep the two independently recorded digest types
+        # for comparison with the publication manifest below.
+        build_output_digests.add(document["build_output_sha256"])
+        bridge_payload = json.loads(document["python_bridge_receipt"]["payload_text"])
+        specification_digests.add(bridge_payload["spec_sha256"])
         statuses[name] = processes
     if set(RECORDS) != seen:
         raise OriginalEvidenceError("runtime receipt missing")
@@ -129,8 +137,18 @@ def validate(root: Path = ROOT) -> dict:
         or verify_lean(root)["archive_integrity"] != "PASS"):
         raise OriginalEvidenceError("historical proof archive check failed")
     checks = manifest.get("comparison")
-    if (type(checks) is not dict or checks.get("compiled_binary_sha256_in_both") != BIN_SHA
-        or checks.get("reported_python_unit_tests") != 233):
+    if (type(checks) is not dict or set(checks) != {
+            "compiled_binary_sha256_in_both", "compiler_build_output_sha256",
+            "source_spec_sha256", "reported_python_unit_tests"
+        } or checks["compiled_binary_sha256_in_both"] != BIN_SHA
+        or type(checks["reported_python_unit_tests"]) is not int
+        or checks["reported_python_unit_tests"] != 233
+        # Require agreement across BOTH separately preserved source receipts;
+        # a single matching receipt must not conceal a contradictory peer.
+        or len(build_output_digests) != 1
+        or checks["compiler_build_output_sha256"] not in build_output_digests
+        or len(specification_digests) != 1
+        or checks["source_spec_sha256"] not in specification_digests):
         raise OriginalEvidenceError("cross-record comparison claims mismatch")
     if (type(manifest.get("limitations")) is not list
         or not any("not independently attested" in x.lower() for x in manifest["limitations"])):
