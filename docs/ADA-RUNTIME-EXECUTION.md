@@ -14,7 +14,7 @@ From the repository root:
 export PATH="$HOME/opt/edgewalk-spark-toolchain/bin:$PATH"
 python3 -m unittest discover -s tests -v
 
-# Fresh real build + 128 valid + 16 numeric-invalid + 6 lexical-invalid:
+# Fresh real build + 128 valid + 16 rejected fixtures + 6 lexical-invalid:
 python3 scripts/build_and_compare_ada.py --samples 128 --output ada-runtime-evidence.json
 python3 scripts/verify_ada_runtime_evidence.py ada-runtime-evidence.json
 
@@ -23,7 +23,7 @@ python3 scripts/build_and_compare_ada.py --full --output ada-runtime-evidence-fu
 python3 scripts/verify_ada_runtime_evidence.py ada-runtime-evidence-full.json
 ~~~
 
-The runner requires gprbuild and gnatmake on PATH, checks their versions, builds using literal argv with shell=False, verifies the resulting executable exists, then invokes it for every selected vector. The CLI must produce **exactly one LF-terminated expected line**, zero exit code and empty stderr. Invalid numeric and lexical inputs are tested using their original spellings, including based literals.
+The runner requires gprbuild and gnatmake on PATH, checks their versions, builds using literal argv with shell=False, verifies the resulting executable exists, then invokes it for every selected vector. The CLI must produce **exactly one LF-terminated expected line**, zero exit code and empty stderr. Invalid fixture and lexical inputs are tested using their original spellings, including based literals.
 
 The result records the complete compiler output and SHA-256 digest, compiler versions, input source hashes, compiled binary SHA-256, deterministic vector digest, seed, case counts, and a previously defined Python/Ada bridge receipt. Neither a stale executable nor a successful Python-only test can substitute for compilation and execution. Any missing compiler, build failure, unexpected output, timeout or disagreement must return nonzero with status FAILED_OR_NOT_RUN and must not issue a passing receipt.
 
