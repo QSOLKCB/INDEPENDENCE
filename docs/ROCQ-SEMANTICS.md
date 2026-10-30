@@ -90,3 +90,21 @@ Existing Lean/SPARK local tool output must be archived separately with
 its exact source commit and checksum. No proof summary may silently
 promote those finite/runtime results into arbitrary-width implementation
 correctness.
+
+## Rocq 9.2.0 version-banner compatibility
+
+The exact opam packages are `rocq-core.9.2.0` and `rocq-stdlib.9.2.0`,
+but Rocq's executable banner prints `The Rocq Prover, version 9.2`
+(the patch-zero suffix is omitted). The optional proof runner now recognises
+both exact banner forms `9.2` and `9.2.0`; it rejects other minor or
+nonzero patch versions. This only fixes toolchain detection and does **not**
+constitute Rocq proof success. A real `rocq compile` run is still required,
+and must produce a nonempty `.vo` and all fifteen closed assumption audits.
+
+After merging this hotfix, run in your Rocq opam switch:
+
+```sh
+eval "$(opam env --switch=independence-rocq-9.2 --set-switch)"
+rocq --version
+python3 scripts/check_rocq_semantics.py --require-rocq --output rocq-executed-evidence.json
+```
