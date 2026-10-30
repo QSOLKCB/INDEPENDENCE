@@ -57,6 +57,32 @@ class LeanFoundationTests(unittest.TestCase):
             with self.assertRaisesRegex(lean.LeanAuditError, "transitive-axiom"):
                 lean.inspect(root)
 
+    def test_crt_right_inverse_enumerates_components_not_prod(self):
+        source = (ROOT / lean.SOURCE).read_text(encoding="utf-8")
+        start = source.index("theorem crt_right_inverse :")
+        end = source.index("/-- GF(2)", start)
+        proof = source[start:end]
+        self.assertIn("∀ (a : Fin 2) (b : Fin 3)", proof)
+        self.assertIn("cases p with", proof)
+        self.assertIn("exact cases_checked a b", proof)
+        self.assertIn("decide +kernel", proof)
+        self.assertNotIn(
+            "crtEncode (crtDecode p) = p := by\n  decide +kernel", proof
+        )
+
+    def test_actual_failure_shape_is_rejected_by_axiom_gate(self):
+        log = "\n".join(
+            (
+                f"'{lean.PREFIX}{theorem}' depends on axioms: [sorryAx]"
+                if theorem == "crt_right_inverse"
+                else f"'{lean.PREFIX}{theorem}' does not depend on any axioms"
+            )
+            for theorem in lean.THEOREMS
+        )
+        valid, observed = lean.parse_axiom_audit(log)
+        self.assertFalse(valid)
+        self.assertEqual(observed["crt_right_inverse"], ["sorryAx"])
+
     def test_rejects_unpinned_toolchain(self):
         temp, root = self.copy_scope()
         with temp:
