@@ -25,10 +25,17 @@ class ReadmePublicationTests(unittest.TestCase):
                 path = ROOT / ".github" / "workflows" / filename
                 self.assertTrue(path.is_file())
                 url = "https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/" + filename
-                self.assertIn(url + "/badge.svg?branch=main", readme)
                 self.assertIn("](" + url + ")", readme)
+                if filename == "verify.yml":
+                    self.assertIn(url + "/badge.svg?branch=main", readme)
+                else:
+                    self.assertNotIn(url + "/badge.svg?branch=main", readme)
         self.assertIn("Pages deploy (manual)", readme)
         self.assertIn("Published-byte audit (manual)", readme)
+        self.assertIn("https://img.shields.io/badge/Pages_deploy-manual-lightgrey", readme)
+        self.assertIn("https://img.shields.io/badge/Published_byte_audit-manual-lightgrey", readme)
+        self.assertIn("separate HTTPS byte check received 404", readme)
+        self.assertIn("That observation is NOT_VERIFIED", readme)
 
     def test_completed_v110_has_auditable_citation_and_limits(self):
         readme = README.read_text(encoding="utf-8")
