@@ -99,6 +99,74 @@ class AdaRuntimeExecutionTests(unittest.TestCase):
             self.assertEqual(failure.exception.stage, "BUILD")
             bridge.assert_not_called()
 
+    def test_raw_stdout_rejects_carriage_return_and_crlf(self):
+        # Python text=True normalizes both malformed byte sequences to LF.
+        # These subprocesses must be rejected at the byte-level boundary.
+        for suffix in (r"\r", r"\r\n", r"\n\r"):
+            with self.subTest(suffix=suffix), tempfile.TemporaryDirectory() as temporary:
+                stub = Path(temporary) / "wrong_newline"
+                stub.write_text(
+                    "#!/bin/sh\nprintf 'OK:0" + suffix + "'\n",
+                    encoding="utf-8",
+                )
+                stub.chmod(0o755)
+                with self.assertRaisesRegex(RuntimeError, "Ada mismatch"):
+                    run_ada(stub, [("PARITY_ADD", (0, 0))])
+
+    def test_raw_stdout_accepts_exact_lf(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            stub = Path(temporary) / "good_line"
+            stub.write_text("#!/bin/sh\nprintf 'OK:0\\n'\n", encoding="utf-8")
+            stub.chmod(0o755)
+            result = run_ada(stub, [("PARITY_ADD", (0, 0))])
+            self.assertEqual(result["cases"], 1)
+            self.assertEqual(result["status"], "ADA_CLI_TESTED_UNATTESTED")
+
+    def test_cli_stdout_is_captured_in_binary_mode(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            stub = Path(temporary) / "dummy"
+            stub.write_bytes(b"fake binary fixture")
+            fake = subprocess.CompletedProcess(
+                ["fake"], 0, stdout=b"OK:0\n", stderr=b""
+            )
+            with patch("run_kernel_conformance.subprocess.run", return_value=fake) as call:
+                result = run_ada(stub, [("PARITY_ADD", (0, 0))])
+            self.assertEqual(result["cases"], 1)
+            self.assertIs(call.call_args.kwargs["text"], False)
+            self.assertIs(call.call_args.kwargs["capture_output"], True)
+
+    def test_samples_full_domain_is_labelled_full_without_full_switch(self):
+        # Mocked compiler and comparison isolate the mode selection without
+        # impersonating 8,903 genuine Ada process executions.
+        valid = len(list(finite_cases()))
+        def fake_compiler(command, cwd, timeout):
+            binary = cwd / "bin" / "reference_cli"
+            binary.parent.mkdir(parents=True, exist_ok=True)
+            binary.write_bytes(b"synthetic, not actual Ada")
+            binary.chmod(0o755)
+            return subprocess.CompletedProcess(command, 0, stdout="synthetic", stderr="")
+
+        def fake_bridge(ada_binary, ada_cases, seed):
+            self.assertEqual(ada_cases, valid)
+            return {"evidence": {"ada_cli_conformance": {
+                "status": "ADA_CLI_TESTED_UNATTESTED",
+                "cases": valid + 22,
+                "binary_sha256": runner.sha(ada_binary),
+                "vectors_sha256": "a" * 64,
+            }}}
+
+        with patch.object(runner, "tool_versions", return_value={
+                "gprbuild": "mock", "gnatmake": "mock",
+             }), patch.object(runner, "checked_process", side_effect=fake_compiler), \
+             patch.object(runner, "build_report", side_effect=fake_bridge) as compare, \
+             patch.object(runner, "make_receipt", return_value={"synthetic": True}), \
+             patch.object(runner, "verify_bridge_receipt", return_value={"valid": True}):
+            output = runner.execute(sample_count=valid, full=False)
+        self.assertEqual(output["mode"], "FULL_FINITE_SET")
+        self.assertEqual(output["finite_cases_checked"], valid)
+        self.assertEqual(output["ada_processes_checked"], valid + 22)
+        self.assertEqual(compare.call_count, 1)
+
     def test_exact_stdout_rejects_extra_ada_lines(self):
         with tempfile.TemporaryDirectory() as temporary:
             stub = Path(temporary) / "fake"
