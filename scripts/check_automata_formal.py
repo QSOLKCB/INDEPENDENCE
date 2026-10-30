@@ -29,6 +29,7 @@ THEOREMS = ("pattern_bounded", "rule_zero_cell", "rule_all_cell",
 PREFIX = "IndependenceAutomata."
 ALLOWED_AXIOMS = {"propext", "Quot.sound", "Classical.choice"}
 PROTOCOL = "AUTOMATA4-FORMAL-LAB/1"
+EXPECTED_VECTORS_SHA256 = "f1ecce4798a35f6642a065a0ffbf87e6bdfcbb30ba0afffb5fb0da69c7c40635"
 FORBIDDEN_LEAN = (r"\bsorry\b", r"\badmit\b", r"\bnative_decide\b",
                   r"\bunsafe\b", r"\bpartial\b", r"\brun_tac\b",
                   r"^\s*(?:axiom|constant|opaque|elab|macro|syntax)\b",
@@ -120,8 +121,8 @@ def inspect(root: Path = ROOT):
         if f'for Object_Dir use "{object_dir}";' not in value or 'for Create_Missing_Dirs use "True";' not in value:
             raise FormalLabError("invalid GPR scalar directory")
     rows = list(vectors())
-    if len(rows) != 4096:
-        raise FormalLabError("finite corpus count drift")
+    if len(rows) != 4096 or vectors_digest(rows) != EXPECTED_VECTORS_SHA256:
+        raise FormalLabError("finite corpus count/digest drift")
     for known in spec["expected_vectors"]:
         if list(reference_step(known["rule"], tuple(known["bits"]))) != known["output"]:
             raise FormalLabError("known vector disagrees with reference")
