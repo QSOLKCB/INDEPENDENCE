@@ -1,0 +1,72 @@
+{
+  "protocol": "INDEPENDENCE-SPARK-EVIDENCE-ARCHIVE/1",
+  "evidence_origin": "USER_SUPPLIED_TERMINAL_TRANSCRIPT",
+  "evidence_provenance": "JSON_RECONSTRUCTED_FROM_PASTED_TERMINAL_REPORT",
+  "original_file_byte_identity": "NOT_INDEPENDENTLY_CONFIRMED",
+  "execution_attested_independently": false,
+  "reported_execution_local_date": "2026-10-31",
+  "reported_checkout": {
+    "repository": "QSOLKCB/INDEPENDENCE",
+    "git_sha": "9900e57f2283c534815657dd6c079d0e966715f4",
+    "ref": "refs/pull/13/head"
+  },
+  "corresponding_merge_commit": "e52578ee630d619b7c0aa54b47ef05f997f80741",
+  "reported_python_unittest": {
+    "total": 186,
+    "passed": 186,
+    "failed": 0
+  },
+  "gnatprove": {
+    "status": "GNATPROVE_REPORTED_DISCHARGED",
+    "reported_checks_proved": 21,
+    "exit_code": 0,
+    "tool_version": "FSF 16.1.0\nWhy3 for gnatprove version 1.8.2+git\n/home/trent/opt/edgewalk-spark-toolchain/libexec/spark/bin/alt-ergo: Alt-Ergo version 2.6.1\n/home/trent/opt/edgewalk-spark-toolchain/libexec/spark/bin/cvc5: This is cvc5 version 1.3.2 [git 86cecd8 on branch HEAD]\n/home/trent/opt/edgewalk-spark-toolchain/libexec/spark/bin/z3: Z3 version 4.15.4 - 64 bit",
+    "command": [
+      "gnatprove",
+      "-P",
+      "kernel.gpr",
+      "-u",
+      "reference_kernel.adb",
+      "--mode=all",
+      "--checks-as-errors=on",
+      "--warnings=error",
+      "--report=all",
+      "--level=2"
+    ],
+    "proof_output_sha256": "834ff4418b98e36e011900c7c5a6897776d2db5f12d7874011a64a474a268fab"
+  },
+  "source_hashes_sha256": {
+    "cli.gpr": "b92a85e592d792c740e1b16d9a01c3b441a83cdb5d6420e240c993f1a97e8309",
+    "kernel.gpr": "bd71f6edab8d5f2ff97c686f3c72600e532d28c25c8c07f982879f2b2ca7f312",
+    "reference_cli.adb": "937c51b184e8173f90dd71d0df80797c25f3a88b20ea86910f1ee179c483d83a",
+    "reference_kernel.adb": "22cb09b6df9e0b5a93406e6746b895205e7b465381ebcd4d61d267b6cf289334",
+    "reference_kernel.ads": "a1569a35c2e924243f8d9cc2a3c83a83391e263f1c38a5a280f1b056984408fe"
+  },
+  "evidence_file": "formal/evidence/spark/pr13/spark-evidence.json",
+  "limitations": [
+    "The JSON is reconstructed from a user-provided terminal transcript; byte-identical provenance to the original local spark-evidence.json is not independently established.",
+    "The 21 discharged checks are GNATprove's reported Ada reference-kernel result; the CLI boundary and production Python/JavaScript remain outside the proof.",
+    "The transcript reports 186 Python unittests passed; it is not a separately signed or independently authenticated CI run.",
+    "The evidence receipt hashes confirm consistency with reported bytes, not independent execution attestation."
+  ],
+  "historical_source_snapshot": {
+    "path": "formal/evidence/spark/pr13/source",
+    "files": [
+      "cli.gpr",
+      "kernel.gpr",
+      "reference_cli.adb",
+      "reference_kernel.adb",
+      "reference_kernel.ads"
+    ],
+    "hashes_sha256": {
+      "cli.gpr": "b92a85e592d792c740e1b16d9a01c3b441a83cdb5d6420e240c993f1a97e8309",
+      "kernel.gpr": "bd71f6edab8d5f2ff97c686f3c72600e532d28c25c8c07f982879f2b2ca7f312",
+      "reference_cli.adb": "937c51b184e8173f90dd71d0df80797c25f3a88b20ea86910f1ee179c483d83a",
+      "reference_kernel.adb": "22cb09b6df9e0b5a93406e6746b895205e7b465381ebcd4d61d267b6cf289334",
+      "reference_kernel.ads": "a1569a35c2e924243f8d9cc2a3c83a83391e263f1c38a5a280f1b056984408fe"
+    },
+    "spec_snapshot_path": "formal/evidence/spark/pr13/source/kernel-v1.json",
+    "spec_git_blob_sha1": "aebdb9ca058b27adb71264b74a87cfafac0b8310",
+    "source_checkout_git_sha": "9900e57f2283c534815657dd6c079d0e966715f4"
+  }
+}

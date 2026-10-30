@@ -15,3 +15,17 @@
 /* Declaration's closing statement — deliberate, legible, responsive. */
 .divorce-declaration{border-top:1px solid var(--red);padding-top:25px;margin:34px 0 0!important;display:flex;flex-wrap:wrap;column-gap:.35em;row-gap:.08em;text-transform:uppercase;font-size:clamp(22px,2.7vw,38px)!important;font-weight:900;line-height:1.13!important;letter-spacing:-.045em;color:var(--ink)!important}
 .divorce-declaration strong{color:var(--red)}
+
+/* A second satirical line, visually subordinate to the original declaration. */
+.pest-control-declaration{margin:8px 0 0!important;font:900 clamp(16px,1.9vw,25px)/1.22 "Courier New",monospace!important;letter-spacing:-.025em;text-transform:uppercase;color:var(--ink)!important}
+.pest-control-declaration strong{color:var(--red)}
+@media(max-width:700px){.pest-control-declaration{font-size:clamp(14px,4.1vw,19px)!important}}
+
+/* Historical proof results are distinguished from local browser self-tests. */
+.proof-milestone{margin:20px 0 28px;border:1px solid #536154;background:#18221c;padding:22px 24px;display:flex;gap:22px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.proof-milestone>div{flex:1;min-width:min(100%,270px)}
+.proof-milestone-kicker{display:block;color:#d9d19d;font:700 11px/1.5 "Courier New",monospace;letter-spacing:.04em;margin-bottom:10px}
+.proof-milestone strong{display:block;font:900 clamp(29px,4vw,50px)/1.15 "Courier New",monospace;color:#9cdaa5}
+.proof-milestone strong span{font-size:clamp(14px,2.1vw,24px);color:#f6ead0}
+.proof-milestone p{font:12px/1.75 "Courier New",monospace;color:#c9d4c9;max-width:770px;margin:12px 0 0}
+.proof-milestone a{font:700 11px/1.4 "Courier New",monospace;color:#f1db9c;overflow-wrap:anywhere}
