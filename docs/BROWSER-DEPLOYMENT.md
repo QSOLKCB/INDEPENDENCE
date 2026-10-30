@@ -120,3 +120,22 @@ If the main website remains 404 after propagation, inspect the repository's
 Settings → Pages → Build and deployment → Source (GitHub Actions), and
 review the Pages deployment logs. Do not attribute a persistent 404 to
 propagation without evidence.
+
+## Manifest artifact precedence — follow-up observation
+
+The standalone `independence-pages-manifest` is the preferred exact source
+for any deployment run that uploaded it. Unlike the special `github-pages`
+upload, which defaults to roughly one-day retention, this independent upload
+follows repository artifact-retention settings. The follow-up verifier first
+downloads the standalone manifest. **Only if that artifact cannot be
+downloaded** does it request the short-lived `github-pages` archive and
+extract the historical manifest from its `artifact.tar`. The fallback
+remains useful for early deployment runs such as `41113714704` while the
+archive is retained.
+
+Both paths pass through `scripts/select_public_manifest.py`: the exact
+manifest must satisfy its strict checksum/schema contract before comparison.
+An already-downloaded but corrupt primary manifest **fails closed**; it is
+never silently replaced with data from another source. When both sources
+are unavailable, the selector emits `NOT_VERIFIED` evidence and the
+workflow fails instead of inventing a successful remote observation.

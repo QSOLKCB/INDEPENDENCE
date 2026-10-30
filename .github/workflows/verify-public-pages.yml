@@ -1,7 +1,6 @@
 # Manually verify a previous Pages publish without redeploying it.
-# The exact manifest is extracted from that run's preserved github-pages artifact.tar.
-# Works with historical deployment run 41113714704 too, before the separate
-# independent-pages-manifest upload existed.
+# Prefer the separately preserved independence-pages-manifest, using the
+# short-lived github-pages artifact.tar only for historical deployments.
 name: Verify Published INDEPENDENCE Bytes
 
 on:
@@ -22,22 +21,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download exact original GitHub Pages upload from selected deployment
+      # The independent manifest follows repository artifact retention;
+      # the special github-pages archive defaults to about one day.
+      - name: Download separately preserved manifest first
+        id: preserved_manifest
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: independence-pages-manifest
+          run-id: ${{ inputs.deployment_run_id }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/preferred-manifest
+
+      - name: Download legacy Pages archive only if the manifest is unavailable
+        if: steps.preserved_manifest.outcome != 'success'
+        id: historical_pages
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: github-pages
           run-id: ${{ inputs.deployment_run_id }}
           github-token: ${{ github.token }}
-          path: ${{ runner.temp }}/published-pages
+          path: ${{ runner.temp }}/historical-pages
 
-      - name: Extract only the exact deployment manifest from Pages artifact.tar
-        shell: bash
+      - name: Select and strictly validate exact original manifest
         run: |
-          set -euo pipefail
-          test -s "$RUNNER_TEMP/published-pages/artifact.tar"
-          mkdir -p "$RUNNER_TEMP/published-manifest"
-          tar -xOf "$RUNNER_TEMP/published-pages/artifact.tar" ./deployment-manifest.json > "$RUNNER_TEMP/published-manifest/deployment-manifest.json"
-          test -s "$RUNNER_TEMP/published-manifest/deployment-manifest.json"
+          python3 scripts/select_public_manifest.py \
+            --preferred "$RUNNER_TEMP/preferred-manifest/deployment-manifest.json" \
+            --legacy-tar "$RUNNER_TEMP/historical-pages/artifact.tar" \
+            --output "$RUNNER_TEMP/published-manifest/deployment-manifest.json" \
+            --failure-output "$RUNNER_TEMP/manual-pages-observation.json"
 
       - name: Compare every public byte with preserved deployment manifest
         run: python3 scripts/verify_deployed_site.py --manifest "$RUNNER_TEMP/published-manifest/deployment-manifest.json" --attempts 8 --delay 10 --output "$RUNNER_TEMP/manual-pages-observation.json"

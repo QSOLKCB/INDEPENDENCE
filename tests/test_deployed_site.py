@@ -144,9 +144,15 @@ class DeployObservationTests(unittest.TestCase):
         self.assertIn("name: independence-pages-manifest", deploy)
         self.assertIn("id: deployment", deploy.split("id: public-observation")[0])
         self.assertIn("run-id:", manual)
+        self.assertIn("name: independence-pages-manifest", manual)
         self.assertIn("name: github-pages", manual)
-        self.assertIn("tar -xOf", manual)
-        self.assertIn("./deployment-manifest.json", manual)
+        self.assertLess(manual.index("name: independence-pages-manifest"),
+                        manual.index("name: github-pages"))
+        self.assertIn("id: preserved_manifest", manual)
+        self.assertIn("if: steps.preserved_manifest.outcome != 'success'", manual)
+        self.assertIn("continue-on-error: true", manual)
+        self.assertIn("select_public_manifest.py", manual)
+        self.assertIn("artifact.tar", manual)
         self.assertIn("verify_deployed_site.py", manual)
 
     def test_missing_remote_stays_not_verified(self):
