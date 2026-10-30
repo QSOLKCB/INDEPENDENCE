@@ -42,3 +42,10 @@ The browser test button runs a separate native-JavaScript suite.
 27. A survived mutant is a known divergence not detected by the selected suite. Mutation scores apply to curated fixtures only, not the repository or its security.
 28. Seeded order, fixed IDs, observed failures and selected suite must be reproducible. Python verification independently checks fixed expectations and order but does not attest authentic execution.
 29. UI renders findings through textContent, prevents export after failure and never sends measurements to a server.
+
+30. AI-HUMAN-WORKFLOW/1 describes the human-controlled development process; the slogan "unlimited potential" must be labelled aspirational, not quantified, literal, guaranteed, or scientifically established.
+31. AI's suggestions are not evidence of a successful test, review or deployment. Separate source-backed facts, tool observations, explicit human reports, and hypothetical examples.
+32. The browser guide is educational only: its checklist is self-reported, never a code or security audit, and must not claim that ticking boxes authorises a merge.
+33. The agent handoff composer is entirely local, plain text and never sends inputs to an AI, GitHub API or other server. No credentials, persistence, hidden telemetry, dynamic execution, or untrusted HTML rendering.
+34. Preserve human authority over merges, deployments, releases, task scope and risk acceptance. Require a fresh PR HEAD SHA and rerun meaningful review after code changes.
+35. The workflow's historical PR examples must use correct, publicly inspectable INDEPENDENCE PR URLs. Claims of reduced drift or improved accuracy remain qualitative recommendations unless tested in a controlled study.

@@ -125,3 +125,18 @@ Runs are deterministic by seed and show killed/survived classifications and fail
     python3 scripts/verify_breeding.py /path/to/gremlin-breeding-xxxxxxxxxxxx.json --json
 
 The verifier pins the catalogue, outcomes and seeded order but does not attest genuine browser execution. See [docs/BREEDING.md](docs/BREEDING.md) for methodology and limits.
+
+## v0.6.0 — The Secret Source: AI + Web Tech = Unlimited Potential
+
+[Explore the AI–Human GitHub Workflow](https://qsolkcb.github.io/INDEPENDENCE/#workflow) after merging and manually deploying.
+
+The previously unspoken engine behind this repository is a human-directed loop:
+**intent → bounded scope → invariants → AI-assisted implementation → real tests
+→ adversarial review → fresh HEAD SHA → human-authorised merge and release**.
+
+The slogan is aspirational, not a guarantee: models can be wrong, drift, miss edge cases and misreport unverified work. Practical guidance shows how to improve reliability by freezing scope, naming forbidden changes, checking provenance and tool outputs, testing failure cases, challenging patches with a hostile reviewer and reviewing the **actual latest commit** before merging.
+
+The new static browser guide includes eight selectable workflow stages, eight self-reported drift safeguards, public links to five merged PR case studies, and a **local copyable agent-handoff prompt generator**. It does **not** call an AI, send prompts to a server, track activity or claim to check your repository. Only browser-standard code and Python stdlib tests are used.
+
+Full method and copyable adversarial-review/fix prompts:
+[docs/AI-HUMAN-WORKFLOW.md](docs/AI-HUMAN-WORKFLOW.md).
