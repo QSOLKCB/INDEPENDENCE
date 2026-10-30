@@ -148,15 +148,15 @@ def run_ada(binary: Path, cases):
         expected = oracle(operation, args)
         try:
             proc = subprocess.run([str(binary), operation, *map(str, args)],
-                                  capture_output=True, text=True, timeout=3, check=False)
+                                  capture_output=True, text=False, timeout=3, check=False)
         except (OSError, subprocess.TimeoutExpired) as error:
             raise RuntimeError("Ada CLI unavailable/timeout: " + str(error)) from error
-        # Ada.Text_IO.Put_Line emits exactly one LF-terminated response on
-        # the tested Linux toolchain. Ignore no extra output, blank lines,
-        # unexpected whitespace or diagnostic stderr.
+        # Compare raw bytes. text=True would normalize CR and CRLF to LF,
+        # defeating the exact one-line protocol and admitting malformed output.
         actual = proc.stdout
-        if proc.returncode != 0 or actual != expected + "\n" or proc.stderr:
-            raise RuntimeError("Ada mismatch: " + repr((operation, args, expected, actual,
+        expected_bytes = (expected + "\n").encode("ascii")
+        if proc.returncode != 0 or actual != expected_bytes or proc.stderr:
+            raise RuntimeError("Ada mismatch: " + repr((operation, args, expected_bytes, actual,
                                                        proc.stderr[:160], proc.returncode)))
         records.append([operation, list(args), expected])
     serialized = json.dumps(records, separators=(",", ":"), ensure_ascii=False)
