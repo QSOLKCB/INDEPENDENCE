@@ -27,3 +27,9 @@ python3 -m unittest discover -s tests -v
 ```
 
 The archive verifier validates claimed source identifiers, reported digest and outcome consistency; it cannot rerun GNATprove on its own. A new GNATprove execution, explicit CLI compilation and Python/Ada comparison are separate future steps.
+
+## Exact archived inputs
+
+The `source/` directory contains immutable copies of the five Ada/GPR input files and `kernel-v1.json` fetched from PR #13 HEAD `9900e57f2283c534815657dd6c079d0e966715f4`. The manifest stores each Ada/GPR file's reported SHA-256 and the canonical specification's Git blob ID. The archive verifier checks these **snapshots**, not the moving working tree, so future edits to `formal/spark/` won't break the historical verification record.
+
+No SPARK source code is changed by adding these archival copies. Their retention does not make the user-provided terminal report independently attested.
