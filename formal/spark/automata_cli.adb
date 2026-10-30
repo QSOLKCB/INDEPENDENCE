@@ -43,7 +43,9 @@ begin
    begin
       IO.Put_Line ("OK:" & Digit (Output (1)) & Digit (Output (2)) &
                    Digit (Output (3)) & Digit (Output (4)));
-   exception
-      when Constraint_Error => IO.Put_Line ("ERR:INVALID");
    end;
+exception
+   -- The handler belongs to the outer procedure: it also catches
+   -- exceptions raised while elaborating constants in the inner declare.
+   when Constraint_Error => IO.Put_Line ("ERR:INVALID");
 end Automata_CLI;
