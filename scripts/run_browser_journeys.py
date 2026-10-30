@@ -32,6 +32,26 @@ class BrowserError(ValueError):
     pass
 
 
+SHARED_CHECKS = frozenset({
+    "real document loaded with application script",
+    "ledger fetch completed rather than hanging",
+    "accessible headings/landmarks and unique IDs",
+    "form labels and button accessible names",
+    "viewport is not catastrophically horizontally clipped",
+    "real CSP blocks inline code",
+    "real page has no cross-origin runtime resource requests",
+})
+NORMAL_CHECKS = SHARED_CHECKS | {
+    "real packaged ledger rendered",
+    "ledger search changes and restores actual rendered results",
+    "automaton deterministic replay",
+    "real first-party browser self tests",
+    "real 4096-vector formal browser lab and WebCrypto receipt",
+    "real property laboratory executed",
+    "real workflow handoff built locally",
+}
+
+
 class ResultParser(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
@@ -118,9 +138,24 @@ def parse_html(html: str, expected_mode: str) -> dict:
             record.get("status") not in ("PASS", "FAIL") or
             type(record.get("checks")) is not list or not record["checks"]):
         raise BrowserError("incomplete browser result schema")
-    if any(type(c) is not dict or c.get("status") not in ("PASS", "FAIL")
+    if any(type(c) is not dict or c.get("status") not in ("PASS", "FAIL") or
+           type(c.get("name")) is not str or type(c.get("detail")) is not str
            for c in record["checks"]):
         raise BrowserError("malformed browser assertion list")
+    if record["status"] == "PASS":
+        expected = NORMAL_CHECKS if expected_mode == "normal" else SHARED_CHECKS | {
+            "controlled " + expected_mode + " failure is fail-closed",
+            "failed ledger cannot disable other first-party controls",
+        }
+        names = [c["name"] for c in record["checks"]]
+        if (len(names) != len(set(names)) or set(names) != expected or
+                any(c["status"] != "PASS" for c in record["checks"]) or
+                type(record.get("user_agent")) is not str or not record["user_agent"] or
+                type(record.get("viewport")) is not dict or
+                type(record["viewport"].get("width")) is not int or
+                record["viewport"]["width"] < 200 or
+                type(record.get("resource_count")) is not int):
+            raise BrowserError("browser PASS contradicts required executed assertions")
     return record
 
 

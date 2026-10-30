@@ -19,12 +19,30 @@ class BrowserJourneysTests(unittest.TestCase):
 
     def test_html_requires_real_completed_json(self):
         report = {"mode": "normal", "status": "PASS",
-                  "checks": [{"name": "actual", "status": "PASS", "detail": "ok"}]}
+                  "user_agent": "Real Browser Test",
+                  "viewport": {"width": 1000, "height": 800},
+                  "resource_count": 10,
+                  "checks": [{"name": name, "status": "PASS", "detail": "ok"}
+                             for name in sorted(browser.NORMAL_CHECKS)]}
         raw = ('<pre id="verification-result" data-complete="yes">' +
                json.dumps(report).replace("&", "&amp;") + "</pre>")
         self.assertEqual(browser.parse_html(raw, "normal"), report)
         with self.assertRaisesRegex(browser.BrowserError, "did not complete"):
             browser.parse_html(raw.replace('data-complete="yes"', ''), "normal")
+
+    def test_forged_pass_with_missing_assertions_is_rejected(self):
+        fake = {"mode": "normal", "status": "PASS", "user_agent": "fake",
+                "viewport": {"width": 1000}, "resource_count": 10,
+                "checks": [{"name": "real CSP blocks inline code", "status": "PASS", "detail": ""}]}
+        raw = '<pre id="verification-result" data-complete="yes">' + json.dumps(fake) + '</pre>'
+        with self.assertRaisesRegex(browser.BrowserError, "contradicts"):
+            browser.parse_html(raw, "normal")
+        fake["checks"] = [{"name": name, "status": "PASS", "detail": ""}
+                          for name in sorted(browser.NORMAL_CHECKS)]
+        fake["checks"][0]["status"] = "FAIL"
+        raw = '<pre id="verification-result" data-complete="yes">' + json.dumps(fake) + '</pre>'
+        with self.assertRaisesRegex(browser.BrowserError, "contradicts"):
+            browser.parse_html(raw, "normal")
 
     def test_fake_browsers_cannot_produce_a_pass(self):
         with self.assertRaises(browser.BrowserError):
