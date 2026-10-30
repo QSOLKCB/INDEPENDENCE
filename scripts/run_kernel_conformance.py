@@ -21,6 +21,8 @@ SPEC = ROOT / "formal/spec/kernel-v1.json"
 BRIDGE = "PROOF-CONFORMANCE-BRIDGE/1"
 RECEIPT = "PROOF-CONFORMANCE-RECEIPT/1"
 SEED = 314159
+# Source-reviewed specification lock; changes require an intentional spec version bump.
+EXPECTED_SPEC_SHA256 = "a8cdcf3dccc4f4b91173069528935db02a6dac14681f60a47b10174cdfa451e0"
 
 
 def oracle(operation: str, args: tuple[int, ...]) -> str:
@@ -151,6 +153,8 @@ def run_ada(binary: Path, cases):
 def build_report(ada_binary: Path | None = None, ada_cases: int = 128, seed: int = SEED):
     if type(seed) is not int or not 0 <= seed <= 0xffffffff:
         raise ValueError("invalid seed")
+    if digest(SPEC) != EXPECTED_SPEC_SHA256:
+        raise ValueError("shared specification changed without reviewed version bump")
     spec = json.loads(SPEC.read_text(encoding="utf-8"))
     if spec.get("protocol") != "INDEPENDENCE-KERNEL-SPEC/1":
         raise ValueError("shared specification mismatch")
