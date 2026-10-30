@@ -50,12 +50,28 @@ async function run() {
     const record = d.querySelector('#ledger-list .ledger-record-name');
     if (record) {
       const field = d.getElementById('ledger-search');
-      field.value = record.textContent;
+      const initialNames = [...d.querySelectorAll('#ledger-list .ledger-record-name')]
+        .map(n => n.textContent);
+      const initialCount = initialNames.length;
+      const selectedName = record.textContent;
+      field.value = '__independence_no_matching_repo_v1_0__';
       field.dispatchEvent(new Event('input', {bubbles: true}));
-      assert('real ledger input filters records', d.querySelectorAll('#ledger-list .ledger-record').length >= 1);
+      const zeroMatches = d.querySelectorAll('#ledger-list .ledger-record').length === 0 &&
+        d.getElementById('ledger-message').textContent.includes('0 matching repositories');
+      field.value = selectedName;
+      field.dispatchEvent(new Event('input', {bubbles: true}));
+      const visibleNames = [...d.querySelectorAll('#ledger-list .ledger-record-name')]
+        .map(n => n.textContent);
+      const narrowed = visibleNames.length >= 1 &&
+        visibleNames.every(n => n.toLocaleLowerCase().includes(selectedName.toLocaleLowerCase()));
       field.value = '';
       field.dispatchEvent(new Event('input', {bubbles: true}));
-    } else assert('real ledger input filters records', false, 'no records');
+      const restored = d.querySelectorAll('#ledger-list .ledger-record').length === initialCount;
+      assert('ledger search changes and restores actual rendered results',
+        zeroMatches && narrowed && restored,
+        'initial='+initialCount+', zero='+zeroMatches+', narrowed='+visibleNames.length+
+        ', restored='+restored);
+    } else assert('ledger search changes and restores actual rendered results', false, 'no records');
     d.getElementById('repeat').click();
     assert('automaton deterministic replay', d.getElementById('replay').textContent.includes('PASS / BIT-EXACT'));
     d.getElementById('run-tests').click();

@@ -73,12 +73,35 @@ def check_html(raw: bytes) -> None:
     if len(parser.csp) != 1:
         raise BundleError("exactly one CSP meta policy required")
     policy = parser.csp[0]
-    for clause in ("default-src 'self'", "script-src 'self'", "style-src 'self'",
-                   "connect-src 'self'", "object-src 'none'", "base-uri 'self'"):
-        if clause not in policy:
-            raise BundleError("CSP missing required restriction: " + clause)
-    if "unsafe-inline" in policy or "unsafe-eval" in policy or parser.remote:
-        raise BundleError("remote/unsafe executable content present")
+    # CSP browsers honour the FIRST occurrence of each directive. Checking
+    # whether a safe directive merely occurs somewhere is dangerous:
+    #   script-src *; script-src 'self'
+    # is effectively permissive. Reject duplicates and require a reviewed
+    # exact source list for every shipped directive.
+    expected_csp = {
+        "default-src": ("'self'",),
+        "script-src": ("'self'",),
+        "style-src": ("'self'",),
+        "img-src": ("'self'", "data:"),
+        "font-src": ("'self'",),
+        "connect-src": ("'self'",),
+        "object-src": ("'none'",),
+        "base-uri": ("'self'",),
+        "form-action": ("'none'",),
+    }
+    actual_csp = {}
+    for clause in policy.split(";"):
+        fields = clause.strip().split()
+        if not fields:
+            continue
+        name, values = fields[0].lower(), tuple(fields[1:])
+        if name in actual_csp:
+            raise BundleError("duplicate effective CSP directive: " + name)
+        actual_csp[name] = values
+    if actual_csp != expected_csp:
+        raise BundleError("CSP effective directives differ from reviewed policy")
+    if parser.remote:
+        raise BundleError("remote executable content present")
     if len(parser.ids) != len(set(parser.ids)):
         raise BundleError("duplicate HTML IDs")
     for expected in ("main", "automaton", "run-tests", "ledger", "formal-lab", "formal-lab-run"):

@@ -82,6 +82,9 @@ class SiteBundleTests(unittest.TestCase):
         original = (ROOT / "index.html").read_bytes()
         for bad in (
             original.replace(b"script-src 'self'", b"script-src 'self' 'unsafe-inline'"),
+            original.replace(b"script-src 'self'", b"script-src *; script-src 'self'"),
+            original.replace(b"connect-src 'self'", b"connect-src *; connect-src 'self'"),
+            original.replace(b"style-src 'self'", b"style-src *"),
             original.replace(b'<main id="main">', b'<main id="main"><div id="main">'),
         ):
             with self.subTest(bad=bad[:50]), self.assertRaises(bundle.BundleError):
