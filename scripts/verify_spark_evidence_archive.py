@@ -143,7 +143,7 @@ def verify(root: Path = ROOT):
         if digest(path.read_bytes()) != expected:
             raise EvidenceError("historical SPARK source bytes differ from reported proof checkout: " + relative)
     spec_bytes = (directory / "source" / "kernel-v1.json").read_bytes()
-    git_blob = b"blob " + str(len(spec_bytes)).encode("ascii") + b"\\0" + spec_bytes
+    git_blob = b"blob " + str(len(spec_bytes)).encode("ascii") + b"\0" + spec_bytes
     if hashlib.sha1(git_blob).hexdigest() != snapshot["spec_git_blob_sha1"]:
         raise EvidenceError("historical kernel specification Git blob mismatch")
     tool = manifest["gnatprove"]
