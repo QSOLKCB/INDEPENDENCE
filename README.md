@@ -1,5 +1,14 @@
 # THE SOFTWARE DECLARATION OF INDEPENDENCE
 
+
+[![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23816739.svg)](https://doi.org/10.5281/zenodo.23816739)
+[![CI · Verify](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/verify.yml)
+[![Release](https://img.shields.io/github/v/release/QSOLKCB/INDEPENDENCE?label=release)](https://github.com/QSOLKCB/INDEPENDENCE/releases/latest)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
+[![Pages deploy (manual)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/deploy-pages.yml/badge.svg?branch=main)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/deploy-pages.yml)
+[![Published-byte audit (manual)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/verify-public-pages.yml/badge.svg?branch=main)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/verify-public-pages.yml)
+
 ### QSOL-IMC — October 30, 2026
 
 **We hereby declare our independence from the Modern Software Industry.**
