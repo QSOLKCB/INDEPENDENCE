@@ -8,7 +8,9 @@ import unittest
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
-from verify_tribunal import ReceiptError, main, strict_json, verify_receipt  # noqa: E402
+from verify_tribunal import (  # noqa: E402
+    ReceiptError, main, strict_json, verify_receipt, phase_fingerprints, bootstrap_interval
+)
 
 PHASES = ("initial", "update", "reorder")
 ATTRIBUTION = "local keyed adapter is illustrative; NOT a React/Vue/Svelte benchmark"
@@ -34,6 +36,7 @@ def fixture():
             {"id": "keyed", "label": "Local keyed adapter", "kind": "illustrative"}
         ],
         "samples_ms": pairs, "statistics": summary,
+        "phase_fingerprints": phase_fingerprints(1, 100),
         "methodology": {"attribution": ATTRIBUTION},
         "adapter_source_bytes": {"direct": 500, "keyed": 900},
         "low_clock_resolution_observed": False,
@@ -107,6 +110,31 @@ class TribunalReceiptTests(unittest.TestCase):
         report["methodology"]["attribution"] = "React outperformed"
         with self.assertRaisesRegex(ReceiptError, "attribution"):
             verify_receipt(seal(report))
+
+    def test_fixture_fingerprint_tampering_rejected(self):
+        report = json.loads(fixture()["payload_text"])
+        report["phase_fingerprints"]["initial"] = "deadbeef"
+        with self.assertRaisesRegex(ReceiptError, "fingerprint mismatch"):
+            verify_receipt(seal(report))
+
+    def test_bootstrap_interval_recalculated(self):
+        report = json.loads(fixture()["payload_text"])
+        report["statistics"]["update"]["paired_delta_bootstrap_95_ms"] = [0.1, 1.2]
+        with self.assertRaisesRegex(ReceiptError, "bootstrap interval mismatch"):
+            verify_receipt(seal(report))
+
+    def test_python_bootstrap_known_constant(self):
+        self.assertEqual(bootstrap_interval([1.0] * 8), [1.0, 1.0])
+
+    def test_tribunal_static_site_integration(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        app = (ROOT / "app.js").read_text(encoding="utf-8")
+        workflow = (ROOT / ".github/workflows/deploy-pages.yml").read_text(encoding="utf-8")
+        for name in ("core.js", "direct.js", "keyed.js", "bench.js", "ui.js", "tribunal.css"):
+            self.assertTrue((ROOT / "tribunal" / name).is_file())
+        self.assertIn('id="tribunal"', html)
+        self.assertIn("mountTribunal();", app)
+        self.assertIn("cp tribunal/bench.js tribunal/ui.js tribunal/tribunal.css", workflow)
 
     def test_disk_cli_round_trip(self):
         with tempfile.TemporaryDirectory() as directory:
