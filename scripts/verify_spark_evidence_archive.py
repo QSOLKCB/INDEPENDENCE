@@ -27,6 +27,17 @@ COMMAND = [
     "--mode=all", "--checks-as-errors=on", "--warnings=error",
     "--report=all", "--level=2",
 ]
+TOOL_VERSION = """FSF 16.1.0
+Why3 for gnatprove version 1.8.2+git
+/home/trent/opt/edgewalk-spark-toolchain/libexec/spark/bin/alt-ergo: Alt-Ergo version 2.6.1
+/home/trent/opt/edgewalk-spark-toolchain/libexec/spark/bin/cvc5: This is cvc5 version 1.3.2 [git 86cecd8 on branch HEAD]
+/home/trent/opt/edgewalk-spark-toolchain/libexec/spark/bin/z3: Z3 version 4.15.4 - 64 bit"""
+LIMITATIONS = [
+    "The JSON is reconstructed from a user-provided terminal transcript; byte-identical provenance to the original local spark-evidence.json is not independently established.",
+    "The 21 discharged checks are GNATprove's reported Ada reference-kernel result; the CLI boundary and production Python/JavaScript remain outside the proof.",
+    "The transcript reports 186 Python unittests passed; it is not a separately signed or independently authenticated CI run.",
+    "The evidence receipt hashes confirm consistency with reported bytes, not independent execution attestation.",
+]
 REPORT_KEYS = {
     "ada_contracts", "command", "exit_code", "files_sha256", "note",
     "proof_output", "proof_output_sha256", "spec", "static_contracts", "tool_version",
@@ -110,11 +121,7 @@ def verify(root: Path = ROOT):
         or len(re.findall(r"^ info:", output, flags=re.M)) != 21):
         raise EvidenceError("reported proof-output digest or 21-check summary mismatch")
     version = report["tool_version"]
-    if (type(version) is not str or not version.startswith("FSF 16.1.0\n")
-        or "Why3 for gnatprove version 1.8.2+git" not in version
-        or "Alt-Ergo version 2.6.1" not in version
-        or "cvc5 version 1.3.2" not in version
-        or "Z3 version 4.15.4" not in version):
+    if type(version) is not str or version != TOOL_VERSION:
         raise EvidenceError("GNATprove toolchain version mismatch")
     if type(report["files_sha256"]) is not dict or report["files_sha256"] != SOURCE_SHA:
         raise EvidenceError("reported source hash inventory mismatch")
@@ -135,8 +142,7 @@ def verify(root: Path = ROOT):
         raise EvidenceError("GNATprove manifest contradicts reported proof result")
     if (manifest["reported_execution_local_date"] != "2026-10-31"
         or type(manifest["limitations"]) is not list
-        or len(manifest["limitations"]) != 4
-        or any(type(x) is not str or not x for x in manifest["limitations"])):
+        or manifest["limitations"] != LIMITATIONS):
         raise EvidenceError("manifest date or limitations mismatch")
     return {
         "archive_integrity": "PASS",
