@@ -86,9 +86,17 @@ def verify(document):
         records = [[op, list(args), oracle(op, args)] for op, args in cases]
         reference_sha = hashlib.sha256(json.dumps(
             records, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
+        allowed = {"status", "cases", "vectors_sha256", "binary_sha256", "note"}
+        disclaimer = "CLI output matched oracle; binary provenance and SPARK compilation not independently attested"
+        if set(ada) != allowed or ada.get("note") != disclaimer:
+            raise InvalidReceipt("Ada CLI evidence contains unsupported provenance or extra fields")
         if type(ada.get("binary_sha256")) is not str or re.fullmatch("[0-9a-f]{64}", ada["binary_sha256"]) is None or ada.get("vectors_sha256") != reference_sha:
             raise InvalidReceipt("Ada CLI evidence metadata inconsistent")
-        expected["evidence"]["ada_cli_conformance"] = ada
+        expected["evidence"]["ada_cli_conformance"] = {
+            "status": "ADA_CLI_TESTED_UNATTESTED", "cases": count,
+            "vectors_sha256": reference_sha,
+            "binary_sha256": ada["binary_sha256"], "note": disclaimer
+        }
         expected["unresolved"][3] = "Ada CLI execution matches selected inputs but provenance not attested"
     if not strict_equal(report, expected):
         raise InvalidReceipt("fixed spec, source hash, classification or unresolved-obligation mismatch")
