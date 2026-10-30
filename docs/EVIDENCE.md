@@ -83,3 +83,9 @@ The project adds SPARK_Mode On Ada functions for bounded rectangular addressing,
 The source-level Python gate checks files, hashes, forbidden proof-escape annotations and declared contracts. This is not GNATprove. An optional strict runner invokes GNATprove with checks-as-errors and records actual tool output; where it was unavailable, evidence remains NOT_RUN and outstanding. The reference does not establish Python or JavaScript equivalence.
 
 A subsequent v0.7.2 conformance layer must separately compare Python/Ada results against the same versioned semantics. See docs/SPARK-REFERENCE.md.
+
+## v0.7.2 — Independent proof-conformance bridge
+
+formal/spec/kernel-v1.json remains the shared versioned specification. scripts/run_kernel_conformance.py independently checks formal/python/kernel.py against a second Python oracle for 8,881 finite valid inputs plus 16 invalid/negative samples. The source is a new Python reference, not all existing application Python. No claim about production JavaScript follows from it.
+
+With an actual supplied Ada executable the same script executes matching vectors and records source/spec and binary hashes; when missing, Ada differential comparison remains NOT_RUN. No Lean kernel proof or GNATprove discharge is asserted by this bridge. The resulting SHA-256 receipt and verifier separate MATHEMATICAL_PROOF, ADA_CONTRACTS, PYTHON_CONFORMANCE, ADA_CLI_CONFORMANCE and UNRESOLVED evidence and explicitly disclaim independent execution attestation. See docs/PROOF-CONFORMANCE.md.
