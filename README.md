@@ -76,7 +76,7 @@ See docs/INVARIANTS.md, docs/EVIDENCE.md, and docs/ROADMAP.md. The scope and lim
 
 [Browse the public evidence ledger](https://qsolkcb.github.io/INDEPENDENCE/#ledger) after this PR is merged and manually deployed.
 
-The public catalogue at [QSOL-IMC](https://github.com/QSOLKCB/QSOL-IMC) provides curated categories. [QSOL-CONTEXT](https://github.com/QSOLKCB/QSOL-CONTEXT) informs snapshot/provenance design; only its public manifest snapshot date is read. The ledger **never** publishes personal context records.
+The public catalogue at [QSOL-IMC](https://github.com/QSOLKCB/QSOL-IMC) provides curated categories. QSOL-CONTEXT informs the provenance philosophy but is a **private repository** and is neither queried by the collector nor imported into this public dataset. The ledger **never** publishes personal context records.
 
 This is a *filename-signal inventory*, not a declaration that every repo is package-free. It distinguishes observed manifests, inspected trees without known manifests, truncated trees and failed scans. Counts come from the packaged JSON, not hard-coded website constants.
 

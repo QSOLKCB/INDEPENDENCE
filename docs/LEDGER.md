@@ -2,7 +2,7 @@
 
 **What is collected:** Public GitHub repository metadata returned by the QSOLKCB organisation REST endpoint (explicit pagination), the default branch, archived/fork attributes, and the recursive Git tree for each available branch. No project source files are downloaded or executed.
 
-**Public references:** QSOL-IMC app.js supplies optional editorial categories. The historical 99 curated project entries are not assumed to equal the live public repository count. The QSOL-CONTEXT public manifest.json supplies only its snapshot_date as a provenance reference; personal context and detailed project records are never copied.
+**Public references:** QSOL-IMC app.js supplies optional editorial categories. The historical 99 curated project entries are not assumed to equal the live public repository count. QSOL-CONTEXT is a private design inspiration, not an evidence source. The collector does not query it, publish its metadata or inspect its contents.
 
 ## Collection and reproducibility
 

@@ -171,16 +171,6 @@ def collection(client, as_of: str, owner: str = OWNER) -> dict:
     except (HTTPError, URLError, ValueError, KeyError, UnicodeError) as error:
         catalog = {}
         category_state = "unavailable:" + type(error).__name__
-    context_date = None
-    try:
-        context_doc = json.loads(client.get_text(owner, "QSOL-CONTEXT", "manifest.json"))
-        if isinstance(context_doc, dict):
-            value = context_doc.get("snapshot_date")
-            if isinstance(value, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
-                context_date = value
-    except (HTTPError, URLError, ValueError, KeyError, UnicodeError):
-        pass  # Optional metadata. Do not ingest private personal/project records.
-
     rows = []
     for name in sorted(discovered, key=lambda value: (value.casefold(), value)):
         repo = discovered[name]
@@ -215,12 +205,10 @@ def collection(client, as_of: str, owner: str = OWNER) -> dict:
         "sources": {
             "repositories": "https://github.com/orgs/" + owner + "/repositories",
             "catalog": "https://github.com/" + owner + "/QSOL-IMC/blob/main/app.js",
-            "context": "https://github.com/" + owner + "/QSOL-CONTEXT/blob/main/manifest.json",
         },
         "references": {
             "catalogue_status": category_state,
-            "context_manifest_snapshot_date": context_date,
-            "context_policy": "Only manifest snapshot date is used; no personal context is published.",
+            "private_context_policy": "QSOL-CONTEXT is private: never accessed, imported or published.",
         },
         "coverage": {
             "total": len(rows),

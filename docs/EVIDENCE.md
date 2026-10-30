@@ -38,7 +38,7 @@ The manifest list is finite and can miss unconventional build tools; source scan
 
 ## v0.2 — Public organisation-wide filename evidence
 
-The standard-library collector (scripts/build_ledger.py) queries the GitHub public repository listing with pagination, reads the optional QSOL-IMC curated catalogue for categories, reads only the public QSOL-CONTEXT manifest snapshot date, and fetches recursive default-branch Git trees. This is **not** a dependency import graph or project test.
+The standard-library collector (scripts/build_ledger.py) queries the GitHub public repository listing with pagination, reads the optional QSOL-IMC curated catalogue for categories, does not read QSOL-CONTEXT (a private design reference), and fetches recursive default-branch Git trees. This is **not** a dependency import graph or project test.
 
 A successful untruncated tree is labelled scanned. A negative filename finding is labelled no known manifest and is **never** interpreted as dependency-free. Truncation, HTTP failures, and missing branches are always unknown. Canonical SHA-256 receipts exclude their own digest member. No private GitHub repositories or personal context contents are intentionally collected.
 

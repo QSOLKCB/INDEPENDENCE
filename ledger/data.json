@@ -5,7 +5,6 @@
   "method": "GitHub repository search and recursive default-branch git tree inspection; filename evidence, not full dependency audits",
   "sources": {
     "catalog": "https://github.com/QSOLKCB/QSOL-IMC/blob/main/app.js",
-    "context": "https://github.com/QSOLKCB/QSOL-CONTEXT/blob/main/manifest.json",
     "repositories": "https://github.com/orgs/QSOLKCB/repositories"
   },
   "coverage": {
@@ -20,7 +19,8 @@
     "Absence of a known manifest filename is not proof of zero dependencies.",
     "A manifest may describe tooling without third-party runtime requirements.",
     "The list captures public repositories in a time-bounded search; fork/archival status and scan currency may change.",
-    "Individual project tests and import graphs are not executed or analysed."
+    "Individual project tests and import graphs are not executed or analysed.",
+    "QSOL-CONTEXT is private; no private-context data was ingested or published."
   ],
   "repositories": [
     {
