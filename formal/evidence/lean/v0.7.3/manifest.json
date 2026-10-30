@@ -42,5 +42,13 @@
     "The recovered JSON is not a byte-verified upload of the user's original lean-evidence.json file.",
     "Only statements of the pinned Lean model are in scope; not Ada/Python/JS conformance.",
     "General CRT and complete monomial-order properties remain outside verified scope."
-  ]
+  ],
+  "source_snapshot": {
+    "path": "formal/evidence/lean/v0.7.3/FiniteFoundation.lean",
+    "sha256": "0a71bba7fa1d8e81a73051c9c5e508126ba97242bf88537d2e55779019e2756d"
+  },
+  "toolchain_snapshot": {
+    "path": "formal/evidence/lean/v0.7.3/lean-toolchain",
+    "sha256": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c"
+  }
 }
