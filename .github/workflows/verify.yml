@@ -1,0 +1,25 @@
+# A small, package-free verification gate for PRs and main.
+name: Verify INDEPENDENCE
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python standard-library regression suite
+        run: python3 -m unittest discover -s tests -v
+      - name: Inspect versioned proof contracts
+        run: python3 scripts/check_proof_contracts.py --json
+      - name: Run v0.9 finite semantic reference
+        run: python3 scripts/automaton_proof_lab.py --output "$RUNNER_TEMP/automaton-evidence.json"
+      - name: Audit no-package website
+        run: python3 scripts/audit.py --json
