@@ -102,7 +102,7 @@ def check_html(raw: bytes) -> None:
         raise BundleError("non-ASCII characters in CSP policy")
     actual_csp = {}
     for clause in policy.split(";"):
-        fields = re.findall(r"[^\\t\\n\\f\\r ]+", clause)
+        fields = re.findall(r"[^\t\n\f\r ]+", clause)
         if not fields:
             continue
         name, values = fields[0].lower(), tuple(fields[1:])
