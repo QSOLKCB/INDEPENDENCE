@@ -10,10 +10,10 @@
   },
   "coverage": {
     "total": 103,
-    "scanned": 0,
-    "unknown": 103,
-    "with_manifest_signals": 0,
-    "without_manifest_signals": 0,
+    "scanned": 7,
+    "unknown": 96,
+    "with_manifest_signals": 4,
+    "without_manifest_signals": 3,
     "catalogued": 99
   },
   "limitations": [
@@ -50,7 +50,18 @@
       "archived": false,
       "category": "Games",
       "scan": {
-        "state": "not_scanned"
+        "state": "scanned",
+        "tree_sha": "847b0dacb39dd97812f8ec7eaedf0aedf46d795b",
+        "files_seen": 48,
+        "manifest_count": 1,
+        "manifest_paths": [
+          "package.json"
+        ],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 0,
+        "container_marker_paths": [],
+        "vendored_file_count": 0,
+        "workflow_count": 1
       }
     },
     {
@@ -330,7 +341,16 @@
       "archived": false,
       "category": null,
       "scan": {
-        "state": "not_scanned"
+        "state": "scanned",
+        "tree_sha": "3dddf67cb89dd85b9675477c8758b84baac81467",
+        "files_seen": 15,
+        "manifest_count": 0,
+        "manifest_paths": [],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 0,
+        "container_marker_paths": [],
+        "vendored_file_count": 0,
+        "workflow_count": 1
       }
     },
     {
@@ -440,7 +460,16 @@
       "archived": false,
       "category": "Research",
       "scan": {
-        "state": "not_scanned"
+        "state": "scanned",
+        "tree_sha": "7556dd36acd53ed3ed538fd03b1db44e5c1ec869",
+        "files_seen": 96,
+        "manifest_count": 0,
+        "manifest_paths": [],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 0,
+        "container_marker_paths": [],
+        "vendored_file_count": 0,
+        "workflow_count": 3
       }
     },
     {
@@ -480,7 +509,18 @@
       "archived": false,
       "category": null,
       "scan": {
-        "state": "not_scanned"
+        "state": "scanned",
+        "tree_sha": "c97a5035acaf7119c08956e7b1aed15f1d2a223e",
+        "files_seen": 32,
+        "manifest_count": 1,
+        "manifest_paths": [
+          "package.json"
+        ],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 0,
+        "container_marker_paths": [],
+        "vendored_file_count": 0,
+        "workflow_count": 1
       }
     },
     {
@@ -500,7 +540,23 @@
       "archived": false,
       "category": "Physics",
       "scan": {
-        "state": "not_scanned"
+        "state": "scanned",
+        "tree_sha": "4ad55333f888ca33200f0e6f062cb7afd20f1eec",
+        "files_seen": 2577,
+        "manifest_count": 4,
+        "manifest_paths": [
+          "package.json",
+          "pyproject.toml",
+          "tui/Cargo.lock",
+          "tui/Cargo.toml"
+        ],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 1,
+        "container_marker_paths": [
+          "Dockerfile"
+        ],
+        "vendored_file_count": 0,
+        "workflow_count": 16
       }
     },
     {
@@ -570,7 +626,20 @@
       "archived": false,
       "category": "AI",
       "scan": {
-        "state": "not_scanned"
+        "state": "scanned",
+        "tree_sha": "2f9c3e826ee177a75cf12ca0eeb7d5a97070cff9",
+        "files_seen": 108,
+        "manifest_count": 3,
+        "manifest_paths": [
+          "pyproject.toml",
+          "rust/Cargo.lock",
+          "rust/Cargo.toml"
+        ],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 0,
+        "container_marker_paths": [],
+        "vendored_file_count": 0,
+        "workflow_count": 2
       }
     },
     {
@@ -580,7 +649,16 @@
       "archived": false,
       "category": null,
       "scan": {
-        "state": "not_scanned"
+        "state": "scanned",
+        "tree_sha": "21f6a7d3efd512b8a7f1d07a5bca27004cf3fd70",
+        "files_seen": 11,
+        "manifest_count": 0,
+        "manifest_paths": [],
+        "manifest_paths_omitted": 0,
+        "container_marker_count": 0,
+        "container_marker_paths": [],
+        "vendored_file_count": 0,
+        "workflow_count": 2
       }
     },
     {
