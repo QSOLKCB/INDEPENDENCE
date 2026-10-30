@@ -48,20 +48,33 @@ def inspect_sources(root: Path = ROOT):
     }, "static_contracts": "INSPECTED_ONLY", "ada_contracts": "NOT_RUN"}
 
 
-def run_gnatprove(root: Path = ROOT, executable: str | None = None):
+def run_gnatprove(root: Path = ROOT):
     record = inspect_sources(root)
-    executable = executable or shutil.which("gnatprove")
-    if not executable:
+    # Optional, local developer toolchain only; do not accept an arbitrary
+    # executable path from caller input or source-controlled data.
+    if shutil.which("gnatprove") is None:
         return {**record, "ada_contracts": "NOT_RUN", "reason": "gnatprove unavailable",
                 "unproved_obligations": "UNKNOWN_UNTIL_EXECUTED"}
-    command = [executable, "-P", "kernel.gpr", "-u", "reference_kernel.adb",
+    command = ["gnatprove", "-P", "kernel.gpr", "-u", "reference_kernel.adb",
                "--mode=all", "--checks-as-errors=on", "--warnings=error",
                "--report=all", "--level=2"]
     try:
-        version = subprocess.run([executable, "--version"], capture_output=True,
-                                 text=True, timeout=20, check=False)
-        result = subprocess.run(command, cwd=root / "formal" / "spark",
-                                capture_output=True, text=True, timeout=120, check=False)
+        # Static command/argument vectors and explicit shell=False prevent
+        # shell interpretation; PATH remains a trusted local toolchain boundary.
+        version = subprocess.run(["gnatprove", "--version"],
+                                 cwd=root / "formal" / "spark", shell=False,
+                                 capture_output=True, text=True, timeout=20, check=False)
+        if version.returncode != 0:
+            return {**record, "ada_contracts": "FAILED_OR_UNPROVED",
+                    "reason": "gnatprove version check failed",
+                    "tool_version": (version.stdout + version.stderr).strip()[:400],
+                    "unproved_obligations": "UNKNOWN_UNTIL_EXECUTED"}
+        result = subprocess.run(
+            ["gnatprove", "-P", "kernel.gpr", "-u", "reference_kernel.adb",
+             "--mode=all", "--checks-as-errors=on", "--warnings=error",
+             "--report=all", "--level=2"],
+            cwd=root / "formal" / "spark", shell=False,
+            capture_output=True, text=True, timeout=120, check=False)
         output = result.stdout + "\n" + result.stderr
         lowered = output.lower()
         unresolved = bool(re.search(
