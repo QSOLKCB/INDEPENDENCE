@@ -153,7 +153,10 @@ class TribunalReceiptTests(unittest.TestCase):
             self.assertTrue((ROOT / "tribunal" / name).is_file())
         self.assertIn('id="tribunal"', html)
         self.assertIn("mountTribunal();", app)
-        self.assertIn("cp tribunal/bench.js tribunal/ui.js tribunal/tribunal.css", workflow)
+        from site_bundle import SITE_FILES
+        self.assertIn('python3 scripts/site_bundle.py stage --source .', workflow)
+        for filename in ("tribunal/bench.js", "tribunal/ui.js", "tribunal/tribunal.css"):
+            self.assertIn(filename, SITE_FILES)
 
     def test_disk_cli_round_trip(self):
         with tempfile.TemporaryDirectory() as directory:

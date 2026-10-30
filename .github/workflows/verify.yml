@@ -34,3 +34,28 @@ jobs:
           fi
       - name: Verify first-party dependency audit
         run: python3 scripts/audit.py --json
+
+      - name: Build exact first-party Pages artifact
+        run: python3 scripts/site_bundle.py stage --source . --site "$RUNNER_TEMP/independence-site" --revision "$GITHUB_SHA"
+      - name: Independently verify staged source bytes
+        run: python3 scripts/site_bundle.py verify --source . --site "$RUNNER_TEMP/independence-site" --revision "$GITHUB_SHA"
+      - name: Run real Chromium journeys and controlled ledger failures
+        run: python3 scripts/run_browser_journeys.py --site "$RUNNER_TEMP/independence-site" --require-browser --output "$RUNNER_TEMP/real-browser-evidence.json"
+      - name: Run real Firefox WebDriver journeys and controlled ledger failures
+        run: python3 scripts/firefox_journeys.py --site "$RUNNER_TEMP/independence-site" --require-browser --output "$RUNNER_TEMP/firefox-browser-evidence.json"
+      - name: Check narrow 390px responsive viewport in both actual browser engines
+        shell: bash
+        run: |
+          python3 scripts/run_browser_journeys.py --site "$RUNNER_TEMP/independence-site" --width 390 --height 844 --normal-only --require-browser --output "$RUNNER_TEMP/chromium-narrow.json"
+          python3 scripts/firefox_journeys.py --site "$RUNNER_TEMP/independence-site" --width 390 --height 844 --normal-only --require-browser --output "$RUNNER_TEMP/firefox-narrow.json"
+      - name: Preserve real browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independence-real-browser-evidence
+          path: |
+            ${{ runner.temp }}/real-browser-evidence.json
+            ${{ runner.temp }}/firefox-browser-evidence.json
+            ${{ runner.temp }}/chromium-narrow.json
+            ${{ runner.temp }}/firefox-narrow.json
+          if-no-files-found: ignore

@@ -146,7 +146,10 @@ class ProofTests(unittest.TestCase):
         self.assertIn('href="#proof"', page)
         self.assertIn("mountProof();", app)
         self.assertIn("python3 scripts/check_proof_contracts.py --json", workflow)
-        self.assertIn('cp proof/core.js proof/ui.js proof/proof.css proof/contracts.json "$site/proof/"', workflow)
+        from site_bundle import SITE_FILES
+        self.assertIn('python3 scripts/site_bundle.py stage --source .', workflow)
+        for filename in ("proof/core.js", "proof/ui.js", "proof/proof.css", "proof/contracts.json"):
+            self.assertIn(filename, SITE_FILES)
         for path in ("proof/core.js", "proof/ui.js", "proof/proof.css",
                      "proof/contracts.json"):
             self.assertIn('"' + path + '"', audit)

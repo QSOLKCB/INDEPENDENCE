@@ -62,8 +62,10 @@ class AutomataBrowserReceiptTests(unittest.TestCase):
 
     def test_browser_lab_is_staged_by_pages_deployment(self):
         workflow = (ROOT / ".github/workflows/deploy-pages.yml").read_text()
-        self.assertIn('cp formal-lab/core.js formal-lab/ui.js', workflow)
-        self.assertIn('test -s "$site/formal-lab/ui.js"', workflow)
+        from site_bundle import SITE_FILES
+        self.assertIn("formal-lab/core.js", SITE_FILES)
+        self.assertIn("formal-lab/ui.js", SITE_FILES)
+        self.assertIn('python3 scripts/site_bundle.py stage --source .', workflow)
 
     def test_browser_and_node_use_real_production_evolve(self):
         source = (ROOT / "formal-lab/core.js").read_text()

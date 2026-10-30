@@ -59,8 +59,13 @@ v0.9 — Lean 4 + SPARK Ada proof laboratory (new executable source and proof ob
 - Strict pinned-toolchain Lean/axiom and GNATprove runners; fail closed and preserve NOT_RUN until real proof execution.
 - Existing historical Lean, SPARK and Ada/Python evidence remains unchanged; production refinement is still outstanding.
 
-v1.0 — Real-browser and deployment verification (planned)
-- Cross-browser journeys, CSP, accessibility, fault handling and deploy artifact checks.
+v1.0 — Real-browser and deployment verification (implementation PR)
+- PAGES-ARTIFACT/1 canonical, exact allowlisted bytes and SHA-256 deployment-manifest verifier.
+- Actual Chromium browser journeys: automaton, ledger, proof/property labs, workflow, CSP, resource privacy and layout.
+- Actual Firefox W3C WebDriver journeys (development tools only); NOT_RUN or FAILED on missing/failed browser.
+- Controlled local HTTP 503 and malformed-JSON ledger faults, fail-closed browser assertions and reproducible evidence.
+- Manual Pages deployment gated on staged browser checks and post-deploy official HTTPS byte comparison.
+- Finite accessibility checks are not WCAG certification; local browser results are not a live CDN browser attestation.
 
 v1.1.0 — Zenodo formalization of repository (planned)
 - Exact tagged sources, executable proof artefacts and logs, assumptions, partial gaps, SHA manifest and transparent research report.

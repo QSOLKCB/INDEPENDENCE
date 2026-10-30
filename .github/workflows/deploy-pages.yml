@@ -41,43 +41,33 @@ jobs:
       - name: Check zero-package web policy
         run: python3 scripts/audit.py --json
 
-      - name: Stage only first-party site files
+
+      - name: Stage exact allowlisted Pages artifact and SHA-256 manifest
+        run: python3 scripts/site_bundle.py stage --source . --site "$RUNNER_TEMP/independence-pages" --revision "$GITHUB_SHA"
+
+      - name: Verify staged deployment against checkout
+        run: python3 scripts/site_bundle.py verify --source . --site "$RUNNER_TEMP/independence-pages" --revision "$GITHUB_SHA"
+
+      - name: Execute real browser smoke and ledger fault journeys
+        run: python3 scripts/run_browser_journeys.py --site "$RUNNER_TEMP/independence-pages" --require-browser --output "$RUNNER_TEMP/pages-browser-evidence.json"
+
+      - name: Run real Firefox WebDriver journeys before deploying
+        run: python3 scripts/firefox_journeys.py --site "$RUNNER_TEMP/independence-pages" --require-browser --output "$RUNNER_TEMP/pages-firefox-evidence.json"
+
+      - name: Verify narrow viewport journeys in both actual browsers
         shell: bash
         run: |
-          set -euo pipefail
-          site="$RUNNER_TEMP/independence-pages"
-          mkdir -p "$site/lab" "$site/ledger" "$site/tribunal" "$site/museum" "$site/breeding" "$site/workflow" "$site/proof" "$site/property" "$site/formal-lab"
-          cp index.html styles.css app.js .nojekyll "$site/"
-          cp lab/core.js lab/tests.js "$site/lab/"
-          cp ledger/ledger.js ledger/ledger.css ledger/data.json "$site/ledger/"
-          cp tribunal/core.js tribunal/direct.js tribunal/keyed.js "$site/tribunal/"
-          cp tribunal/bench.js tribunal/ui.js tribunal/tribunal.css "$site/tribunal/"
-          cp museum/core.js museum/ui.js museum/museum.css "$site/museum/"
-          cp breeding/core.js breeding/ui.js breeding/breeding.css "$site/breeding/"
-          cp workflow/core.js workflow/ui.js workflow/workflow.css "$site/workflow/"
-          cp proof/core.js proof/ui.js proof/proof.css proof/contracts.json "$site/proof/"
-          cp property/core.js property/tests.js property/ui.js property/property.css "$site/property/"
-          cp formal-lab/core.js formal-lab/ui.js formal-lab/tests.js formal-lab/formal-lab.css "$site/formal-lab/"
-          test -s "$site/index.html"
-          test -s "$site/app.js"
-          test -s "$site/lab/core.js"
-          test -s "$site/ledger/data.json"
-          test -s "$site/tribunal/core.js"
-          test -s "$site/tribunal/bench.js"
-          test -s "$site/museum/core.js"
-          test -s "$site/museum/ui.js"
-          test -s "$site/breeding/core.js"
-          test -s "$site/breeding/ui.js"
-          test -s "$site/workflow/core.js"
-          test -s "$site/workflow/ui.js"
-          test -s "$site/proof/core.js"
-          test -s "$site/proof/contracts.json"
-          test -s "$site/property/core.js"
-          test -s "$site/property/ui.js"
-          test -s "$site/formal-lab/core.js"
-          test -s "$site/formal-lab/ui.js"
-          grep -Fq '<link rel="stylesheet" href="./formal-lab/formal-lab.css">' "$site/index.html"
-          echo "Static Pages artifact ready; no build required."
+          python3 scripts/run_browser_journeys.py --site "$RUNNER_TEMP/independence-pages" --width 390 --height 844 --normal-only --require-browser --output "$RUNNER_TEMP/pages-chromium-narrow.json"
+          python3 scripts/firefox_journeys.py --site "$RUNNER_TEMP/independence-pages" --width 390 --height 844 --normal-only --require-browser --output "$RUNNER_TEMP/pages-firefox-narrow.json"
+      - name: Preserve pre-deployment browser evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: independence-pages-preflight
+          path: |
+            ${{ runner.temp }}/pages-browser-evidence.json
+            ${{ runner.temp }}/pages-firefox-evidence.json
+            ${{ runner.temp }}/pages-chromium-narrow.json
+            ${{ runner.temp }}/pages-firefox-narrow.json
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
@@ -90,3 +80,14 @@ jobs:
       - name: Publish to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      
+      - name: Verify public GitHub Pages bytes after deployment
+        run: python3 scripts/verify_deployed_site.py --manifest "$RUNNER_TEMP/independence-pages/deployment-manifest.json" --attempts 8 --delay 5 --output "$RUNNER_TEMP/pages-remote-evidence.json"
+
+      - name: Preserve public byte-observation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independence-pages-public-observation
+          path: ${{ runner.temp }}/pages-remote-evidence.json
+          if-no-files-found: ignore
