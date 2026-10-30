@@ -17,8 +17,6 @@ class SparkEvidenceArchiveTests(unittest.TestCase):
         temp = tempfile.TemporaryDirectory()
         root = Path(temp.name)
         shutil.copytree(ROOT / FOLDER, root / FOLDER)
-        shutil.copytree(ROOT / "formal/spark", root / "formal/spark",
-                        ignore=shutil.ignore_patterns("obj", "bin", ".git"))
         return temp, root
 
     @staticmethod
@@ -40,10 +38,34 @@ class SparkEvidenceArchiveTests(unittest.TestCase):
             with self.subTest(name=name):
                 tmp, root = self.fixture()
                 with tmp:
-                    source = root / "formal/spark" / name
+                    source = root / FOLDER / "source" / name
                     source.write_bytes(source.read_bytes() + b"\n-- altered\n")
                     with self.assertRaisesRegex(EvidenceError, "SPARK source bytes differ"):
                         verify(root)
+
+    def test_spec_snapshot_tampering_rejected(self):
+        temp, root = self.fixture()
+        with temp:
+            path = root / FOLDER / "source" / "kernel-v1.json"
+            path.write_bytes(path.read_bytes() + b" ")
+            with self.assertRaisesRegex(EvidenceError, "specification Git blob"):
+                verify(root)
+
+    def test_historical_snapshot_metadata_rejected_if_retarged(self):
+        temp, root = self.fixture()
+        with temp:
+            self.change_json(root, "manifest.json",
+                             lambda m: m["historical_source_snapshot"].update(
+                                 source_checkout_git_sha="0"*40))
+            with self.assertRaisesRegex(EvidenceError, "snapshot metadata"):
+                verify(root)
+
+    def test_archive_is_not_coupled_to_future_main_sources(self):
+        # Fixture intentionally does not copy live formal/spark sources.
+        temp, root = self.fixture()
+        with temp:
+            self.assertFalse((root / "formal/spark/reference_kernel.adb").exists())
+            self.assertEqual(verify(root)["archive_integrity"], "PASS")
 
     def test_false_proved_count_rejected(self):
         for count in (0, 22, False):
