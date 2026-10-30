@@ -1,5 +1,15 @@
 # THE SOFTWARE DECLARATION OF INDEPENDENCE
 
+[![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23816739.svg)](https://doi.org/10.5281/zenodo.23816739)
+[![CI · Verify](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/verify.yml)
+[![Release](https://img.shields.io/github/v/release/QSOLKCB/INDEPENDENCE?label=release)](https://github.com/QSOLKCB/INDEPENDENCE/releases/latest)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
+[![Pages deploy (manual)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/deploy-pages.yml/badge.svg?branch=main)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/deploy-pages.yml)
+[![Published-byte audit (manual)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/verify-public-pages.yml/badge.svg?branch=main)](https://github.com/QSOLKCB/INDEPENDENCE/actions/workflows/verify-public-pages.yml)
+
+**Project milestone: v1.1.0 formalisation complete.** [GitHub release](https://github.com/QSOLKCB/INDEPENDENCE/releases/tag/v1.1.0) · [Full research report](formal/research/v1.1.0/FORMALISATION_REPORT.md) · [Published Zenodo dataset](https://doi.org/10.5281/zenodo.23816739). Historical evidence and proof boundaries remain explicitly preserved.
+
 ### QSOL-IMC — October 30, 2026
 
 **We hereby declare our independence from the Modern Software Industry.**
@@ -52,6 +62,39 @@ We build software that can stand on its own.
 
 ---
 
+
+## Completed project — v1.1.0 research milestone
+
+The delivered project comprises the first-party, dependency-free static website; interactive automaton and dependency experiments; the public evidence ledger; seeded counterexamples; versioned proof contracts; executable conformance checks; dual-engine browser verification; and a research-grade formalisation with immutable evidence archives. The [v1.1.0 GitHub release](https://github.com/QSOLKCB/INDEPENDENCE/releases/tag/v1.1.0) and [Zenodo dataset](https://doi.org/10.5281/zenodo.23816739) represent this **completed research milestone**, not a claim of universal software correctness.
+
+**Research citation:** Slade, T. (2026). *INDEPENDENCE v1.1.0: Formal Models, Bounded Conformance, and Evidentiary Trust Boundaries* (Version v1.1.0) [Dataset]. Zenodo. [doi:10.5281/zenodo.23816739](https://doi.org/10.5281/zenodo.23816739).
+
+| Verification class | Recorded result | What it establishes |
+| --- | --- | --- |
+| Lean 4.35.0 | 6 kernel-checked theorem statements | Width-four mathematical model properties |
+| SPARK/GNATprove | 10 discharged verification conditions | Scoped Ada reference contracts |
+| Ada CLI / production JavaScript | 4,096 width-four comparisons each; 10 additional invalid Ada cases | Finite executable conformance only |
+| Rocq 9.2.0 | 15 kernel-checked theorem/example obligations; 15 closed assumption audits | Arbitrary-finite-width mathematical model properties |
+| Chromium / Firefox | 92 recorded passing historical PR-run assertions | Specific browser observations, not live deployment attestation |
+| Original proof archives | 2 byte-preserved tarballs and 13 internal checksum entries | File integrity, not independent compiler attestation |
+| v1.1.0 post-merge CI | 377 passing Python tests; integrity, browser and staged-site checks passed | A successful versioned CI run, not permanent certification |
+
+**Reproduce the archived release checks** (Python 3 standard library; developer-only compiler/browser tools are optional):
+
+    git checkout v1.1.0
+    python3 -m unittest discover -s tests -v
+    python3 scripts/verify_formalisation_archive.py --output formalisation-integrity.json
+    python3 scripts/verify_browser_archive.py
+    python3 scripts/check_rocq_semantics.py --output rocq-static.json
+
+To *actually execute* the Rocq proof obligations, activate a pinned Rocq 9.2.0 toolchain and run `python3 scripts/check_rocq_semantics.py --require-rocq --output rocq-executed.json`. CI's ordinary static Rocq stage records `NOT_RUN` unless a real compiler is invoked separately. Existing archived local execution receipts distinguish this from CI source inspection.
+
+**Research boundary:** Neither the Lean/Rocq models nor finite runtime comparisons formally refine the production JavaScript implementation. The original receipts do not authenticate the developer machine, certify WCAG compliance or prove all frameworks unnecessary. The website remains zero-package at runtime; GitHub Pages deployment and published-byte verification are separately *manual* workflows.
+
+**Evidence and reading:** [Formalisation report](formal/research/v1.1.0/FORMALISATION_REPORT.md) · [Original archives and checksum manifest](formal/research/v1.1.0/README.md) · [Proof limitations](docs/FORMAL-ROADMAP.md) · [Versioned GitHub release](https://github.com/QSOLKCB/INDEPENDENCE/releases/tag/v1.1.0).
+
+The historical milestone sections below retain release-time status language. An earlier `NOT_RUN` does not erase a later, separately archived proof execution.
+
 ## Live proof lab
 
 The manifesto now has a working, no-build interactive demonstration on GitHub Pages:
@@ -78,7 +121,7 @@ See docs/INVARIANTS.md, docs/EVIDENCE.md, and docs/ROADMAP.md. The scope and lim
 
 ## v0.2.0 — Software Independence Evidence Ledger
 
-[Browse the public evidence ledger](https://qsolkcb.github.io/INDEPENDENCE/#ledger) after this PR is merged and manually deployed.
+[Browse the public evidence ledger](https://qsolkcb.github.io/INDEPENDENCE/#ledger). Site changes are published separately through a manual Pages deployment; successful CI does not itself deploy the website.
 
 The public catalogue at [QSOL-IMC](https://github.com/QSOLKCB/QSOL-IMC) provides curated categories. QSOL-CONTEXT informs the provenance philosophy but is a **private repository** and is neither queried by the collector nor imported into this public dataset. The ledger **never** publishes personal context records.
 
@@ -92,7 +135,7 @@ The existing manually triggered Pages workflow now refreshes the snapshot before
 
 ## v0.3.0 — The Dependency Tribunal
 
-[Open the experiment](https://qsolkcb.github.io/INDEPENDENCE/#tribunal) after merging and manually deploying.
+[Open the experiment](https://qsolkcb.github.io/INDEPENDENCE/#tribunal). Site updates require the manual Pages deployment.
 
 DOM-TRIBUNAL/1 compares **direct DOM replacement** with a tiny **first-party keyed adapter**, both performing identical seeded list render, update and reorder operations on detached DOM elements. The latter is illustrative, NOT an actual React/Vue/Svelte or third-party framework benchmark. No default winning figures are provided: results only exist when the visitor explicitly runs the workload.
 
@@ -154,13 +197,13 @@ Reproduce the registry check and verify a downloaded receipt with Python stdlib:
     python3 scripts/check_proof_contracts.py --json
     python3 scripts/verify_proof_receipt.py proof-contracts-<hash>.json --json
 
-Hash verification does not attest execution. No Lean or SPARK proof has yet been constructed or discharged. The proof tools remain planned as optional development-only components, not runtime dependencies. Read [docs/PROOF-CONTRACTS.md](docs/PROOF-CONTRACTS.md) and [the formal programme through v1.1.0 Zenodo](docs/FORMAL-ROADMAP.md).
+At the v0.7.0 milestone no Lean or SPARK proof had yet been constructed or discharged. Later model proofs and SPARK reference conditions were reported and preserved separately for the v1.1.0 archive. Hash verification alone never attests execution. Proof tools remain optional developer-only components. Read [docs/PROOF-CONTRACTS.md](docs/PROOF-CONTRACTS.md) and [the formal programme through v1.1.0 Zenodo](docs/FORMAL-ROADMAP.md).
 
 ## v0.7.1 — SPARK Ada Reference Kernel
 
 Introduces development-only SPARK/Ada source under `formal/spark/` for a narrow finite reference: rectangular addressing and decoding, GF(2) parity arithmetic, mod-3 phase addition and validated in-range, distinct endpoint transitions. Canonical semantics are versioned at `formal/spec/kernel-v1.json`.
 
-The kernel specifies preconditions and postconditions. **No GNATprove execution was possible in the implementing environment; the contracts are NOT_RUN, not proved.** The CLI input boundary is not formally analyzed. There is no claim that this reference verifies existing Python or JavaScript.
+The kernel specifies preconditions and postconditions. **At the original v0.7.1 implementation milestone, GNATprove was unavailable and the contracts were correctly reported NOT_RUN; later scoped local proof evidence is documented below.** The CLI input boundary is not formally analyzed. There is no claim that this reference verifies existing Python or JavaScript.
 
     python3 scripts/check_spark_reference.py
     python3 scripts/check_spark_reference.py --prove --output spark-evidence.json
@@ -181,13 +224,13 @@ To compare an actually built Ada CLI, supply the executable:
 
     python3 scripts/run_kernel_conformance.py --ada-cli formal/spark/bin/reference_cli --ada-cases 128 --receipt ada-comparison.json
 
-The receipt distinctly reports Lean mathematical proofs, Ada contract verification, tested Python conformance, Ada CLI comparisons and unresolved obligations. In the source author's execution environment, GNAT/GNATprove were unavailable, so Ada contracts and differential comparison remain NOT_RUN. Matching a supplied executable is explicitly UNATTESTED; neither Python application-wide correctness nor production JavaScript is established. Details: [docs/PROOF-CONFORMANCE.md](docs/PROOF-CONFORMANCE.md).
+The receipt distinctly reports Lean mathematical proofs, Ada contract verification, tested Python conformance, Ada CLI comparisons and unresolved obligations. In the original v0.7.2 authoring environment, GNAT/GNATprove were unavailable and those stages were recorded NOT_RUN; later historical local execution evidence is preserved in the following sections. Matching a supplied executable is explicitly UNATTESTED; neither Python application-wide correctness nor production JavaScript is established. Details: [docs/PROOF-CONFORMANCE.md](docs/PROOF-CONFORMANCE.md).
 
 ## v0.7.3 — Lean 4 Mathematical Foundation (review candidate)
 
 The first development-only Lean 4 proof source is in [formal/lean/FiniteFoundation.lean](formal/lean/FiniteFoundation.lean), pinned to **Lean 4.35.0** in [lean-toolchain](lean-toolchain). It defines 13 proposed theorem statements and accompanying proof terms for an explicit CRT (2,3) bijection, Boolean GF(2) identities, cyclic modulo-3 phase identities, and strict degree-lex order properties on natural exponent pairs.
 
-**Verification is not yet complete:** the authoring environment does not have Lean installed. All 13 theorem declarations are **NOT RUN / NOT KERNEL CHECKED** pending real Lean execution. Static Python source checks cannot change that status. No Lean proof implies correctness of production Ada, Python or JavaScript.
+**Historical authoring status:** Lean was unavailable during the first v0.7.3 implementation, so the 13 theorem candidates were recorded NOT_RUN. Subsequent user-reported Lean 4.35.0 proof execution is described in the preserved-evidence section below. Static source inspection still cannot establish kernel checking. No Lean proof implies correctness of production Ada, Python or JavaScript.
 
 To run actual Lean checks and a fail-closed axiom audit with a trusted Lean installation:
 
@@ -201,7 +244,7 @@ General CRT, full monomial well-foundedness/totality, graph adjacency and model-
 
 ## Preserved Lean 4 proof evidence — pinned v0.7.3 source
 
-The user's successful local Lean 4.35.0 verification output (13/13 theorem audits; `--trust=0`; reported 169/169 Python tests) has been archived for the proposed v1.1.0 Zenodo formalization at [formal/evidence/lean/v0.7.3](formal/evidence/lean/v0.7.3). The archive includes `lean-evidence.json`, its manifest, a copy of the historical Lean source and `lean-toolchain`, and a provenance explanation.
+The user's successful local Lean 4.35.0 verification output (13/13 theorem audits; `--trust=0`; reported 169/169 Python tests) has been archived and retained alongside the completed v1.1.0 research record at [formal/evidence/lean/v0.7.3](formal/evidence/lean/v0.7.3). The archive includes `lean-evidence.json`, its manifest, a copy of the historical Lean source and `lean-toolchain`, and a provenance explanation.
 
 **Source commit:** `68351489e8bbbb879efdcac19d02869124fcf724` (merged PR #11). **Provenance qualification:** the report was recovered intact from the user-shared terminal transcript, not independently byte-matched against an upload of the original `lean-evidence.json`; the local execution was not independently attested. Archive hashes establish internal consistency, not authorship or Ada/Python/JS verification.
 
@@ -211,7 +254,7 @@ This offline integrity gate does not itself run Lean. Re-run the pinned compiler
 
 ## SPARK verification milestone — PR #13 (reported local evidence)
 
-The user reported an actual GNATprove FSF 16.1.0 execution against PR #13 HEAD `9900e57f2283c534815657dd6c079d0e966715f4`, with **all 21 kernel checks proved**, exit code 0 and a passing **186/186 Python regression suite**. The exact analyzed Ada source/project SHA-256 values and the copied proof-output digest are preserved in [formal/evidence/spark/pr13](formal/evidence/spark/pr13) for eventual Zenodo v1.1.0 formalization.
+The user reported an actual GNATprove FSF 16.1.0 execution against PR #13 HEAD `9900e57f2283c534815657dd6c079d0e966715f4`, with **all 21 kernel checks proved**, exit code 0 and a passing **186/186 Python regression suite**. The exact analyzed Ada source/project SHA-256 values and the copied proof-output digest are preserved in [formal/evidence/spark/pr13](formal/evidence/spark/pr13) for the v1.1.0 research record.
 
 This receipt was reconstructed from a user-pasted terminal report, **not the unattached original `spark-evidence.json` bytes or an independently authenticated run**. It describes GNATprove's scoped Ada-reference checks; the Ada CLI and actual Python/Ada differential execution remain separate obligations.
 
@@ -251,7 +294,7 @@ The injected mutant is intentionally faulty, **not a discovered production defec
 
 ## v0.9.0 — Lean 4 + SPARK/Ada Elementary-Automata Laboratory
 
-v0.9 introduces a distinct `AUTOMATA4/1` four-cell elementary automaton reference, specifying fixed-zero boundaries and all 256 rule masks over 16 possible input rows (**4,096 deterministic vectors**). It adds six new Lean 4 theorem candidates, an exact standalone SPARK-mode Ada reference and developer CLI, independent Python finite oracle, and a developer-only JavaScript check against the actual first-party `evolve` function. Unlike the earlier 13 Lean and 21 SPARK results, **new v0.9 formal proof statuses remain NOT_RUN until real local compilation and axiom audit evidence is supplied**.
+v0.9 introduces a distinct `AUTOMATA4/1` four-cell elementary automaton reference, specifying fixed-zero boundaries and all 256 rule masks over 16 possible input rows (**4,096 deterministic vectors**). It adds six new Lean 4 theorem candidates, an exact standalone SPARK-mode Ada reference and developer CLI, independent Python finite oracle, and a developer-only JavaScript check against the actual first-party `evolve` function. Unlike the earlier 13 Lean and 21 SPARK results, **at the original v0.9 authoring milestone, the new formal proof stages remained NOT_RUN; the subsequent v1.1.0 archives preserve the separately executed local proof receipts**.
 
 Run without any additional dependencies:
 
@@ -279,7 +322,7 @@ python3 scripts/verify_automata_evidence.py automata4-evidence.json
 
 ### v0.9.0 browser formal lab — unified AUTOMATA4/1
 
-[Open the four-cell formal lab](https://qsolkcb.github.io/INDEPENDENCE/#formal-lab) after merging and manual Pages deployment. It runs the actual first-party automaton on **4,096** inputs (256 rules × 16 width-four rows), checks all outputs and source ownership against an independent reference, and exports a locally hashed JSON receipt. There is only **one authoritative four-cell formal specification**, not competing Lean/Ada reference implementations.
+[Open the four-cell formal lab](https://qsolkcb.github.io/INDEPENDENCE/#formal-lab). Updated site assets are deployed through a separate manual Pages workflow. It runs the actual first-party automaton on **4,096** inputs (256 rules × 16 width-four rows), checks all outputs and source ownership against an independent reference, and exports a locally hashed JSON receipt. There is only **one authoritative four-cell formal specification**, not competing Lean/Ada reference implementations.
 
 Verify a browser receipt with standard-library Python:
 
@@ -389,6 +432,4 @@ verification conditions, 4,096 Ada + 4,096 JavaScript finite comparisons,
 fifteen Rocq arbitrary-finite-width model theorem/example obligations and
 92 historical recorded passing browser assertions. **No proof of production
 JavaScript refinement or independently authenticated execution is claimed.**
-The user-supplied DOI `10.5281/zenodo.23816739` is linked as an author-minted
-identifier only until public record metadata/deposition is verified. Read
-[the complete evidentiary scope and Zenodo proposal](formal/research/v1.1.0/README.md).
+The author-deposited Zenodo dataset is cited as [Slade (2026), DOI 10.5281/zenodo.23816739](https://doi.org/10.5281/zenodo.23816739). The [original archives and evidence manifest](formal/research/v1.1.0/README.md) retain the historical source identities and formal trust limits. The tagged metadata proposal is a pre-deposit planning document, not a replacement for the published citation.
