@@ -14,13 +14,13 @@ INDEPENDENCE v1.1.0 documents an evidence-disciplined case study in elementary c
 
 **Keywords:** Formal verification; Lean 4; Rocq; Coq; SPARK/Ada; GNATprove; finite-state exhaustive testing; elementary cellular automata; software provenance; reproducibility; SHA-256; browser testing; independent software.
 
-**Related identifiers:** GitHub project https://github.com/QSOLKCB/INDEPENDENCE and the eventual release tag \`v1.1.0\` **once actually published**. If DOI 10.5281/zenodo.23816739 belongs to a separate versioned dataset, link as a related dataset using the correct Zenodo relation; do not mislabel it as this report's final published DOI.
+**Related identifiers:** GitHub project https://github.com/QSOLKCB/INDEPENDENCE and the eventual release tag `v1.1.0` **once actually published**. If DOI 10.5281/zenodo.23816739 belongs to a separate versioned dataset, link as a related dataset using the correct Zenodo relation; do not mislabel it as this report's final published DOI.
 
 **Licensing:** Match the actual repository license for software; select and explicitly declare appropriate licenses for research text, data and original tool-output archives. Do not infer a blanket license.
 
 **Original archive SHA-256:**
-- AUTOMATA4: \`05990c6b614d463e973bdee55b20159b59a37844fe03d81f75927f729de99457\`
-- Rocq: \`c7a28f450c0cb50df51f16cec6190cbcfef850dcf88042e88911bb6167796d6f\`
-- Historical browser ZIP: \`76514017982d86c95003bd4f86ccdcf4404502ede4609ba8f7767b89ee6c396a\`
+- AUTOMATA4: `05990c6b614d463e973bdee55b20159b59a37844fe03d81f75927f729de99457`
+- Rocq: `c7a28f450c0cb50df51f16cec6190cbcfef850dcf88042e88911bb6167796d6f`
+- Historical browser ZIP: `76514017982d86c95003bd4f86ccdcf4404502ede4609ba8f7767b89ee6c396a`
 
 **Recommended citation pending verification:** Slade, T. (2026). *INDEPENDENCE: Formal Models, Bounded Conformance, and Evidentiary Trust Boundaries* (Version 1.1.0) [Software and research dataset]. QSOL-IMC. User-associated DOI: 10.5281/zenodo.23816739. **Not a verified published citation until final Zenodo metadata confirms it.**
