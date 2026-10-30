@@ -15,8 +15,17 @@ procedure Reference_CLI is
    end Img;
 
    function N (Index : Positive) return Natural is
+      Text : constant String := CLI.Argument (Index);
    begin
-      return Natural'Value (CLI.Argument (Index));
+      if Text'Length = 0 then
+         raise Constraint_Error;
+      end if;
+      for C of Text loop
+         if C not in '0' .. '9' then
+            raise Constraint_Error;
+         end if;
+      end loop;
+      return Natural'Value (Text);
    end N;
 
 begin
