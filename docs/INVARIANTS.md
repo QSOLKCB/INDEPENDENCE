@@ -36,3 +36,9 @@ The browser test button runs a separate native-JavaScript suite.
 22. Museum displays all input and observations with textContent, never innerHTML/eval/script injection. No user-provided arbitrary script, external target or remote payload execution is permitted.
 23. Each exhibit must include a reproducible failing legacy condition, a corrected condition, meaningful assertions and provenance. Failed tests must prevent receipt export.
 24. SHA-256 receipt verification checks exact payload integrity and fixed-fixture consistency, never authorship, vulnerability absence, or deployment safety.
+
+25. GREMLIN-BREEDING/1 mutations are predeclared alternative pure functions over inert inputs. Never mutate deployed source, eval generated code, load packages, access files or contact external targets.
+26. Baseline must pass the full oracle case set regardless of selected suite, and every mutant must have a concrete divergent witness; equivalent or unproven cases fail closed.
+27. A survived mutant is a known divergence not detected by the selected suite. Mutation scores apply to curated fixtures only, not the repository or its security.
+28. Seeded order, fixed IDs, observed failures and selected suite must be reproducible. Python verification independently checks fixed expectations and order but does not attest authentic execution.
+29. UI renders findings through textContent, prevents export after failure and never sends measurements to a server.

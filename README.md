@@ -113,3 +113,15 @@ Run a specimen individually or all five. For a passing full run, download an exa
     python3 scripts/verify_museum.py /path/to/gremlin-museum-xxxxxxxxxxxx.json --json
 
 The verifier checks integrity and fixed observations, not authorship, real-world exploitability or the absence of undiscovered vulnerabilities. Read [docs/MUSEUM.md](docs/MUSEUM.md).
+
+## v0.5.0 — The Gremlin Breeding Laboratory
+
+[Visit the mutation-testing laboratory](https://qsolkcb.github.io/INDEPENDENCE/#breeding) after merging and manually deploying.
+
+GREMLIN-BREEDING/1 creates **15 harmless, predeclared pure-function mutants** across five fixed targets. All 26 baseline oracle cases must pass. Each mutant must have a known divergent witness. A deliberately incomplete smoke suite misses several mutants; the expanded fixture suite catches them. This is a laboratory for testing the tests, not arbitrary mutation of repository files or a repository-wide security score.
+
+Runs are deterministic by seed and show killed/survived classifications and failing test IDs. Download a local SHA-256 evidence receipt and verify it using Python's standard library:
+
+    python3 scripts/verify_breeding.py /path/to/gremlin-breeding-xxxxxxxxxxxx.json --json
+
+The verifier pins the catalogue, outcomes and seeded order but does not attest genuine browser execution. See [docs/BREEDING.md](docs/BREEDING.md) for methodology and limits.
