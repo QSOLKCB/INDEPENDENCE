@@ -62,7 +62,7 @@ class FormalisationArchiveTests(unittest.TestCase):
         manifest = json.loads(path.read_text())
         manifest["scope_policy"]["independent_execution_attestation"] = True
         path.write_text(json.dumps(manifest))
-        with self.assertRaisesRegex(research.EvidenceError, "unsupported"):
+        with self.assertRaisesRegex(research.EvidenceError, "claim-bearing manifest scope_policy"):
             research.verify(self.root)
 
     def test_zenodo_publication_not_assumed(self):
@@ -70,7 +70,7 @@ class FormalisationArchiveTests(unittest.TestCase):
         manifest = json.loads(path.read_text())
         manifest["zenodo"]["do_not_claim_report_published"] = False
         path.write_text(json.dumps(manifest))
-        with self.assertRaisesRegex(research.EvidenceError, "Zenodo"):
+        with self.assertRaisesRegex(research.EvidenceError, "claim-bearing manifest zenodo"):
             research.verify(self.root)
 
     def test_codex_claim_promotion_reproductions_fail_closed(self):
