@@ -49,3 +49,12 @@ The browser test button runs a separate native-JavaScript suite.
 33. The agent handoff composer is entirely local, plain text and never sends inputs to an AI, GitHub API or other server. No credentials, persistence, hidden telemetry, dynamic execution, or untrusted HTML rendering.
 34. Preserve human authority over merges, deployments, releases, task scope and risk acceptance. Require a fresh PR HEAD SHA and rerun meaningful review after code changes.
 35. The workflow's historical PR examples must use correct, publicly inspectable INDEPENDENCE PR URLs. Claims of reduced drift or improved accuracy remain qualitative recommendations unless tested in a controlled study.
+
+36. PROOF-CONTRACTS/1 is a machine-readable specification and evidence ledger, NOT a claim of universal or mathematical correctness; every obligation names scope and currently says NOT_PROVED.
+37. Bounded exhaustive results apply only to finite stated domains. Model-to-production-code equivalence must be established separately.
+38. Preserve and report the mutable Uint8Array/fingerprint counterexample. v0.7 must not silently change the public automaton API to hide it.
+39. Never report Lean/SPARK as PROVED without actual checked artefacts, source/version/assumption records and resolved obligations.
+40. SHA-256 receipt integrity and a self-consistent report do not authenticate an actual browser run.
+41. The stdlib registry gate rejects false proof statuses, malformed obligations, missing target symbols and missing provenance/limitations.
+42. Proof dashboard results must come from user-triggered execution against real first-party functions, and be rendered only with inert textContent.
+43. Lean, SPARK, GNATprove and other optional proof toolchains remain development-only and cannot become GitHub Pages or Python-stdlib runtime dependencies.

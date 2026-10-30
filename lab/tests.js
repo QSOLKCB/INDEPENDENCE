@@ -7,6 +7,7 @@ import {validateConfig} from '../tribunal/bench.js';
 import {EXHIBITS,runExhibit,runAll,assembleReport,encodeHtml,finiteJSON} from '../museum/core.js';
 import {TARGETS,runMutationLab,validateConfig as validateMutationConfig} from '../breeding/core.js';
 import {STAGES, CONTROLS, CASE_STUDIES, validateMission, makeHandoff, gateStatus} from '../workflow/core.js';
+import {CONTRACT_IDS, runProofChecks, checkFingerprintImmutability} from '../proof/core.js';
 
 // No testing framework: assertions intentionally use only native JavaScript.
 export function runTests() {
@@ -150,7 +151,25 @@ export function runTests() {
     ['workflow accepts inert user text without interpretation', () => {
       const s=makeHandoff({goal:'<script>just text</script>',scope:'',excluded:'',invariants:'',acceptance:''});
       return s.includes('<script>just text</script>') && s.includes('Do not merge');
-    }]
+    }],
+    ['proof contract bounded checks match fixed observations', () => {
+      const r=runProofChecks();
+      return r.checks.length===5 && r.checks[0].cases===130560 &&
+        r.checks[0].assertions===918016 && r.checks[1].cases===463 &&
+        r.checks[2].cases===36 && r.checks[3].cases===12;
+    }],
+    ['proof contract preserves known counterexample', () => {
+      const x=checkFingerprintImmutability();
+      return x.status==='COUNTEREXAMPLE' && x.stored_fingerprint!==x.recomputed_fingerprint;
+    }],
+    ['proof contract never reports a Lean or SPARK success', () => {
+      const r=runProofChecks();
+      return r.formal_proofs.lean==='NOT_RUN' && r.formal_proofs.spark==='NOT_RUN' &&
+        r.limitations.length===3;
+    }],
+    ['proof contract IDs are unique and ordered', () =>
+      CONTRACT_IDS.length===5 && new Set(CONTRACT_IDS).size===5 &&
+      CONTRACT_IDS[4]==='FINGERPRINT-IMMUTABILITY']
   ];
   return checks.map(([name, check]) => {
     try { return { name, passed: check() === true }; }

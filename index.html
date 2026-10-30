@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="./museum/museum.css">
   <link rel="stylesheet" href="./breeding/breeding.css">
   <link rel="stylesheet" href="./workflow/workflow.css">
+  <link rel="stylesheet" href="./proof/proof.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -28,6 +29,7 @@
       <a href="#museum">Museum</a>
       <a href="#breeding">Breeding Lab</a>
       <a href="#workflow">The Secret</a>
+      <a href="#proof">Proof Contracts</a>
       <a class="nav-github" href="https://github.com/QSOLKCB/INDEPENDENCE">Source ↗</a>
     </nav>
   </header>
@@ -275,9 +277,31 @@
       </div>
     </section>
 
+    <section id="proof" class="section proof-section">
+      <div class="wrap">
+        <span class="kicker">09 / PROOF CONTRACTS — THE EVIDENCE MUST MATCH THE CLAIM</span>
+        <h2>DON'T JUST TRUST TESTS.<br><span class="accent">CHALLENGE THE CONTRACT.</span></h2>
+        <p class="proof-intro">Run bounded checks against the actual first-party JavaScript, using separately implemented mathematical oracles. Exhaust every binary automaton row through width eight under all 256 rules, evaluate an exact-integer geometric sum, check seeded replay and hash formats, and expose a known mutable-fingerprint counterexample.</p>
+        <div class="proof-warning"><strong>NOT A FORMAL PROOF:</strong> These results cover explicitly stated bounded domains and finite fixtures. They do not establish correctness for all program inputs, certify real-browser security, or prove authentic execution. Lean 4 and SPARK/Ada obligations are documented for future releases, not passed here. A detected defect remains labelled COUNTEREXAMPLE instead of being silently treated as a passing invariant.</div>
+        <div class="proof-actions">
+          <button id="proof-run" type="button">RUN BOUNDED CONTRACT CHECKS ↗</button>
+          <button id="proof-export" type="button" class="secondary" disabled>EXPORT SHA-256 RECEIPT ↓</button>
+        </div>
+        <p id="proof-status" class="proof-status" role="status" aria-live="polite">No local proof-contract checks have run. The results below are intentionally empty.</p>
+        <div id="proof-results" class="proof-results" aria-label="Observed proof contract classifications"></div>
+        <p id="proof-hash" class="proof-hash">No receipt issued.</p>
+        <div class="proof-links">
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/proof/contracts.json">MACHINE-READABLE CONTRACTS ↗</a>
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/PROOF-CONTRACTS.md">VERIFICATION SCOPE ↗</a>
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/scripts/verify_proof_receipt.py">OFFLINE VERIFIER ↗</a>
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/FORMAL-ROADMAP.md">LEAN / SPARK ROADMAP ↗</a>
+        </div>
+      </div>
+    </section>
+
     <section class="section impact-section">
       <div class="wrap impact-grid">
-        <div><span class="kicker">09 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
+        <div><span class="kicker">10 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
         <div class="impact-panel">
           <label for="direct">Direct packages <output id="direct-value">3</output></label><input type="range" id="direct" min="1" max="10" value="3">
           <label for="fanout">New children per package <output id="fanout-value">3</output></label><input type="range" id="fanout" min="1" max="5" value="3">
@@ -288,7 +312,7 @@
     </section>
 
     <section class="closing wrap">
-      <div class="kicker">10 / THE SIGNATURE</div>
+      <div class="kicker">11 / THE SIGNATURE</div>
       <h2>WE DID NOT LEAVE<br>SOFTWARE ENGINEERING.<br><em>SOFTWARE ENGINEERING LEFT US.</em></h2>
       <div class="signature"><div><strong>QSOL-IMC</strong><span>Independent Software Sovereignty Initiative</span></div><a class="action primary" href="https://github.com/QSOLKCB/INDEPENDENCE">READ THE SOURCE ↗</a></div>
     </section>

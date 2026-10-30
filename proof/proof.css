@@ -1,0 +1,20 @@
+/* Proof Contracts v0.7 — all first-party CSS, no external resources. */
+.proof-section{background:#0b1411;border-top:1px solid #3e4b42}
+.proof-intro{font-size:17px;line-height:1.8;color:#cedacb;max-width:920px}
+.proof-warning{margin:24px 0;background:#28231f;border-left:4px solid #ff563d;padding:20px;color:#e5dcd1;font:12px/1.8 "Courier New",monospace}
+.proof-actions{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0}
+.proof-actions button{background:#ff563d;color:#111;border:1px solid #ff563d;padding:15px 22px;font:900 12px "Courier New",monospace;cursor:pointer}
+.proof-actions button.secondary{background:transparent;color:#f3eab4;border-color:#a5ad9f}
+.proof-actions button:disabled{opacity:.5;cursor:not-allowed}
+.proof-status,.proof-hash{font:12px/1.75 "Courier New",monospace;color:#c9d4c9;overflow-wrap:anywhere}
+.proof-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:25px 0}
+.proof-case{border:1px solid #3d5447;background:#132019;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.proof-id{font:bold 12px/1.4 "Courier New",monospace;color:#f1e2b2;overflow-wrap:anywhere}
+.proof-state{align-self:flex-start;font:bold 11px "Courier New",monospace;border:1px solid currentColor;padding:6px 8px}
+.proof-observed{color:#9cdaa5}.proof-counterexample{color:#ff917b}.proof-pending{color:#d5c48b}
+.proof-case p{margin:0;color:#b8c9bb;font:12px/1.7 "Courier New",monospace}
+.proof-case .proof-implication{color:#ffb5a4}
+.proof-case .proof-hash-compare{overflow-wrap:anywhere}
+.proof-links{display:flex;gap:16px;flex-wrap:wrap;margin:22px 0}
+.proof-links a{font:bold 11px "Courier New",monospace;color:#f3eab4}
+@media(max-width:700px){.proof-results{grid-template-columns:1fr}}

@@ -1,0 +1,40 @@
+# Formal Verification Roadmap — Lean 4, SPARK/Ada, Zenodo (planned)
+
+**Everything beyond v0.7 is a plan, not a verified proof result.**
+
+## v0.7.0 — Proof Contracts (implemented)
+
+Machine-readable obligation registry, deterministic bounded checks against real first-party JavaScript, explicit counterexample, strict Python stdlib registry/receipt verifiers. All formal statuses NOT_PROVED; no Lean or GNATprove artifact exists yet.
+
+## v0.8.0 — Generative and exhaustive verification (planned)
+
+Add deterministic property generators with recorded seeds and minimal failing inputs, boundary/invalid-input testing, differential Python/JavaScript reference vectors, and controlled network failure simulations for the public ledger. Resolve the mutable typed-array/fingerprint contract through a reviewed API choice, not a silent behavioural change.
+
+## v0.9.0 — Lean 4 and SPARK/Ada (planned)
+
+1. Review a mathematical specification of elementary automaton transitions with fixed-zero boundaries and 0..255 rule indices.
+2. Prove selected properties in Lean 4, record exact tool version, complete source, theorem statements, kernel-checked log and remaining assumptions. Unreviewed sorry, custom axioms or holes are unresolved.
+3. Build a small executable SPARK/Ada reference with explicit pre/postconditions and GNATprove analysis. Unreviewed Assume pragmas and undischarged obligations remain visible.
+4. Produce common input/output vectors and compare Lean reference, SPARK executable and real production JavaScript. Differential tests are not automatically a formal refinement proof.
+5. Document integer and bit-vector semantics of JavaScript, Lean and Ada; do not equate their implicit numeric behaviour without evidence.
+6. Keep all proof toolchains optional development tooling, never a GitHub Pages runtime dependency.
+
+## v1.0.0 — Browser and deployment verification (planned)
+
+Run actual browser journeys, CSP/privacy and asset checks, accessibility/layout testing, malformed-receipt tests and fault injections against controlled fake GitHub responses. Record actual versions, commands, source SHA and limitations. Mock DOM results are not live-browser results.
+
+## v1.1.0 — Zenodo formalization of the repository (planned)
+
+Only after substantive evidence exists, assemble a version-pinned archive with exact commit and tag; mathematical specs; Lean code and tool logs; SPARK/Ada sources, GNATprove output and unresolved obligations; differential conformance vectors; Python/browser tests; reproducibility commands; source and evidence SHA-256 manifest; and a candid report. Supply Zenodo metadata and a DOI only when published. A partial proof package must be labelled partial, not absolute correctness.
+
+## Priority risk register
+
+| Risk | Priority | Required disposition |
+| --- | --- | --- |
+| Mutable returned cells cause stale fingerprint | P1 | Clarify and test intended public API semantics |
+| Model-to-JavaScript semantic gap | P1 | Cross-language vectors and explicit translation assumptions |
+| Receipt digest is not execution attestation | P1 | Preserve explicit provenance limitations |
+| Pattern-based audit misses unknown syntax classes | P2 | Adversarial fixtures; bounded claims |
+| Formal tooling causes runtime dependency bloat | P2 | Strict development/runtime separation |
+
+Proof statuses belong to exact versioned artefacts. Human review and a fresh Git HEAD remain mandatory.

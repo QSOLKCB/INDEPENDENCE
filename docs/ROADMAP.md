@@ -40,4 +40,22 @@ v0.6 — The Secret Source: AI–Human GitHub Workflow (implemented in this PR)
 - Real PR #1–#5 case studies; no invented AI accuracy metrics, comparison benchmarks or claims of infinite capability.
 - First-party static HTML/CSS/JavaScript only, offline Python tests, manual Pages deployment; no third-party packages, telemetry or LLM API calls.
 
+v0.7 — Proof Contracts (implemented in this PR)
+- Eight versioned machine-readable proof obligations with actual source targets, priority, explicit NOT_PROVED formal status, baseline v0.6.0 SHA.
+- Bounded-exhaustive/finite JavaScript checks with independent oracles, plus a reproducible mutable-fingerprint counterexample.
+- Fail-closed Python registry check and offline receipt verification, negative/adversarial regression tests, local-only browser UI.
+- No Lean or SPARK proof or execution attestation is claimed.
+
+v0.8 — Property generation and counterexample minimization (planned)
+- Deterministic generative inputs, fault injection and cross-language fixtures; resolve typed-array ownership contract.
+
+v0.9 — Lean 4 + SPARK Ada proof laboratory (planned)
+- Human-reviewed specification, Lean kernel-checked theorems, SPARK reference and GNATprove obligations, documented semantic bridge.
+
+v1.0 — Real-browser and deployment verification (planned)
+- Cross-browser journeys, CSP, accessibility, fault handling and deploy artifact checks.
+
+v1.1.0 — Zenodo formalization of repository (planned)
+- Exact tagged sources, executable proof artefacts and logs, assumptions, partial gaps, SHA manifest and transparent research report.
+
 Each phase requires deterministic tests and a documented limitation statement.
