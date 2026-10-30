@@ -1,5 +1,7 @@
 # Manually verify a previous Pages publish without redeploying it.
-# The original deployed manifest is downloaded from the selected deploy run.
+# The exact manifest is extracted from that run's preserved github-pages artifact.tar.
+# Works with historical deployment run 41113714704 too, before the separate
+# independent-pages-manifest upload existed.
 name: Verify Published INDEPENDENCE Bytes
 
 on:
@@ -20,13 +22,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Download exact manifest from selected deployment
+      - name: Download exact original GitHub Pages upload from selected deployment
         uses: actions/download-artifact@v4
         with:
-          name: independence-pages-manifest
+          name: github-pages
           run-id: ${{ inputs.deployment_run_id }}
           github-token: ${{ github.token }}
-          path: ${{ runner.temp }}/published-manifest
+          path: ${{ runner.temp }}/published-pages
+
+      - name: Extract only the exact deployment manifest from Pages artifact.tar
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s "$RUNNER_TEMP/published-pages/artifact.tar"
+          mkdir -p "$RUNNER_TEMP/published-manifest"
+          tar -xOf "$RUNNER_TEMP/published-pages/artifact.tar" ./deployment-manifest.json > "$RUNNER_TEMP/published-manifest/deployment-manifest.json"
+          test -s "$RUNNER_TEMP/published-manifest/deployment-manifest.json"
 
       - name: Compare every public byte with preserved deployment manifest
         run: python3 scripts/verify_deployed_site.py --manifest "$RUNNER_TEMP/published-manifest/deployment-manifest.json" --attempts 8 --delay 10 --output "$RUNNER_TEMP/manual-pages-observation.json"

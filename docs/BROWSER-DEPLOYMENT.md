@@ -107,9 +107,13 @@ so regenerating a manifest from a later Git checkout can change the bytes.
 
 If propagation takes longer than the in-run bounded retries, launch the
 **Verify Published INDEPENDENCE Bytes** workflow manually, entering the
-original **deployment workflow run ID**. It downloads that run's manifest
-and independently retries official HTTPS byte matching, without republishing
-and without silently treating a missing page as verified. A failed follow-up
+original **deployment workflow run ID**. It downloads that run's original
+`github-pages` artifact, extracts only `./deployment-manifest.json` from
+`artifact.tar`, and strictly retries official HTTPS byte matching.
+This also works with historical deployment run **41113714704**, whose
+upload artifact was verified to contain both index.html and the exact
+deployment-manifest.json. No republishing is needed to repeat the
+observation, and a missing page is never silently treated as verified. A failed follow-up
 verification run remains red, with a `NOT_VERIFIED` JSON evidence artifact.
 
 If the main website remains 404 after propagation, inspect the repository's
