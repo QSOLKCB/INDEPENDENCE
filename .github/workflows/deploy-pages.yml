@@ -73,3 +73,14 @@ jobs:
       - name: Publish to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      
+      - name: Verify public GitHub Pages bytes after deployment
+        run: python3 scripts/verify_deployed_site.py --manifest "$RUNNER_TEMP/independence-pages/deployment-manifest.json" --attempts 8 --delay 5 --output "$RUNNER_TEMP/pages-remote-evidence.json"
+
+      - name: Preserve public byte-observation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independence-pages-public-observation
+          path: ${{ runner.temp }}/pages-remote-evidence.json
+          if-no-files-found: ignore

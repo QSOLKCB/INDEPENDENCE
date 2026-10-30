@@ -23,7 +23,7 @@ The original wider programme remains explicit:
 5. Document integer and bit-vector semantics of JavaScript, Lean and Ada; do not equate their implicit numeric behaviour without evidence.
 6. Keep all proof toolchains optional development tooling, never a GitHub Pages runtime dependency.
 
-## v1.0.0 — Browser and deployment verification (planned)
+## v1.0.0 — Browser and deployment verification (executable implementation PR)
 
 Run actual browser journeys, CSP/privacy and asset checks, accessibility/layout testing, malformed-receipt tests and fault injections against controlled fake GitHub responses. Record actual versions, commands, source SHA and limitations. Mock DOM results are not live-browser results.
 
@@ -68,3 +68,14 @@ independently checked against the reference Python corpus with
 scripts/verify_automata_browser_receipt.py. No duplicate Lean/SPARK model is
 introduced by the browser, and the reported finite conformance and digest
 do not constitute a universal refinement theorem or authenticated execution.
+
+
+## v1.0 local/remote trust separation
+
+A first-party, exact-byte GitHub Pages artifact stage is paired with real
+Chromium and Firefox browser journeys on a loopback-served copy of the stage.
+The official HTTPS Pages host is separately checked only **after** manual
+deployment, using the packaged manifest and exact asset hashes. No localhost
+test is passed off as a remote browser run, and no manifest hash establishes
+independent authorship, continuous uptime or full WCAG compliance.
+See docs/BROWSER-DEPLOYMENT.md.

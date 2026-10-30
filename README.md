@@ -286,3 +286,31 @@ Verify a browser receipt with standard-library Python:
     python3 scripts/verify_automata_browser_receipt.py /path/to/automata4-browser-xxxxxxxxxxxx.json
 
 The receipt verifies consistency with the canonical corpus but does **not** independently attest that the browser executed. Formal theorem checks and Ada differential execution remain optional developer-only tools.
+
+
+## v1.0.0 — Real-browser and GitHub Pages deployment verification
+
+The project now builds an exact, dependency-free Pages artifact from one
+allowlist of first-party files. PAGES-ARTIFACT/1 generates a deterministic
+SHA-256 manifest for every byte, rejects stale/missing/extra assets and malformed
+HTML/CSP, and retains the Git commit revision. The manual Pages workflow
+verifies that staged artifact before uploading it.
+
+Two **actual** development-only browser engines exercise the staged website:
+headless Chromium and headless Firefox via Geckodriver. Real DOM journeys
+cover the deterministic automaton, first-party browser tests, property/formal
+labs, ledger search, local workflow handoff, CSP restrictions, basic labels
+and controlled ledger HTTP 503/malformed-JSON failure paths. Browser/tool
+absence is NOT_RUN, never fabricated success. The workflow also compares
+the official public GitHub Pages HTTPS asset bytes with the manifest **after**
+deployment; local checks are not misrepresented as public-deployment evidence.
+
+    python3 scripts/site_bundle.py stage --source . --site /tmp/independence-v1 --revision "$(git rev-parse HEAD)"
+    python3 scripts/site_bundle.py verify --source . --site /tmp/independence-v1 --revision "$(git rev-parse HEAD)"
+    python3 scripts/run_browser_journeys.py --site /tmp/independence-v1 --require-browser --output chromium.json
+    python3 scripts/firefox_journeys.py --site /tmp/independence-v1 --require-browser --output firefox.json
+    python3 scripts/verify_deployed_site.py --manifest /tmp/independence-v1/deployment-manifest.json
+
+All Python utilities use the standard library. Firefox/Chromium binaries are
+optional developer testing tools, not site requirements. See
+[the complete v1.0 verification scope](docs/BROWSER-DEPLOYMENT.md).

@@ -97,3 +97,12 @@ The browser test button runs a separate native-JavaScript suite.
 67. Lean evidence requires recorded axiom lists to match exactly the parsed raw compiler output. No missing, duplicate, mismatched or unapproved axioms, even in a rehashed receipt.
 68. Browser v0.9 tests real first-party evolve() and unchanged original typed-array inputs. Finite checks, local WebCrypto digest and self-reported receipt are not a formal refinement or third-party attestation.
 69. The formal lab CSS link must be a complete, closed HTML link element, leaving the application's only module script intact. Formal toolchains stay optional developer-only tools, not mandatory Pages dependencies.
+
+
+70. PAGES-ARTIFACT/1 is the single source of truth for GitHub Pages packaging. Only audit.WEB_FILES and .nojekyll may ship, plus the deterministic deployment-manifest.json; no secret, build output, package installation or unlisted file.
+71. The source-to-staging comparison rejects missing, extra, tampered or symlinked files; HTMLParser must find the true application module, required local stylesheet and restrictive CSP. Hash checks are exact bytes, not ownership attestation.
+72. REAL-BROWSER-JOURNEYS/1 requires genuine browser binaries executing the staged site; a headless DOM mock or synthetic success may not substitute. Missing Chrome/Firefox tools must never be reported as passed.
+73. Browser regression must demonstrate functional interactive journeys and fail-closed ledger handling for controlled HTTP 503 and malformed packaged JSON without querying live GitHub REST from the browser.
+74. Check CSP inline-code blocking, same-origin runtime resources, semantic names/labels and bounded horizontal layout against actual browser DOM. These finite checks are not universal security guarantees, WCAG conformance certificates or mobile-device performance tests.
+75. Only a separately observed HTTPS response from the exact public INDEPENDENCE Pages host can establish a current remote byte match. Local staging/remote SHA checks do not prove CDN stability, host authorship or production JavaScript execution.
+76. Preserve actual browser version, source revision, SHA-256 manifest, executed checks and explicit NOT_RUN/FAIL states in v1.0 receipts. Development browsers, Geckodriver, optional Node, Lean and Ada remain outside the web runtime.
