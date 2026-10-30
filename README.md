@@ -216,3 +216,15 @@ The user reported an actual GNATprove FSF 16.1.0 execution against PR #13 HEAD `
 This receipt was reconstructed from a user-pasted terminal report, **not the unattached original `spark-evidence.json` bytes or an independently authenticated run**. It describes GNATprove's scoped Ada-reference checks; the Ada CLI and actual Python/Ada differential execution remain separate obligations.
 
     python3 scripts/verify_spark_evidence_archive.py
+
+## v0.7.4 — Actual Ada CLI build and Python comparison
+
+A new offline developer-only command compiles the pinned PR #13 Ada source snapshot in a **fresh temporary build directory**, then compares the executable against the independent Python oracle over either 150 sample/invalid inputs or the full **8,903-process finite set**. It records compiler versions, source and executable SHA-256 hashes, raw build output and a fail-closed self-consistency receipt. No Ada runtime success is claimed until the command really runs on a GNAT-equipped machine.
+
+~~~sh
+export PATH="$HOME/opt/edgewalk-spark-toolchain/bin:$PATH"
+python3 scripts/build_and_compare_ada.py --output ada-runtime-evidence.json
+python3 scripts/verify_ada_runtime_evidence.py ada-runtime-evidence.json
+~~~
+
+See [docs/ADA-RUNTIME-EXECUTION.md](docs/ADA-RUNTIME-EXECUTION.md). The archive verifier does not independently authenticate build execution, and Ada/Lean proofs do not establish production Python/JavaScript correctness.

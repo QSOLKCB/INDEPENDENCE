@@ -82,3 +82,7 @@ output reports the proof outcome and all obligations are resolved.
 The user checked out PR #13 HEAD `9900e57f2283c534815657dd6c079d0e966715f4`, used their existing GNATprove FSF 16.1.0 toolchain, and supplied a report of **21/21 checks proved**, exit code **0**, and **186 passing Python unittest methods**. The record is preserved under `formal/evidence/spark/pr13` with all five analyzed source/project SHA-256 hashes. It supersedes the earlier parser-error state **for the reported historical revision**.
 
 This is user-provided local execution evidence, not an independently witnessed proof run. It covers GNATprove's specified Ada reference-kernel proof obligations; **the CLI remains outside the SPARK proof scope**, and existing Python/JS conformance still needs separate differential execution. See `formal/evidence/spark/pr13/README.md`.
+
+## v0.7.4 — Compiled CLI and runtime comparison
+
+The new scripts/build_and_compare_ada.py compiles archived PR #13 Ada sources in a clean directory and compares the actual CLI with the independent Python oracle. This tests the runtime and CLI protocol without claiming the CLI has been formally proved. See [ADA-RUNTIME-EXECUTION.md](ADA-RUNTIME-EXECUTION.md).
