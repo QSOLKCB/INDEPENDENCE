@@ -1,6 +1,7 @@
 """Offline fake-CDN fixture tests; explicitly NOT real public network evidence."""
 import json
 from pathlib import Path
+from urllib.error import HTTPError
 import shutil
 import sys
 import tempfile
@@ -107,6 +108,43 @@ class DeployObservationTests(unittest.TestCase):
             with self.assertRaises(remote.DeploymentError):
                 remote.verify_once(path)
             fetch.assert_not_called()
+
+
+    def test_public_404_identifies_exact_asset_and_never_passes(self):
+        url = remote.BASE + "deployment-manifest.json"
+        error = HTTPError(url, 404, "Not Found", {}, None)
+        opener = Mock()
+        opener.open.side_effect = error
+        with patch.object(remote, "build_opener", return_value=opener):
+            with self.assertRaisesRegex(remote.DeploymentError,
+                                        "public asset HTTP 404 at .*deployment-manifest.json"):
+                remote.fetch_bytes(url)
+
+    def test_failed_public_observation_writes_explicit_not_verified_receipt(self):
+        output = self.root / "failed-observation.json"
+        with patch.object(remote, "verify", side_effect=remote.DeploymentError(
+                "public asset HTTP 404 at " + remote.BASE + "deployment-manifest.json")):
+            exit_code = remote.main([
+                "--manifest", str(self.site / bundle.MANIFEST),
+                "--output", str(output)
+            ])
+        self.assertEqual(exit_code, 1)
+        result = json.loads(output.read_text())
+        self.assertEqual(result["protocol"], remote.PROTOCOL)
+        self.assertEqual(result["status"], "NOT_VERIFIED")
+        self.assertIn("deployment-manifest.json", result["reason"])
+        self.assertNotIn("REMOTE_BYTES_MATCHED_UNATTESTED", output.read_text())
+
+    def test_workflows_separate_publish_from_remote_byte_observation(self):
+        deploy = (ROOT / ".github/workflows/deploy-pages.yml").read_text()
+        manual = (ROOT / ".github/workflows/verify-public-pages.yml").read_text()
+        self.assertIn("id: deployment", deploy)
+        self.assertIn("continue-on-error: true", deploy)
+        self.assertIn("id: public-observation", deploy)
+        self.assertIn("name: independence-pages-manifest", deploy)
+        self.assertIn("id: deployment", deploy.split("id: public-observation")[0])
+        self.assertIn("run-id:", manual)
+        self.assertIn("verify_deployed_site.py", manual)
 
     def test_missing_remote_stays_not_verified(self):
         with patch.object(remote, "fetch_bytes", side_effect=OSError("offline")):

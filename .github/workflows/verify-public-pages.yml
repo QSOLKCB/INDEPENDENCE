@@ -1,0 +1,40 @@
+# Manually verify a previous Pages publish without redeploying it.
+# The original deployed manifest is downloaded from the selected deploy run.
+name: Verify Published INDEPENDENCE Bytes
+
+on:
+  workflow_dispatch:
+    inputs:
+      deployment_run_id:
+        description: "Completed Deploy INDEPENDENCE workflow run ID"
+        type: string
+        required: true
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  verify-public:
+    name: Observe published HTTPS bytes (strict)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download exact manifest from selected deployment
+        uses: actions/download-artifact@v4
+        with:
+          name: independence-pages-manifest
+          run-id: ${{ inputs.deployment_run_id }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/published-manifest
+
+      - name: Compare every public byte with preserved deployment manifest
+        run: python3 scripts/verify_deployed_site.py --manifest "$RUNNER_TEMP/published-manifest/deployment-manifest.json" --attempts 8 --delay 10 --output "$RUNNER_TEMP/manual-pages-observation.json"
+
+      - name: Preserve success or explicit NOT_VERIFIED evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independence-manual-pages-observation
+          path: ${{ runner.temp }}/manual-pages-observation.json
+          if-no-files-found: ignore

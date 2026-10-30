@@ -82,3 +82,37 @@ ignored. The PR CI and the manual Pages preflight require narrow Chromium and
 Firefox passes, separately from the standard 1280px three-scenario runs.
 This is a responsive smoke test, **not** a device emulator or a full
 WCAG/visual-regression audit.
+
+## Public CDN propagation and honest deployment status
+
+GitHub Pages can report the deployment action as successful before every
+newly uploaded URL is observable from all public CDN edges. The original
+v1.0.0 workflow incorrectly made the entire deployment run fail when the
+separate public-byte verification returned HTTP 404 shortly after publish.
+The actual deployment action had already reported SUCCESS.
+
+The workflow now distinguishes:
+
+- **Deployment: SUCCESS** means `actions/deploy-pages@v4` completed.
+- **Public byte observation: REMOTE_BYTES_MATCHED_UNATTESTED** means the exact
+  publicly fetched deployment manifest and all file hashes matched.
+- **Public byte observation: NOT_VERIFIED** means the observation failed,
+  with the exact requested URL and HTTP code recorded. It is **never** counted
+  as a public match or proof of website availability.
+
+Each deploy stores the *exact deployed manifest* as a separately downloadable
+Actions artifact called `independence-pages-manifest`. This is essential
+because `ledger/data.json` can be freshly collected during each deploy,
+so regenerating a manifest from a later Git checkout can change the bytes.
+
+If propagation takes longer than the in-run bounded retries, launch the
+**Verify Published INDEPENDENCE Bytes** workflow manually, entering the
+original **deployment workflow run ID**. It downloads that run's manifest
+and independently retries official HTTPS byte matching, without republishing
+and without silently treating a missing page as verified. A failed follow-up
+verification run remains red, with a `NOT_VERIFIED` JSON evidence artifact.
+
+If the main website remains 404 after propagation, inspect the repository's
+Settings → Pages → Build and deployment → Source (GitHub Actions), and
+review the Pages deployment logs. Do not attribute a persistent 404 to
+propagation without evidence.
