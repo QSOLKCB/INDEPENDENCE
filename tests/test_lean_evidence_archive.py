@@ -96,6 +96,20 @@ class LeanEvidenceArchiveTests(unittest.TestCase):
                     ):
                         verify(root)
 
+    def test_codex_combined_corrupt_lean_summary_rejected(self):
+        temp, root = self.fixture()
+        with temp:
+            path = root / FOLDER / "manifest.json"
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+            manifest["checks"].update({
+                "lean_kernel_reported": "FAILED_OR_UNRESOLVED",
+                "lean_exit_code_reported": 1,
+                "axiom_audits": 0,
+            })
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            with self.assertRaisesRegex(ArchiveError, "manifest Lean result mismatch"):
+                verify(root)
+
     def test_boolean_values_cannot_impersonate_integer_results(self):
         # False == 0 and True == 1 in Python; checks must be type strict.
         for field in ("lean_exit_code_reported", "unapproved_axioms_reported"):
