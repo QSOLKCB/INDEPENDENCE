@@ -148,13 +148,26 @@ def invoke(argv, cwd, timeout=120):
                           text=True, capture_output=True, timeout=timeout)
 
 
+def pinned_version_display(version_text: str) -> bool:
+    """Accept Rocq's real 9.2.0 banner (prints 9.2) and 9.2.0.
+
+    Rocq 9.2.0 from opam prints "The Rocq Prover, version 9.2".
+    Restrict matching to the entire first banner line; do not accept 9.2.1,
+    9.20 or an unrelated line containing the pinned version.
+    """
+    if type(version_text) is not str or not version_text.strip():
+        return False
+    first_line = version_text.splitlines()[0].strip()
+    return re.fullmatch(r"The Rocq Prover, version 9\.2(?:\.0)?", first_line) is not None
+
+
 def run_rocq(root: Path = ROOT) -> dict:
     if shutil.which("rocq") is None:
         return {"status": "NOT_RUN", "reason": "Rocq 9.2.0 executable unavailable"}
     try:
         version = invoke(["rocq", "--version"], root, timeout=15)
         version_text = (version.stdout + version.stderr).strip()
-        if version.returncode or not re.search(r"(?<!\d)9\.2\.0(?!\d)", version_text):
+        if version.returncode or not pinned_version_display(version_text):
             return {"status": "VERSION_MISMATCH", "tool_version": version_text[:1000]}
         with tempfile.TemporaryDirectory(prefix="independence-rocq-") as tmp:
             copied = Path(tmp) / "Automata.v"

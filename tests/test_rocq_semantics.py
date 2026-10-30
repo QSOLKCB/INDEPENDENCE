@@ -67,6 +67,33 @@ class RocqSemanticsTests(unittest.TestCase):
         with patch.object(rocq.shutil, "which", return_value=None):
             self.assertEqual(rocq.run_rocq()["status"], "NOT_RUN")
 
+    def test_real_rocq_920_version_banner_is_accepted(self):
+        actual = "The Rocq Prover, version 9.2\ncompiled with OCaml 4.14.2"
+        self.assertTrue(rocq.pinned_version_display(actual))
+        self.assertTrue(rocq.pinned_version_display("The Rocq Prover, version 9.2.0"))
+        for invalid in ("The Rocq Prover, version 9.2.1",
+                        "The Rocq Prover, version 9.3",
+                        "The Rocq Prover, version 9.20",
+                        "The Rocq Prover, version 9.2.0-rc1",
+                        "Different compiler version 9.2.0",
+                        "not a version\nThe Rocq Prover, version 9.2",
+                        ""):
+            with self.subTest(version=invalid):
+                self.assertFalse(rocq.pinned_version_display(invalid))
+
+    def test_real_rocq_920_banner_reaches_compiler_instead_of_mismatch(self):
+        version = subprocess.CompletedProcess(
+            [], 0, "The Rocq Prover, version 9.2\ncompiled with OCaml 4.14.2", ""
+        )
+        fail = subprocess.CompletedProcess([], 1, "", "Error: proof not discharged")
+        with patch.object(rocq.shutil, "which", return_value="/usr/bin/rocq"), \
+             patch.object(rocq, "invoke", side_effect=(version, fail)) as invoked:
+            result = rocq.run_rocq()
+        self.assertEqual(result["status"], "FAILED_OR_UNRESOLVED")
+        self.assertEqual(invoked.call_args_list[0].args[0], ["rocq", "--version"])
+        self.assertEqual(invoked.call_args_list[1].args[0][:2], ["rocq", "compile"])
+        self.assertEqual(result["exit_code"], 1)
+
     def test_wrong_version_reports_mismatch(self):
         fake = subprocess.CompletedProcess([], 0, "The Rocq Prover, version 9.3.0", "")
         with patch.object(rocq.shutil, "which", return_value="/usr/bin/rocq"), \
