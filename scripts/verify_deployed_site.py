@@ -14,7 +14,7 @@ from pathlib import Path
 import sys
 import time
 from urllib.parse import urlsplit
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from site_bundle import MANIFEST, SITE_FILES, BundleError, envelope, parse_manifest
 
@@ -35,16 +35,30 @@ def validate_base(url: str) -> None:
         raise DeploymentError("only the official HTTPS Pages deployment path is permitted")
 
 
+class RejectRedirects(HTTPRedirectHandler):
+    """Fail closed before any redirect target is requested, even same-origin."""
+
+    def redirect_request(self, request, fp, code, msg, headers, newurl):
+        raise DeploymentError("public Pages redirect denied before follow-up request")
+
+
 def fetch_bytes(url: str) -> bytes:
     validate_base(BASE)
     requested = urlsplit(url)
-    if not url.startswith(BASE) or requested.netloc != "qsolkcb.github.io":
+    permitted = {MANIFEST, *SITE_FILES}
+    # Check the whole URI, not merely a string prefix or a final redirect URL.
+    if (requested.scheme != "https" or requested.netloc != "qsolkcb.github.io"
+            or requested.path != "/INDEPENDENCE/" + requested.path.removeprefix("/INDEPENDENCE/")
+            or requested.path.removeprefix("/INDEPENDENCE/") not in permitted
+            or requested.query or requested.fragment):
         raise DeploymentError("out-of-scope public Pages asset")
-    with urlopen(Request(url, headers={"User-Agent": "INDEPENDENCE-v1-deployment-check"}),
-                 timeout=15) as response:
-        actual = response.geturl()
-        if not actual.startswith(BASE) or urlsplit(actual).netloc != "qsolkcb.github.io":
-            raise DeploymentError("redirected away from official Pages scope")
+    # The dedicated opener prevents urllib's default automatic redirect
+    # handling. No external or downgraded HTTP URL can be fetched first.
+    opener = build_opener(RejectRedirects())
+    with opener.open(Request(url, headers={"User-Agent": "INDEPENDENCE-v1-deployment-check"}),
+                     timeout=15) as response:
+        if response.geturl() != url:
+            raise DeploymentError("unexpected final public Pages URL")
         if getattr(response, "status", 200) != 200:
             raise DeploymentError("non-200 CDN response: " + url)
         data = response.read(MAX_BYTES + 1)

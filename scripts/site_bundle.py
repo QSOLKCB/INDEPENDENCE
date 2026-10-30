@@ -48,6 +48,12 @@ class IndexParser(HTMLParser):
         self.remote: list[str] = []
 
     def handle_starttag(self, tag, attrs):
+        # HTML consumers keep the first duplicate attribute, whereas
+        # dict(attrs) keeps the last one. Reject all duplicates before
+        # interpreting CSP, module paths, element identifiers or styles.
+        names = [name for name, _ in attrs]
+        if len(names) != len(set(names)):
+            raise BundleError("duplicate HTML attribute in " + tag)
         fields = dict(attrs)
         if "id" in fields:
             self.ids.append(fields["id"])
@@ -89,9 +95,14 @@ def check_html(raw: bytes) -> None:
         "base-uri": ("'self'",),
         "form-action": ("'none'",),
     }
+    # CSP splits on ASCII whitespace only (HT, LF, FF, CR, SP). Python's
+    # default str.split() also treats NBSP and other Unicode characters
+    # as whitespace, falsely approving policies browsers do not parse.
+    if not policy.isascii():
+        raise BundleError("non-ASCII characters in CSP policy")
     actual_csp = {}
     for clause in policy.split(";"):
-        fields = clause.strip().split()
+        fields = re.findall(r"[^\\t\\n\\f\\r ]+", clause)
         if not fields:
             continue
         name, values = fields[0].lower(), tuple(fields[1:])

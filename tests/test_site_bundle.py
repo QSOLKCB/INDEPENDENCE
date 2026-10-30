@@ -78,6 +78,35 @@ class SiteBundleTests(unittest.TestCase):
         with self.assertRaisesRegex(bundle.BundleError, "script|stylesheet"):
             bundle.check_html(bad)
 
+    def test_duplicate_html_attributes_block_effective_policy_bypass(self):
+        original = (ROOT / "index.html").read_bytes()
+        csp = b'<meta http-equiv="Content-Security-Policy" content='
+        self.assertIn(csp, original)
+        for modified in (
+            original.replace(csp, csp.replace(b" content=", b' content="script-src *" content='), 1),
+            original.replace(b'<script type="module" ', b'<script src="https://evil.example/run.js" type="module" ', 1),
+            original.replace(b'<main id="main">', b'<main id="outside" id="main">', 1),
+            original.replace(b'<link rel="stylesheet" ', b'<link href="https://evil.example/x.css" rel="stylesheet" ', 1)
+        ):
+            with self.subTest(html=modified[:100]), self.assertRaisesRegex(
+                    bundle.BundleError, "duplicate HTML attribute"):
+                bundle.check_html(modified)
+
+    def test_non_ascii_csp_whitespace_is_not_normalized(self):
+        original = (ROOT / "index.html").read_bytes()
+        for token in (b"default-src", b"script-src", b"connect-src"):
+            broken = original.replace(token + b" ", token + "\u00a0".encode("utf-8"), 1)
+            with self.subTest(token=token), self.assertRaisesRegex(
+                    bundle.BundleError, "non-ASCII"):
+                bundle.check_html(broken)
+
+    def test_ascii_csp_whitespace_parses_as_browser_does(self):
+        original = (ROOT / "index.html").read_bytes()
+        modified = original.replace(b"script-src 'self'", b"script-src\t'self'", 1)
+        # HTML treats literal tabs as part of attribute values; CSP accepts
+        # ASCII HT as whitespace between a directive and its source.
+        bundle.check_html(modified)
+
     def test_unsafe_csp_and_duplicate_html_ids_rejected(self):
         original = (ROOT / "index.html").read_bytes()
         for bad in (

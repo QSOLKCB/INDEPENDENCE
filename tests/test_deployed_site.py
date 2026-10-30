@@ -5,7 +5,7 @@ import shutil
 import sys
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -47,6 +47,48 @@ class DeployObservationTests(unittest.TestCase):
         with patch.object(remote, "fetch_bytes", return_value=b"{}"):
             with self.assertRaisesRegex(remote.DeploymentError, "manifest"):
                 remote.verify(self.site / bundle.MANIFEST)
+
+    def test_redirect_handler_blocks_every_redirect_before_followup(self):
+        from urllib.request import Request
+        original = Request(remote.BASE + "app.js")
+        for status, destination in (
+            (301, "https://evil.example/steal"),
+            (302, "http://qsolkcb.github.io/INDEPENDENCE/app.js"),
+            (303, remote.BASE + "app.js"),
+            (307, "https://evil.example/bounce"),
+            (308, remote.BASE + "index.html"),
+        ):
+            with self.subTest(status=status), self.assertRaisesRegex(
+                    remote.DeploymentError, "before follow-up"):
+                remote.RejectRedirects().redirect_request(
+                    original, None, status, "Redirect", {}, destination)
+
+    def test_fetch_uses_redirect_rejecting_opener(self):
+        fake = Mock()
+        fake.__enter__ = Mock(return_value=fake)
+        fake.__exit__ = Mock(return_value=False)
+        fake.geturl.return_value = remote.BASE + "app.js"
+        fake.status = 200
+        fake.read.return_value = b"ok"
+        opener = Mock()
+        opener.open.return_value = fake
+        with patch.object(remote, "build_opener", return_value=opener) as build:
+            self.assertEqual(remote.fetch_bytes(remote.BASE + "app.js"), b"ok")
+        self.assertEqual(len(build.call_args.args), 1)
+        self.assertIsInstance(build.call_args.args[0], remote.RejectRedirects)
+
+    def test_fetch_rejects_out_of_scope_url_without_network(self):
+        with patch.object(remote, "build_opener") as build:
+            for url in (
+                "https://evil.example/INDEPENDENCE/app.js",
+                "http://qsolkcb.github.io/INDEPENDENCE/app.js",
+                remote.BASE + "../private",
+                remote.BASE + "app.js?leak=1",
+                remote.BASE + "unlisted.js",
+            ):
+                with self.subTest(url=url), self.assertRaises(remote.DeploymentError):
+                    remote.fetch_bytes(url)
+            build.assert_not_called()
 
     def test_outside_network_hosts_are_rejected(self):
         for value in ("http://qsolkcb.github.io/INDEPENDENCE/",
