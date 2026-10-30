@@ -76,3 +76,10 @@ The browser test button runs a separate native-JavaScript suite.
 56. Every promoted Lean theorem must be checked by the actual Lean kernel with trust level zero and undergo a transitive axiom audit. Reject missing toolchains, unapproved proof holes, custom axioms, native evaluation or ignored errors.
 57. Proving the Fin 6 ↔ Fin 2 × Fin 3 CRT bijection does not prove general CRT; proving degree-lex irreflexivity/transitivity/translation does not yet prove all monomial order requirements.
 58. Model-to-SPARK/Ada, model-to-Python and model-to-browser conformance remain separate obligations; an unauthenticated local proof log must not become independent evidence of execution provenance.
+
+59. PROPERTY-LAB/1 may only generate bounded, seeded and replayable property inputs with local xorshift32. No time-based randomness, remote input, dynamic execution or external packages.
+60. Distinguish injected faulty alternatives (educational mutants) from real first-party defects, and show the original and shrunk reproducible witnesses explicitly.
+61. Shrinking must recheck the predicate before and after reduction, use a documented finite canonical ordering, and never imply global minimisation of unbounded JavaScript programs.
+62. Preserve the original mutable Uint8Array/fingerprint counterexample. The new guardedSnapshot is opt-in, defensively copies typed arrays and rejects stale fingerprints; never silently rewrite the v0.7 public API.
+63. Property receipts must be SHA-256 over the exact JSON payload, and the independent Python verifier must reject status/provenance inflation, forged generated cases, malformed receipts and self-inconsistent witnesses.
+64. Property-sample results are not mathematical proofs, independent browser execution attestation, or proof of the previously archived Lean/SPARK/Ada results. UI must render only inert textContent and must fail closed on any property mismatch.
