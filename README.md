@@ -364,3 +364,31 @@ theorem assumption audits closed. The `.vo` and logs are generated in a
 fresh temporary directory; the evidence JSON is written only on request.
 The finite bridge is not a formal refinement proof of JavaScript or SPARK.
 See [Rocq developer verification](docs/ROCQ-SEMANTICS.md).
+
+## v1.1.0 — Formalisation Report and Original Research Evidence
+
+The [v1.1.0 formalisation report](formal/research/v1.1.0/FORMALISATION_REPORT.md)
+consolidates **original byte-preserved** Lean/SPARK/Ada/JavaScript and Rocq
+local evidence archives, the historical Chromium/Firefox PR evidence and a
+reproducible, explicit boundary between mathematical model proofs, contract
+discharge, finite executable conformance, and operational observations.
+
+The uploaded original proof archives (3,473 and 3,658 bytes) are included
+losslessly, with pinned SHA-256 digests, a complete 15-member manifest, and
+a Python-stdlib verifier that checks the 13 original internal checksum
+entries, proof statuses and provenance:
+
+```sh
+python3 scripts/verify_formalisation_archive.py --output formalisation-integrity.json
+python3 -m unittest discover -s tests -p 'test_formalisation_archive.py' -v
+python3 scripts/verify_browser_archive.py
+```
+
+The evidence records six Lean width-four model theorem checks, ten SPARK
+verification conditions, 4,096 Ada + 4,096 JavaScript finite comparisons,
+fifteen Rocq arbitrary-finite-width model theorem/example obligations and
+92 historical recorded passing browser assertions. **No proof of production
+JavaScript refinement or independently authenticated execution is claimed.**
+The user-supplied DOI `10.5281/zenodo.23816739` is linked as an author-minted
+identifier only until public record metadata/deposition is verified. Read
+[the complete evidentiary scope and Zenodo proposal](formal/research/v1.1.0/README.md).

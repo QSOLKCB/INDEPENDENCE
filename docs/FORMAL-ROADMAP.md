@@ -106,3 +106,21 @@ This is a proof of mathematical-model properties **only**, not verified
 refinement of the existing `lab/core.js` production automaton, arbitrary
 browser inputs, or Ada program. Existing successful local Lean/GNATprove
 evidence and original v1.0.1 browser archive are not modified or conflated.
+
+## v1.1.0 — Evidence and Formalisation Research Report
+
+The [v1.1.0 report](../formal/research/v1.1.0/FORMALISATION_REPORT.md)
+separately classifies six reported Lean kernel-checked width-four model
+theorems, ten GNATprove-discharged SPARK conditions, actual Ada/JavaScript
+finite comparisons across the 4,096-case canonical domain, and fifteen
+Rocq 9.2 arbitrary-finite-width **model** theorem/example obligations.
+It preserves the two original user-uploaded proof archives, separate
+source revisions, version inventories and a manifest with fixed original
+SHA-256 values plus an offline verifier. Historic real browser observations
+remain independent from the post-deployment asset-observation gate.
+
+The new automated integrity check is *not* a third-party compiler execution
+attestation and does not prove real JavaScript implementation refinement.
+The author-reported Zenodo DOI `10.5281/zenodo.23816739` is a proposed
+associated identifier; verify actual public deposit metadata before
+describing this v1.1.0 record as published.
