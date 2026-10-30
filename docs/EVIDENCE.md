@@ -55,3 +55,9 @@ DOM-TRIBUNAL/1 uses same-origin first-party JavaScript adapters on identical see
 GREMLIN-MUSEUM/1 is a browser-native, fixed-fixture teaching and verification system containing five safe, **inert** reproductions of bug patterns: a historical static import regex omission, a historical repo-path ancestry false positive, a historical Git/receipt SHA-size mix-up, illustrative JSON numeric overflow, and illustrative HTML output encoding. The last two are NOT asserted to have occurred in INDEPENDENCE.
 
 Every specimen has explicit legacy and corrected behaviours and meaningful deterministic assertions. No payload is imported, fetched, evaluated, rendered as unsafe markup, or passed to a real service. The UI renders all samples using textContent and generates a SHA-256 of exact JSON payload bytes. An offline Python stdlib verifier checks payload integrity and known fixture outputs; receipts do not certify absence of vulnerabilities.
+
+## v0.5 — Gremlin Breeding Laboratory
+
+GREMLIN-BREEDING/1 implements five isolated pure-function targets and 15 deliberately changed versions. Each is known to diverge from a full, fixed oracle. The small smoke suite and extended fixture suite illustrate how detection capacity changes. Their mutation scores describe **only this fixed catalogue**, not application-wide coverage.
+
+The exact text of the report is SHA-256 hashed by browser WebCrypto. The Python standard-library verifier independently encodes expected witness cases, operators, outcomes and seeded order, then checks the receipt. A valid digest plus expected report does not prove a real execution occurred, certify code quality or represent a security assessment. No dynamic source mutation is performed.

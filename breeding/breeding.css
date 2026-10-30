@@ -1,0 +1,26 @@
+/* GREMLIN-BREEDING/1 — all first-party responsive CSS */
+.breeding-section{background:#101714;border-top:1px solid #414941}
+.breeding-intro{font-size:16px;line-height:1.75;color:#b2c1b6;max-width:860px}
+.breeding-warning{background:#25251c;border-left:3px solid #f3eab4;padding:18px 24px;font:12px/1.7 "Courier New",monospace;color:#e6dec3;margin:26px 0}
+.breeding-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:700px;margin:26px 0}
+.breeding-controls label{font:700 11px "Courier New",monospace;color:#cad2c9;display:flex;flex-direction:column;gap:10px}
+.breeding-controls select,.breeding-controls input{background:#1b221c;border:1px solid #5d6a60;color:#f3f1e5;min-height:47px;padding:12px;font:13px "Courier New",monospace}
+.breeding-actions{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}
+.breeding-actions button{background:#ff563d;color:#141414;border:1px solid #ff563d;padding:15px 23px;font:900 12px "Courier New",monospace}
+.breeding-actions button.secondary{background:transparent;border:1px solid #8b938b;color:#f3eab4}
+.breeding-actions button:disabled{opacity:.45;cursor:not-allowed}
+.breeding-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid #455149;margin:22px 0}
+.breeding-stat{padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0;border-right:1px solid #455149}
+.breeding-stat:last-child{border-right:0}.breeding-stat strong{font:bold 30px Arial,sans-serif;color:#f3eab4}
+.breeding-stat span{font:10px "Courier New",monospace;color:#abb5ac}
+.breeding-records{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.breeding-record{background:#182019;border:1px solid #475349;padding:21px;min-width:0}
+.breeding-record h3{font-size:21px;letter-spacing:-.035em;margin:12px 0}
+.breeding-record p{line-height:1.5;color:#b2bdb2;font-size:13px}
+.breeding-record-label,.breeding-state{font:700 10px "Courier New",monospace}
+.breeding-record-label{color:#ff907a}.breeding-state{display:inline-block;border:1px solid currentColor;padding:6px 9px}
+.breeding-killed{color:#9ddd9d}.breeding-survived{color:#ffad84}
+.breeding-record .breeding-detail{font:11px/1.5 "Courier New",monospace;overflow-wrap:anywhere}
+.breeding-status,.breeding-digest{color:#c1cfc2;font:12px/1.7 "Courier New",monospace;overflow-wrap:anywhere}
+@media(max-width:950px){.breeding-records{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:670px){.breeding-controls,.breeding-records{grid-template-columns:1fr}.breeding-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.breeding-stat:nth-child(2){border-right:0}.breeding-stat:nth-child(-n+2){border-bottom:1px solid #455149}}

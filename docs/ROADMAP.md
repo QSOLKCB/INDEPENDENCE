@@ -26,4 +26,11 @@ v0.4 — The Gremlin Museum (implemented in this PR)
 - Exportable SHA-256 receipts, Python standard-library verifier and adversarial offline tests.
 - Same-origin static GitHub Pages museum, without external dependencies or browser API calls.
 
+v0.5 — The Gremlin Breeding Laboratory (implemented in this PR)
+- Fifteen fixed pure-function mutants over five targets; no dynamic source modification or execution.
+- Seeded ordering, full baseline oracles and a demonstrated divergence witness per mutant.
+- Smoke versus extended fixture suites with killed/survived outcomes and a scoped mutation score.
+- SHA-256 local receipt export and Python stdlib verifier with independently encoded expected outcomes.
+- No repository-wide mutation coverage, external vulnerability scanning, or real-world attack claims.
+
 Each phase requires deterministic tests and a documented limitation statement.

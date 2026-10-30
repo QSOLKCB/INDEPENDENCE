@@ -3,6 +3,7 @@ import {runTests} from './lab/tests.js';
 import {mountLedger} from './ledger/ledger.js';
 import {mountTribunal} from './tribunal/ui.js';
 import {mountMuseum} from './museum/ui.js';
+import {mountBreeding} from './breeding/ui.js';
 
 const $ = id => document.getElementById(id);
 const canvas = $('automaton');
@@ -95,3 +96,4 @@ generate();
 mountLedger();
 mountTribunal();
 mountMuseum();
+mountBreeding();

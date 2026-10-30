@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="./ledger/ledger.css">
   <link rel="stylesheet" href="./tribunal/tribunal.css">
   <link rel="stylesheet" href="./museum/museum.css">
+  <link rel="stylesheet" href="./breeding/breeding.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -24,6 +25,7 @@
       <a href="#ledger">Ledger</a>
       <a href="#tribunal">Tribunal</a>
       <a href="#museum">Museum</a>
+      <a href="#breeding">Breeding Lab</a>
       <a class="nav-github" href="https://github.com/QSOLKCB/INDEPENDENCE">Source ↗</a>
     </nav>
   </header>
@@ -178,9 +180,40 @@
       </div>
     </section>
 
+    <section id="breeding" class="section breeding-section">
+      <div class="wrap">
+        <span class="kicker">07 / GREMLIN BREEDING LABORATORY</span>
+        <h2>BREED THE BUGS.<br><span class="accent">TEST THE TESTS.</span></h2>
+        <p class="breeding-intro">Deterministic mutation testing: 15 harmless, predefined defects in five isolated first-party function families. Run a small or expanded test suite and inspect exactly which defects it catches. Every mutant has a known divergent witness. No deployed source is modified.</p>
+        <div class="breeding-warning"><strong>NO FREE PASSES:</strong> A surviving Gremlin means the chosen test subset missed a known defect. These are hand-curated pure-function fixtures, NOT automatic mutation of the deployed application, an attack tool, or repository-wide code coverage. A high score here does not prove the site is secure.</div>
+        <div class="breeding-controls">
+          <label for="breeding-seed">ORDER SEED (NONZERO UINT32)<input id="breeding-seed" type="number" min="1" max="4294967295" step="1" value="314159" required></label>
+          <label for="breeding-suite">TEST STRENGTH
+            <select id="breeding-suite">
+              <option value="smoke" selected>SMOKE SUITE — deliberately incomplete</option>
+              <option value="full">FULL FIXTURE SUITE — extended inputs</option>
+            </select>
+          </label>
+        </div>
+        <div class="breeding-actions">
+          <button id="breeding-run" type="button">BREED AND TEST GREMLINS ↗</button>
+          <button id="breeding-export" class="secondary" type="button" disabled>EXPORT SHA-256 RECEIPT ↓</button>
+        </div>
+        <p id="breeding-status" class="breeding-status" role="status" aria-live="polite">No mutation tests have run. Results are generated only when you start the experiment.</p>
+        <div id="breeding-summary" class="breeding-summary" aria-label="Mutation test outcomes"></div>
+        <div id="breeding-records" class="breeding-records" aria-label="Mutant details"></div>
+        <p id="breeding-digest" class="breeding-digest">No evidence receipt yet.</p>
+        <div class="tribunal-links">
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/docs/BREEDING.md">EXPERIMENTAL CONTRACT ↗</a>
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/blob/main/scripts/verify_breeding.py">PYTHON RECEIPT VERIFIER ↗</a>
+          <a href="https://github.com/QSOLKCB/INDEPENDENCE/tree/main/breeding">INSPECT MUTATION OPERATORS ↗</a>
+        </div>
+      </div>
+    </section>
+
     <section class="section impact-section">
       <div class="wrap impact-grid">
-        <div><span class="kicker">07 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
+        <div><span class="kicker">08 / A THOUGHT EXPERIMENT</span><h2>COMPLEXITY<br><span class="accent">COMPOUNDS.</span></h2><p>Explore a synthetic dependency tree. This is a <strong>mathematical illustration</strong>, not measured npm, Docker, Kubernetes, or vulnerability data. Real package graphs share nodes, often have cycles, and aren't perfect trees.</p></div>
         <div class="impact-panel">
           <label for="direct">Direct packages <output id="direct-value">3</output></label><input type="range" id="direct" min="1" max="10" value="3">
           <label for="fanout">New children per package <output id="fanout-value">3</output></label><input type="range" id="fanout" min="1" max="5" value="3">
@@ -191,7 +224,7 @@
     </section>
 
     <section class="closing wrap">
-      <div class="kicker">08 / THE SIGNATURE</div>
+      <div class="kicker">09 / THE SIGNATURE</div>
       <h2>WE DID NOT LEAVE<br>SOFTWARE ENGINEERING.<br><em>SOFTWARE ENGINEERING LEFT US.</em></h2>
       <div class="signature"><div><strong>QSOL-IMC</strong><span>Independent Software Sovereignty Initiative</span></div><a class="action primary" href="https://github.com/QSOLKCB/INDEPENDENCE">READ THE SOURCE ↗</a></div>
     </section>
