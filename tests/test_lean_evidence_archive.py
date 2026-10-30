@@ -1,5 +1,4 @@
 """Offline verification of recovered Lean evidence, not independent execution."""
-import copy
 import json
 from pathlib import Path
 import shutil
@@ -74,6 +73,65 @@ class LeanEvidenceArchiveTests(unittest.TestCase):
         with temp:
             (root / FOLDER / "lean-toolchain").write_text("leanprover/lean4:stable\n")
             with self.assertRaisesRegex(ArchiveError, "toolchain pin"):
+                verify(root)
+
+    def test_contradictory_lean_manifest_results_rejected(self):
+        cases = (
+            ("lean_kernel_reported", "FAILED_OR_UNRESOLVED"),
+            ("lean_exit_code_reported", 1),
+            ("theorems_declared", 0),
+            ("axiom_audits", 0),
+            ("unapproved_axioms_reported", 1),
+        )
+        for field, value in cases:
+            with self.subTest(field=field):
+                temp, root = self.fixture()
+                with temp:
+                    path = root / FOLDER / "manifest.json"
+                    manifest = json.loads(path.read_text(encoding="utf-8"))
+                    manifest["checks"][field] = value
+                    path.write_text(json.dumps(manifest), encoding="utf-8")
+                    with self.assertRaisesRegex(
+                        ArchiveError, "manifest Lean result mismatch: " + field
+                    ):
+                        verify(root)
+
+    def test_boolean_values_cannot_impersonate_integer_results(self):
+        # False == 0 and True == 1 in Python; checks must be type strict.
+        for field in ("lean_exit_code_reported", "unapproved_axioms_reported"):
+            with self.subTest(field=field):
+                temp, root = self.fixture()
+                with temp:
+                    path = root / FOLDER / "manifest.json"
+                    manifest = json.loads(path.read_text(encoding="utf-8"))
+                    manifest["checks"][field] = False
+                    path.write_text(json.dumps(manifest), encoding="utf-8")
+                    with self.assertRaisesRegex(ArchiveError, "manifest Lean result mismatch"):
+                        verify(root)
+
+    def test_missing_or_extra_lean_check_fields_rejected(self):
+        for mode in ("missing", "extra"):
+            with self.subTest(mode=mode):
+                temp, root = self.fixture()
+                with temp:
+                    path = root / FOLDER / "manifest.json"
+                    manifest = json.loads(path.read_text(encoding="utf-8"))
+                    if mode == "missing":
+                        del manifest["checks"]["axiom_audits"]
+                    else:
+                        manifest["checks"]["lean_proven_application_wide"] = True
+                    path.write_text(json.dumps(manifest), encoding="utf-8")
+                    with self.assertRaisesRegex(ArchiveError, "manifest checks schema mismatch"):
+                        verify(root)
+
+    def test_boolean_unittest_count_rejected(self):
+        temp, root = self.fixture()
+        with temp:
+            path = root / FOLDER / "manifest.json"
+            manifest = json.loads(path.read_text(encoding="utf-8"))
+            manifest["checks"]["python_unittest_reported"]["failed"] = False
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            with self.assertRaisesRegex(ArchiveError, "reported unittest metadata changed"):
                 verify(root)
 
     def test_modified_raw_lean_output_rejected(self):
