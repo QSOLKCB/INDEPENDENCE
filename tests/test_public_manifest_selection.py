@@ -85,6 +85,23 @@ class PublicManifestSelectionTests(unittest.TestCase):
         self.assertEqual(record["verified_public_assets"], 0)
         self.assertFalse(self.out.exists())
 
+    def test_malformed_primary_type_fails_closed_even_with_valid_archive(self):
+        self.primary.parent.mkdir(parents=True)
+        manifest = json.loads(self.valid)
+        manifest["files"] = list(manifest["files"])
+        self.primary.write_text(json.dumps(manifest))
+        self.archive()
+        failure = self.tmp / "bad-manifest-observation.json"
+        rc = selector.main([
+            "--preferred", str(self.primary),
+            "--legacy-tar", str(self.legacy),
+            "--output", str(self.out),
+            "--failure-output", str(failure),
+        ])
+        self.assertEqual(rc, 1)
+        self.assertFalse(self.out.exists())
+        self.assertEqual(json.loads(failure.read_text())["status"], "NOT_VERIFIED")
+
     def test_rejects_resealed_wrong_checksum(self):
         self.primary.parent.mkdir(parents=True)
         manifest = json.loads(self.valid)

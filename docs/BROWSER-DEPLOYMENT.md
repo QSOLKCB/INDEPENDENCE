@@ -107,9 +107,11 @@ so regenerating a manifest from a later Git checkout can change the bytes.
 
 If propagation takes longer than the in-run bounded retries, launch the
 **Verify Published INDEPENDENCE Bytes** workflow manually, entering the
-original **deployment workflow run ID**. It downloads that run's original
-`github-pages` artifact, extracts only `./deployment-manifest.json` from
-`artifact.tar`, and strictly retries official HTTPS byte matching.
+original **deployment workflow run ID**. It first downloads that run's independent
+`independence-pages-manifest` artifact; where unavailable for historical
+runs, it extracts `./deployment-manifest.json` from the original
+`github-pages` archive's `artifact.tar`. It then strictly retries
+official HTTPS byte matching.
 This also works with historical deployment run **41113714704**, whose
 upload artifact was verified to contain both index.html and the exact
 deployment-manifest.json. No republishing is needed to repeat the

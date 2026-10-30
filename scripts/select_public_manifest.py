@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import re
 import sys
 import tarfile
 
@@ -25,8 +26,17 @@ class SelectionError(ValueError):
 def checked(raw: bytes) -> bytes:
     manifest = parse_manifest(raw)
     try:
-        expected = envelope(manifest["files"], manifest["revision"])
-    except (KeyError, TypeError, ValueError) as exc:
+        files = manifest["files"]
+        revision = manifest["revision"]
+        if type(files) is not dict or type(revision) is not str:
+            raise SelectionError("invalid published manifest field types")
+        if any(type(name) is not str or
+               type(digest) is not str or
+               re.fullmatch(r"[0-9a-f]{64}", digest) is None
+               for name, digest in files.items()):
+            raise SelectionError("invalid published manifest SHA-256 hashes")
+        expected = envelope(files, revision)
+    except (KeyError, TypeError, AttributeError, ValueError) as exc:
         raise SelectionError("invalid published manifest fields") from exc
     if manifest != expected:
         raise SelectionError("published manifest failed exact schema/checksum validation")
