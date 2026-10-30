@@ -267,4 +267,11 @@ export PATH="$HOME/opt/edgewalk-spark-toolchain/bin:$PATH"
 python3 scripts/check_automata_formal.py --require-all --output automata4-evidence.json
 ```
 
-This checks formal proof outcomes, compiled Ada execution and all 4,096 real JavaScript transitions as **separate** evidence classes. No build tool or external dependency is added to the deployed website. See [AUTOMATA-FORMAL.md](docs/AUTOMATA-FORMAL.md).
+This checks formal proof outcomes, compiled Ada execution and all 4,096 real JavaScript transitions as **separate** evidence classes.
+
+Check saved evidence integrity (not execution attestation):
+
+```bash
+python3 scripts/verify_automata_evidence.py automata4-evidence.json
+```
+ No build tool or external dependency is added to the deployed website. See [AUTOMATA-FORMAL.md](docs/AUTOMATA-FORMAL.md).
