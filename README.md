@@ -48,6 +48,8 @@ We build software that can stand on its own.
 
 **This is not War, This is a Divorce.**
 
+**This Isn't War, This Is Pest Control.**
+
 ---
 
 ## Live proof lab
@@ -206,3 +208,11 @@ The user's successful local Lean 4.35.0 verification output (13/13 theorem audit
     python3 scripts/verify_lean_evidence_archive.py
 
 This offline integrity gate does not itself run Lean. Re-run the pinned compiler separately to reproduce the proof.
+
+## SPARK verification milestone — PR #13 (reported local evidence)
+
+The user reported an actual GNATprove FSF 16.1.0 execution against PR #13 HEAD `9900e57f2283c534815657dd6c079d0e966715f4`, with **all 21 kernel checks proved**, exit code 0 and a passing **186/186 Python regression suite**. The exact analyzed Ada source/project SHA-256 values and the copied proof-output digest are preserved in [formal/evidence/spark/pr13](formal/evidence/spark/pr13) for eventual Zenodo v1.1.0 formalization.
+
+This receipt was reconstructed from a user-pasted terminal report, **not the unattached original `spark-evidence.json` bytes or an independently authenticated run**. It describes GNATprove's scoped Ada-reference checks; the Ada CLI and actual Python/Ada differential execution remain separate obligations.
+
+    python3 scripts/verify_spark_evidence_archive.py

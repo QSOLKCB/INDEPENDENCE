@@ -23,8 +23,8 @@ function display(report){
   }
   for(const title of ["LEAN-TRANSITION","SPARK-TRANSITION","RECEIPT-AUTHENTICITY"]){
     const card=node("article","proof-case");
-    card.append(node("span","proof-id",title),node("strong","proof-state proof-pending","NOT PROVED"));
-    card.append(node("p","","Future obligation: no verified formal discharge or execution attestation is claimed."));
+    card.append(node("span","proof-id",title),node("strong","proof-state proof-pending","NOT CHECKED HERE"));
+    card.append(node("p","","Historical browser-check obligation: this dashboard does not execute or authenticate Lean or GNATprove. See the separately archived versioned evidence."));
     box.append(card);
   }
 }
