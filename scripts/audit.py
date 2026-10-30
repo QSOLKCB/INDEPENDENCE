@@ -21,6 +21,7 @@ WEB_FILES = (
     "museum/core.js", "museum/ui.js", "museum/museum.css",
     "breeding/core.js", "breeding/ui.js", "breeding/breeding.css",
     "workflow/core.js", "workflow/ui.js", "workflow/workflow.css",
+    "proof/core.js", "proof/ui.js", "proof/proof.css", "proof/contracts.json",
 )
 FORBIDDEN_MANIFESTS = frozenset({
     "package.json", "package-lock.json", "npm-shrinkwrap.json", "yarn.lock",
