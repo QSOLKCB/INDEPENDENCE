@@ -1,0 +1,115 @@
+{
+  "protocol": "PROOF-CONTRACT-REGISTRY/1",
+  "schema_version": 1,
+  "release": "v0.7.0",
+  "source_baseline": {
+    "tag": "v0.6.0",
+    "commit": "cb1d8686cc7e11997fd7608d2ce52e032d7c0056"
+  },
+  "formal_status": "NOT_PROVED",
+  "source": "source review and independently executable bounded observations",
+  "obligations": [
+    {
+      "id": "AUTOMATA-TRANSITION",
+      "target": {
+        "path": "lab/core.js",
+        "symbol": "evolve"
+      },
+      "priority": "P1",
+      "expected_evidence": "BOUNDED_EXHAUSTIVE",
+      "formal_status": "NOT_PROVED",
+      "claim": "For binary input rows of width 1..8 and rules 0..255, evolve equals the independent fixed-zero-boundary oracle.",
+      "domain": "130560 input rows/rule pairs; 918016 output cells"
+    },
+    {
+      "id": "DEPENDENCY-SUM",
+      "target": {
+        "path": "lab/core.js",
+        "symbol": "dependencyExposure"
+      },
+      "priority": "P1",
+      "expected_evidence": "FINITE_CASES",
+      "formal_status": "NOT_PROVED",
+      "claim": "For declared finite tuples the output equals the exact BigInt geometric sum.",
+      "domain": "direct 0..10 x fanout 0..5 x depth 0..6 plus max triple"
+    },
+    {
+      "id": "AUTOMATA-REPLAY",
+      "target": {
+        "path": "lab/core.js",
+        "symbol": "buildAutomaton"
+      },
+      "priority": "P1",
+      "expected_evidence": "FINITE_CASES",
+      "formal_status": "NOT_PROVED",
+      "claim": "Identical allowed inputs replay bit-identically and fingerprints match an independent BigInt FNV-1a oracle.",
+      "domain": "36 seeded/rule/dimension fixtures"
+    },
+    {
+      "id": "SHA-FORMAT",
+      "target": {
+        "path": "ledger/ledger.js",
+        "symbol": "validReceiptSha"
+      },
+      "priority": "P1",
+      "expected_evidence": "FINITE_CASES",
+      "formal_status": "NOT_PROVED",
+      "claim": "Git tree IDs accept exactly lowercase 40-hex and receipt IDs exactly lowercase 64-hex on selected boundaries.",
+      "domain": "12 positive, negative, and type cases"
+    },
+    {
+      "id": "FINGERPRINT-IMMUTABILITY",
+      "target": {
+        "path": "lab/core.js",
+        "symbol": "buildAutomaton"
+      },
+      "priority": "P1",
+      "expected_evidence": "COUNTEREXAMPLE",
+      "formal_status": "NOT_PROVED",
+      "claim": "A frozen wrapper does not make its Uint8Array cells immutable; modifying cells can stale the stored fingerprint.",
+      "domain": "fixed 8x8 seeded example; known open contract issue"
+    },
+    {
+      "id": "RECEIPT-AUTHENTICITY",
+      "target": {
+        "path": "scripts/verify_museum.py",
+        "symbol": "verify"
+      },
+      "priority": "P1",
+      "expected_evidence": "PENDING",
+      "formal_status": "NOT_PROVED",
+      "claim": "Receipt integrity and fixed provenance are not proof of who ran a browser or authored the evidence.",
+      "domain": "independent execution attestation not implemented"
+    },
+    {
+      "id": "LEAN-TRANSITION",
+      "target": {
+        "path": "lab/core.js",
+        "symbol": "evolve"
+      },
+      "priority": "P2",
+      "expected_evidence": "PENDING",
+      "formal_status": "NOT_PROVED",
+      "claim": "Lean specification and checked theorem for elementary automaton transition semantics.",
+      "domain": "Lean model and toolchain not committed or executed in v0.7.0"
+    },
+    {
+      "id": "SPARK-TRANSITION",
+      "target": {
+        "path": "lab/core.js",
+        "symbol": "evolve"
+      },
+      "priority": "P2",
+      "expected_evidence": "PENDING",
+      "formal_status": "NOT_PROVED",
+      "claim": "SPARK Ada reference implementation with contracts and discharged GNATprove obligations.",
+      "domain": "SPARK model and toolchain not committed or executed in v0.7.0"
+    }
+  ],
+  "limitations": [
+    "Not a proof of production JavaScript semantics, browser security, or complete system behaviour.",
+    "Finite and bounded cases do not generalise automatically to untested inputs.",
+    "SHA-256 evidence integrity does not establish author identity or authentic execution.",
+    "Future Lean and SPARK work requires separate executable toolchain evidence and cross-language conformance."
+  ]
+}
