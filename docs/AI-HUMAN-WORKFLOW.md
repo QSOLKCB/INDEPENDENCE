@@ -140,7 +140,7 @@ access control, claims, and external deployments. AI-generated code and
 review comments can be wrong; two AI systems agreeing is not independent
 evidence of truth.
 
-This project does **not** measure AI coding accuracy, quantify a reduction in
+This project does not measure AI coding accuracy, quantify a reduction in
 drift, endorse a specific model as infallible, or establish that low
 dependency count guarantees security.
 
