@@ -32,6 +32,65 @@ SPEC_SHA = "8b20b315d0b4c6d967a198fc909c65ce1d22a37261e8f64efb63734dcc6d0522"
 LEAN_SRC_SHA = "74cb8349ba99feae805a31b74931cbb8da0d98e2020bb738da95d42198f16b98"
 ROCQ_SRC_SHA = "6f814063141fbed564db239c3e5abaf4bdd833e2819889d7a6be005ee937ada1"
 BROWSER_SHA = "76514017982d86c95003bd4f86ccdcf4404502ede4609ba8f7767b89ee6c396a"
+# Claim-bearing fields are a frozen historical record, not user-editable policy.
+# Unlike the original archives, the JSON manifest is human-readable and could
+# otherwise be rewritten to promote NOT_VERIFIED into unearned proof/publication.
+# Changing an established value requires a separately reviewed schema/version.
+FROZEN_CLAIMS = {
+    "source_baseline": {
+        "repository": "QSOLKCB/INDEPENDENCE",
+        "main_commit_at_preparation": "065cc1f1015d3e2faa4c1257fa7efa32f2ca2395",
+        "v1_0_0_tag_commit": "764aec4bda8381de2aed620037d5ff992dba25ea",
+        "rocq_proof_run_branch_commit": "00c093ce56071813b815805c86559b8b4b303cab",
+        "v1_0_2_proof_runner_merge_commit": "065cc1f1015d3e2faa4c1257fa7efa32f2ca2395",
+    },
+    "zenodo": {
+        "doi": "10.5281/zenodo.23816739",
+        "status": "user-reported_minted_not_independently_confirmed_as_published",
+        "do_not_claim_report_published": True,
+    },
+    "historical_browser_evidence": {
+        "in_repo_path": "formal/evidence/browser/v1.0.1/base64/",
+        "original_actions_run_id": 41112613136,
+        "zip_sha256": BROWSER_SHA,
+        "reported_checks": 92,
+        "execution_attestation": "NOT_INDEPENDENTLY_ESTABLISHED",
+    },
+    "scope_policy": {
+        "lean": "MODEL_KERNEL_CHECKED_REPORTED",
+        "spark": "GNATPROVE_CONTRACTS_DISCHARGED_REPORTED",
+        "ada": "FINITE_EXECUTION_REPORTED",
+        "javascript": "FINITE_EXECUTION_REPORTED",
+        "rocq": "MODEL_KERNEL_CHECKED_REPORTED",
+        "independent_execution_attestation": False,
+        "js_formal_refinement": "NOT_ESTABLISHED",
+        "public_github_pages_byte_integrity": "NOT_ESTABLISHED_BY_THESE_RECEIPTS",
+        "full_wide_automaton_correctness": "NOT_ESTABLISHED",
+    },
+}
+
+
+def exact_claims(actual, expected):
+    """Compare all nested claim fields, types, and key sets exactly."""
+    if type(actual) is not type(expected):
+        return False
+    if type(expected) is dict:
+        return (actual.keys() == expected.keys()
+                and all(exact_claims(actual[key], expected[key])
+                        for key in expected))
+    if type(expected) is list:
+        return (len(actual) == len(expected)
+                and all(exact_claims(a, b) for a, b in zip(actual, expected)))
+    return actual == expected
+
+
+def verify_manifest_claims(manifest: dict):
+    """No manifest-only edit may promote evidence, publication or provenance."""
+    for section, expected in FROZEN_CLAIMS.items():
+        require(exact_claims(manifest.get(section), expected),
+                "claim-bearing manifest " + section + " differs from frozen historical values")
+
+
 MAX_BYTES = 100_000
 HEX = re.compile(r"^[0-9a-f]{64}$")
 LEAN = ("pattern_bounded", "rule_zero_cell", "rule_all_cell",
@@ -228,19 +287,7 @@ def verify(root=ROOT):
         "manifest schema differs")
     require(manifest["protocol"] == PROTOCOL and manifest["report_version"] == "1.1.0",
             "wrong report/protocol")
-    require(manifest["zenodo"]["doi"] == "10.5281/zenodo.23816739"
-            and manifest["zenodo"]["do_not_claim_report_published"] is True,
-            "Zenodo publication incorrectly promoted")
-    policy = manifest["scope_policy"]
-    require(policy.get("independent_execution_attestation") is False
-            and policy.get("js_formal_refinement") == "NOT_ESTABLISHED",
-            "unsupported independent attestation or refinement claim")
-    browser = manifest["historical_browser_evidence"]
-    require(browser["zip_sha256"] == BROWSER_SHA
-            and browser["original_actions_run_id"] == 41112613136
-            and browser["reported_checks"] == 92
-            and browser["execution_attestation"] == "NOT_INDEPENDENTLY_ESTABLISHED",
-            "historical browser PR-run provenance changed")
+    verify_manifest_claims(manifest)
     require(set(manifest["evidence_archives"]) == set(PINNED), "archive inventory differs")
     originals = {}
     total = 0

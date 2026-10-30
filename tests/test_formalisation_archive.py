@@ -73,6 +73,93 @@ class FormalisationArchiveTests(unittest.TestCase):
         with self.assertRaisesRegex(research.EvidenceError, "Zenodo"):
             research.verify(self.root)
 
+    def test_codex_claim_promotion_reproductions_fail_closed(self):
+        # Previously all three changes passed verify() while original archive
+        # bytes remained untouched. Verify the exact reported regressions.
+        cases = (
+            ("zenodo", "status", "PUBLICLY_PUBLISHED"),
+            ("scope_policy", "rocq", "INDEPENDENTLY_ATTESTED_EXECUTION"),
+            ("scope_policy", "full_wide_automaton_correctness", "ESTABLISHED"),
+        )
+        manifest_path = self.root / research.DIR / "evidence-manifest.json"
+        original = json.loads(manifest_path.read_text())
+        for section, key, forged in cases:
+            with self.subTest(section=section, field=key):
+                modified = json.loads(json.dumps(original))
+                modified[section][key] = forged
+                manifest_path.write_text(json.dumps(modified))
+                with self.assertRaisesRegex(research.EvidenceError,
+                                            "claim-bearing manifest " + section):
+                    research.verify(self.root)
+        manifest_path.write_text(json.dumps(original))
+        self.assertEqual(research.verify(self.root)["archives"], 2)
+
+    def test_every_frozen_provenance_and_claim_section_is_validated(self):
+        path = self.root / research.DIR / "evidence-manifest.json"
+        original = json.loads(path.read_text())
+        cases = (
+            ("source_baseline", "repository", "someone-else/INDEPENDENCE"),
+            ("source_baseline", "v1_0_0_tag_commit", "0" * 40),
+            ("source_baseline", "main_commit_at_preparation", "0" * 40),
+            ("source_baseline", "rocq_proof_run_branch_commit", "0" * 40),
+            ("source_baseline", "v1_0_2_proof_runner_merge_commit", "0" * 40),
+            ("zenodo", "doi", "10.5281/zenodo.12345678"),
+            ("zenodo", "do_not_claim_report_published", False),
+            ("historical_browser_evidence", "in_repo_path", "other/archive/"),
+            ("historical_browser_evidence", "original_actions_run_id", 41112613137),
+            ("historical_browser_evidence", "zip_sha256", "0" * 64),
+            ("historical_browser_evidence", "reported_checks", 93),
+            ("historical_browser_evidence", "execution_attestation",
+             "INDEPENDENTLY_ATTESTED"),
+            ("scope_policy", "lean", "PRODUCTION_JS_FORMALLY_PROVED"),
+            ("scope_policy", "spark", "ALL_ADA_PROVED"),
+            ("scope_policy", "ada", "UNIVERSAL_EXECUTION_PROVED"),
+            ("scope_policy", "javascript", "ARBITRARY_WIDTH_PROVED"),
+            ("scope_policy", "independent_execution_attestation", True),
+            ("scope_policy", "js_formal_refinement", "ESTABLISHED"),
+            ("scope_policy", "public_github_pages_byte_integrity", "VERIFIED"),
+        )
+        for section, key, bad in cases:
+            with self.subTest(section=section, key=key):
+                modified = json.loads(json.dumps(original))
+                modified[section][key] = bad
+                path.write_text(json.dumps(modified))
+                with self.assertRaisesRegex(research.EvidenceError,
+                                            "claim-bearing manifest " + section):
+                    research.verify(self.root)
+        path.write_text(json.dumps(original))
+
+    def test_claim_schema_rejects_added_missing_and_type_confused_fields(self):
+        path = self.root / research.DIR / "evidence-manifest.json"
+        original = json.loads(path.read_text())
+        cases = (
+            ("zenodo", lambda d: d["zenodo"].update(publication="YES")),
+            ("scope_policy", lambda d: d["scope_policy"].pop("rocq")),
+            ("source_baseline", lambda d: d["source_baseline"].update(
+                extra_release_claim="PUBLISHED")),
+            ("historical_browser_evidence", lambda d: d[
+                "historical_browser_evidence"].update(reported_checks=92.0)),
+            ("zenodo", lambda d: d["zenodo"].update(
+                do_not_claim_report_published=1)),
+            ("scope_policy", lambda d: d.update(scope_policy=["NOT_VERIFIED"])),
+        )
+        for section, mutation in cases:
+            with self.subTest(section=section, mutation=str(mutation)):
+                modified = json.loads(json.dumps(original))
+                mutation(modified)
+                # JSON parser separately rejects float; direct equality also
+                # rejects Boolean/integer type confusion for policy claims.
+                if section == "historical_browser_evidence":
+                    with self.assertRaisesRegex(research.EvidenceError,
+                                                "claim-bearing manifest"):
+                        research.verify_manifest_claims(modified)
+                else:
+                    path.write_text(json.dumps(modified))
+                    with self.assertRaisesRegex(research.EvidenceError,
+                                                "claim-bearing manifest"):
+                        research.verify(self.root)
+        path.write_text(json.dumps(original))
+
     def test_duplicate_nonfinite_and_float_json_rejected(self):
         for value in (b'{"a":1,"a":2}', b'{"a":NaN}', b'{"a":1.5}', b'{"a":Infinity}'):
             with self.subTest(value=value), self.assertRaises(research.EvidenceError):
