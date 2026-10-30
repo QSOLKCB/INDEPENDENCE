@@ -180,3 +180,19 @@ To compare an actually built Ada CLI, supply the executable:
     python3 scripts/run_kernel_conformance.py --ada-cli formal/spark/bin/reference_cli --ada-cases 128 --receipt ada-comparison.json
 
 The receipt distinctly reports Lean mathematical proofs, Ada contract verification, tested Python conformance, Ada CLI comparisons and unresolved obligations. In the source author's execution environment, GNAT/GNATprove were unavailable, so Ada contracts and differential comparison remain NOT_RUN. Matching a supplied executable is explicitly UNATTESTED; neither Python application-wide correctness nor production JavaScript is established. Details: [docs/PROOF-CONFORMANCE.md](docs/PROOF-CONFORMANCE.md).
+
+## v0.7.3 — Lean 4 Mathematical Foundation (review candidate)
+
+The first development-only Lean 4 proof source is in [formal/lean/FiniteFoundation.lean](formal/lean/FiniteFoundation.lean), pinned to **Lean 4.35.0** in [lean-toolchain](lean-toolchain). It defines 13 proposed theorem statements and accompanying proof terms for an explicit CRT (2,3) bijection, Boolean GF(2) identities, cyclic modulo-3 phase identities, and strict degree-lex order properties on natural exponent pairs.
+
+**Verification is not yet complete:** the authoring environment does not have Lean installed. All 13 theorem declarations are **NOT RUN / NOT KERNEL CHECKED** pending real Lean execution. Static Python source checks cannot change that status. No Lean proof implies correctness of production Ada, Python or JavaScript.
+
+To run actual Lean checks and a fail-closed axiom audit with a trusted Lean installation:
+
+    python3 scripts/check_lean_foundation.py --require-checked --output lean-evidence.json
+
+For source-level validation without Lean:
+
+    python3 scripts/check_lean_foundation.py
+
+General CRT, full monomial well-foundedness/totality, graph adjacency and model-to-code conformance remain open. See [docs/LEAN-FOUNDATION.md](docs/LEAN-FOUNDATION.md) for the exact scope, assumptions and reproducibility instructions.

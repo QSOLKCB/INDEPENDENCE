@@ -71,3 +71,8 @@ The browser test button runs a separate native-JavaScript suite.
 52. The optional Ada CLI must be genuinely executed and checked on recorded inputs. When no executable/toolchain exists, the only permitted result is NOT_RUN; a supplied matching executable is marked UNATTESTED without binary provenance.
 53. Lean mathematical theorem status, GNATprove contract status, Python conformance and Ada runtime agreement are independent receipt fields. Unproved or unexecuted obligations remain unresolved even if other fields pass.
 54. Source/spec hashes bind local bytes but neither a checksum nor a Python verifier authenticates real execution. Never report a successful application-wide Python or JavaScript proof from reference fixtures.
+
+55. LEAN-FOUNDATION/1 is a development-only mathematical reference. Its proof file is pinned to exactly Lean 4.35.0 and imports only the Lean distribution; no new browser or Python runtime dependencies.
+56. Every promoted Lean theorem must be checked by the actual Lean kernel with trust level zero and undergo a transitive axiom audit. Reject missing toolchains, unapproved proof holes, custom axioms, native evaluation or ignored errors.
+57. Proving the Fin 6 ↔ Fin 2 × Fin 3 CRT bijection does not prove general CRT; proving degree-lex irreflexivity/transitivity/translation does not yet prove all monomial order requirements.
+58. Model-to-SPARK/Ada, model-to-Python and model-to-browser conformance remain separate obligations; an unauthenticated local proof log must not become independent evidence of execution provenance.
