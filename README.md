@@ -48,7 +48,7 @@ We build software that can stand on its own.
 
 **This is not War, This is a Divorce.**
 
-**This Isn't War, This Is Pest Control.**
+**This Isn't War, This Is Pest Control**
 
 ---
 
