@@ -172,11 +172,14 @@ def collection(client, as_of: str, owner: str = OWNER) -> dict:
         catalog = {}
         category_state = "unavailable:" + type(error).__name__
     rows = []
+    api_restricted = False
     for name in sorted(discovered, key=lambda value: (value.casefold(), value)):
         repo = discovered[name]
         branch = repo.get("default_branch")
         if not isinstance(branch, str) or not branch:
             scan = {"state": "unavailable", "reason": "no_default_branch"}
+        elif api_restricted:
+            scan = {"state": "unavailable", "reason": "api_restriction_stopped_collection"}
         else:
             try:
                 path = "/repos/" + quote(owner, safe="") + "/" + quote(name, safe="") + \
@@ -184,6 +187,9 @@ def collection(client, as_of: str, owner: str = OWNER) -> dict:
                 scan = summarize_tree(client.get(path))
             except HTTPError as error:
                 scan = {"state": "unavailable", "reason": "http_" + str(error.code)}
+                if error.code in (403, 429):
+                    # Stop, rather than hammer a limited or forbidden API.
+                    api_restricted = True
             except (URLError, ValueError, KeyError, TimeoutError, OSError) as error:
                 scan = {"state": "unavailable", "reason": type(error).__name__}
         rows.append({
@@ -208,6 +214,7 @@ def collection(client, as_of: str, owner: str = OWNER) -> dict:
         },
         "references": {
             "catalogue_status": category_state,
+            "collection_stopped_due_to_api_restriction": api_restricted,
             "private_context_policy": "QSOL-CONTEXT is private: never accessed, imported or published.",
         },
         "coverage": {
