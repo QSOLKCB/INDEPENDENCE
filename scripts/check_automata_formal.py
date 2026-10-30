@@ -126,9 +126,12 @@ def inspect(root: Path = ROOT):
     for known in spec["expected_vectors"]:
         if list(reference_step(known["rule"], tuple(known["bits"]))) != known["output"]:
             raise FormalLabError("known vector disagrees with reference")
+    js_hashes = {name: source_hash(root / name)
+                 for name in ("lab/core.js", "scripts/check_automata_js.mjs")}
     return {
         "protocol": PROTOCOL,
         "spec_sha256": sha(raw),
+        "javascript_files_sha256": js_hashes,
         "lean_source_sha256": source_hash(root / LEAN),
         "ada_files_sha256": dict(sorted(files.items())),
         "theorem_inventory": list(THEOREMS),
@@ -252,7 +255,7 @@ def check_ada(root: Path, rows: list):
 def check_js(root: Path, expected_sha: str):
     if shutil.which("node") is None:
         return {"status": "NOT_RUN", "reason": "Node developer tool unavailable"}
-    cmd = ["node", "--experimental-default-type=module", "scripts/check_automata_js.mjs"]
+    cmd = ["node", "scripts/check_automata_js.mjs"]
     try:
         proc = invoke(cmd, root, 120)
         if proc.returncode:

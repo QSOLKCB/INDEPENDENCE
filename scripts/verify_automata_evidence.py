@@ -18,7 +18,7 @@ SPARK_CMD = ["gnatprove", "-P", "automata.gpr", "-u",
              "automata_reference.adb", "--mode=all", "--checks-as-errors=on",
              "--warnings=error", "--report=all", "--level=2"]
 ADA_CMD = ["gprbuild", "-P", "automata_cli.gpr", "-p", "-f"]
-JS_CMD = ["node", "--experimental-default-type=module", "scripts/check_automata_js.mjs"]
+JS_CMD = ["node", "scripts/check_automata_js.mjs"]
 
 
 class ReceiptError(ValueError):
@@ -94,12 +94,18 @@ def verify(report: dict, root: Path = ROOT):
             validate_log(x["raw_output"], x["raw_output_sha256"])
             for theorem, axioms in x["axiom_audit"].items():
                 key = "IndependenceAutomata." + theorem
-                if axioms:
-                    snippet = "'" + key + "' depends on axioms:"
-                    if snippet not in x["raw_output"]:
-                        raise ReceiptError("Lean axiom report missing")
-                elif "'" + key + "' does not depend on any axioms" not in x["raw_output"]:
-                    raise ReceiptError("Lean empty axiom report missing")
+                no_axioms = re.findall(r"'" + re.escape(key) +
+                                      r"' does not depend on any axioms", x["raw_output"])
+                logged = re.findall(r"'" + re.escape(key) +
+                                    r"' depends on axioms:\s*\[([^\]\n]*)\]", x["raw_output"])
+                if len(no_axioms) + len(logged) != 1:
+                    raise ReceiptError("Lean axiom audit missing or duplicated: " + theorem)
+                observed = ([] if no_axioms else
+                            [item.strip() for item in logged[0].split(",") if item.strip()])
+                if observed != axioms or len(observed) != len(set(observed)):
+                    raise ReceiptError("Lean logged and recorded axioms differ: " + theorem)
+                if any(item not in ALLOWED_AXIOMS for item in observed):
+                    raise ReceiptError("Lean log has unapproved axioms: " + theorem)
         elif field == "spark":
             x = report[field]
             if status != "GNATPROVE_REPORTED_DISCHARGED" or set(x) != {

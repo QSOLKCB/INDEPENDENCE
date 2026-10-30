@@ -68,6 +68,43 @@ class AutomataEvidenceTests(unittest.TestCase):
             with self.subTest(raw=raw), self.assertRaises(evidence.ReceiptError):
                 evidence.strict_json(raw)
 
+    def test_lean_receipt_rejects_rehashed_forged_axiom_list(self):
+        altered = copy.deepcopy(self.report)
+        log = "\n".join(
+            "'IndependenceAutomata." + name + "' depends on axioms: [sorryAx]"
+            for name in lab.THEOREMS)
+        altered["lean"] = {
+            "status": "KERNEL_CHECKED", "tool_version": "Lean (version 4.35.0, x86_64)",
+            "command": evidence.LEAN_CMD, "exit_code": 0,
+            "axiom_audit": {name: ["propext"] for name in lab.THEOREMS},
+            "raw_output": log,
+            "raw_output_sha256": hashlib.sha256(log.encode()).hexdigest()
+        }
+        with self.assertRaisesRegex(evidence.ReceiptError, "axioms differ"):
+            evidence.verify(altered)
+
+    def test_lean_receipt_rejects_duplicate_axiom_audits(self):
+        altered = copy.deepcopy(self.report)
+        log = "\n".join(
+            "'IndependenceAutomata." + name + "' does not depend on any axioms"
+            for name in lab.THEOREMS)
+        log += "\n'IndependenceAutomata.rule_zero_cell' does not depend on any axioms"
+        altered["lean"] = {
+            "status": "KERNEL_CHECKED", "tool_version": "Lean (version 4.35.0, x86_64)",
+            "command": evidence.LEAN_CMD, "exit_code": 0,
+            "axiom_audit": {name: [] for name in lab.THEOREMS},
+            "raw_output": log,
+            "raw_output_sha256": hashlib.sha256(log.encode()).hexdigest()
+        }
+        with self.assertRaisesRegex(evidence.ReceiptError, "duplicated"):
+            evidence.verify(altered)
+
+    def test_stale_js_source_hash_rejected(self):
+        altered = copy.deepcopy(self.report)
+        altered["javascript_files_sha256"]["lab/core.js"] = "0" * 64
+        with self.assertRaisesRegex(evidence.ReceiptError, "javascript_files_sha256"):
+            evidence.verify(altered)
+
     def test_invalid_gnatprove_success_zero_checks_rejected(self):
         altered = copy.deepcopy(self.report)
         output = "Success: all checks proved (0 checks).\n"

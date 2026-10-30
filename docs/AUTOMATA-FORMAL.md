@@ -50,7 +50,7 @@ python3 scripts/check_automata_formal.py --require-all --output automata4-eviden
 
 Lean is invoked with `lean --trust=0 formal/lean/AutomataReference.lean`. GNATprove uses its strict `--mode=all --checks-as-errors=on --warnings=error --report=all --level=2` options. The Ada compiler runs on **fresh temporary copies** of this version's sources, not stale objects. The CLI is executed for all 4,096 correct vectors plus invalid lexical/range/arity inputs, with **raw byte-exact output checking** and no stderr.
 
-The optional Node 22 tool invokes the actual first-party source with `--experimental-default-type=module`; no `package.json` or npm install is introduced.
+The optional Node developer tool invokes the `.mjs` file directly without an experimental flag; no `package.json` or npm install is introduced. Both `lab/core.js` and `scripts/check_automata_js.mjs` are SHA-256 fingerprinted in the evidence and verified against the checkout.
 
 For each individual optional stage, a missing tool causes `NOT_RUN` and a nonzero exit status when explicitly requested. `--require-all` requires all four new stages to succeed before returning zero. Save the original JSON receipts and checkout Git SHA for a later Zenodo package.
 

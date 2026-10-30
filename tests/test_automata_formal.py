@@ -53,12 +53,40 @@ class AutomataFormalTests(unittest.TestCase):
             target = root / path
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / path, target)
+        for name in ("lab/core.js", "scripts/check_automata_js.mjs"):
+            target = root / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / name, target)
         for name in lab.ADA_FILES:
             path = lab.SPARK / name
             dest = root / path
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / path, dest)
         return directory, root
+
+    def test_js_source_hashes_bind_production_and_comparator(self):
+        report = lab.inspect()
+        self.assertEqual(set(report["javascript_files_sha256"]),
+                         {"lab/core.js", "scripts/check_automata_js.mjs"})
+        tmp, root = self.fixture()
+        with tmp:
+            path = root / "lab/core.js"
+            path.write_text(path.read_text() + "\n// drift\n")
+            self.assertNotEqual(report["javascript_files_sha256"],
+                                lab.inspect(root)["javascript_files_sha256"])
+
+    def test_node_command_is_portable_mjs_invocation(self):
+        good = subprocess.CompletedProcess([], 0, json.dumps({
+            "protocol": "AUTOMATA4-JS-EVIDENCE/1",
+            "status": "LOCAL_JS_FINITE_EXECUTED",
+            "cases": 4096, "vectors_sha256": lab.EXPECTED_VECTORS_SHA256,
+            "limitation": "Developer Node runtime executed production evolve; no Lean/Ada proof or browser attestation.",
+        }), "")
+        with patch.object(lab.shutil, "which", return_value="/usr/bin/node"), \
+             patch.object(lab, "invoke", return_value=good) as invoked:
+            self.assertEqual(lab.check_js(ROOT, lab.EXPECTED_VECTORS_SHA256)["status"],
+                             "LOCAL_JS_FINITE_EXECUTED")
+        self.assertEqual(invoked.call_args.args[0], ["node", "scripts/check_automata_js.mjs"])
 
     def test_spec_change_fails_closed(self):
         tmp, root = self.fixture()
