@@ -41,6 +41,32 @@ EXPECTED = (
 )
 
 
+# Fixed protocol metadata, independently encoded from the browser's exhibit data.
+# The origin classification is part of the fixture: not user-selected evidence.
+EXPECTED_PROVENANCE = {
+    "side-effect-import": (
+        "Documented INDEPENDENCE v0.1 review",
+        "https://github.com/QSOLKCB/INDEPENDENCE/pull/1",
+    ),
+    "checkout-ancestry": (
+        "Documented INDEPENDENCE v0.1 review",
+        "https://github.com/QSOLKCB/INDEPENDENCE/pull/1",
+    ),
+    "sha-identity": (
+        "Documented INDEPENDENCE v0.2 review",
+        "https://github.com/QSOLKCB/INDEPENDENCE/pull/2",
+    ),
+    "json-overflow": (
+        "Illustrative local case, not a reported INDEPENDENCE vulnerability",
+        "https://github.com/QSOLKCB/INDEPENDENCE",
+    ),
+    "html-encoding": (
+        "Illustrative local case, not a reported INDEPENDENCE vulnerability",
+        "https://github.com/QSOLKCB/INDEPENDENCE",
+    ),
+}
+
+
 class InvalidReceipt(ValueError):
     pass
 
@@ -109,10 +135,9 @@ def verify(envelope):
         src = provenance[index]
         if not isinstance(src, dict) or set(src) != {"id", "provenance", "source"} or src["id"] != id_:
             raise InvalidReceipt("invalid provenance for " + id_)
-        if not isinstance(src["provenance"], str) or not isinstance(src["source"], str) or not src["source"].startswith(
-            "https://github.com/QSOLKCB/INDEPENDENCE"
-        ):
-            raise InvalidReceipt("unrecognised exhibit origin")
+        expected_classification, expected_url = EXPECTED_PROVENANCE[id_]
+        if (src["provenance"], src["source"]) != (expected_classification, expected_url):
+            raise InvalidReceipt("incorrect fixed provenance or source for " + id_)
     limitations = data.get("limitations")
     if not isinstance(limitations, list) or len(limitations) != 3 or any(not isinstance(x, str) or not x for x in limitations):
         raise InvalidReceipt("missing explicit limitations")

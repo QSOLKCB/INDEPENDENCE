@@ -77,6 +77,33 @@ class MuseumTests(unittest.TestCase):
         with self.assertRaisesRegex(InvalidReceipt, "assertions failed"):
             verify(seal(data))
 
+    def test_resealed_illustrative_relabelled_as_historical_rejected(self):
+        document = json.loads(fixture()["payload_text"])
+        document["provenance"][3]["provenance"] = "Confirmed historical INDEPENDENCE vulnerability"
+        with self.assertRaisesRegex(InvalidReceipt, "incorrect fixed provenance"):
+            verify(seal(document))
+
+    def test_resealed_repository_prefix_collision_rejected(self):
+        document = json.loads(fixture()["payload_text"])
+        document["provenance"][3]["source"] = (
+            "https://github.com/QSOLKCB/INDEPENDENCE-unrelated/pull/999"
+        )
+        with self.assertRaisesRegex(InvalidReceipt, "incorrect fixed provenance"):
+            verify(seal(document))
+
+    def test_resealed_swapped_legitimate_review_url_rejected(self):
+        document = json.loads(fixture()["payload_text"])
+        # This URL is real, but belongs to a different historical exhibit.
+        document["provenance"][2]["source"] = "https://github.com/QSOLKCB/INDEPENDENCE/pull/1"
+        with self.assertRaisesRegex(InvalidReceipt, "incorrect fixed provenance"):
+            verify(seal(document))
+
+    def test_resealed_illustrative_source_claiming_review_rejected(self):
+        document = json.loads(fixture()["payload_text"])
+        document["provenance"][4]["source"] = "https://github.com/QSOLKCB/INDEPENDENCE/pull/2"
+        with self.assertRaisesRegex(InvalidReceipt, "incorrect fixed provenance"):
+            verify(seal(document))
+
     def test_missing_provenance_rejected(self):
         data = json.loads(fixture()["payload_text"])
         data["provenance"].pop()
