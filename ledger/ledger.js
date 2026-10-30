@@ -10,8 +10,9 @@ const safeName = name => typeof name === 'string' && /^[A-Za-z0-9_.-]+$/.test(na
 const validSha = sha => typeof sha === 'string' && /^[a-f0-9]{40}$/.test(sha);
 const status = row => {
   const scan = row.scan || {};
-  if (scan.state !== 'scanned') return 'unknown';
-  return Number(scan.manifest_count) > 0 ? 'signals' : 'no-manifest';
+  if (scan.state !== 'scanned' || !Number.isSafeInteger(scan.manifest_count) ||
+      scan.manifest_count < 0) return 'unknown';
+  return scan.manifest_count > 0 ? 'signals' : 'no-manifest';
 };
 
 export function mountLedger() {
@@ -56,7 +57,7 @@ export function mountLedger() {
         (row.branch || 'No default branch')));
       const indicators = make('div', 'ledger-record-indicators');
       const scan = row.scan || {};
-      if (scan.state === 'scanned') {
+      if (state !== 'unknown') {
         indicators.append(make('span', '', 'Manifest markers: ' + scan.manifest_count));
         indicators.append(make('span', '', 'Container markers: ' + scan.container_marker_count));
         indicators.append(make('span', '', 'Workflow files: ' + scan.workflow_count));
@@ -96,7 +97,20 @@ export function mountLedger() {
       if (report.schema_version !== 1 || !Array.isArray(report.repositories) ||
           !report.coverage || report.coverage.total !== report.repositories.length)
         throw new Error('invalid evidence schema');
-      rows = report.repositories.filter(row => safeName(row.name));
+      if (!report.repositories.every(row => row && safeName(row.name)))
+        throw new Error('invalid repository identifier');
+      rows = report.repositories;
+      const inspected = rows.filter(row => status(row) !== 'unknown');
+      const derived = {
+        total: rows.length,
+        scanned: inspected.length,
+        unknown: rows.length - inspected.length,
+        with_manifest_signals: inspected.filter(row => status(row) === 'signals').length,
+        without_manifest_signals: inspected.filter(row => status(row) === 'no-manifest').length,
+        catalogued: rows.filter(row => row.category != null).length,
+      };
+      if (!Object.entries(derived).every(([key, value]) => report.coverage[key] === value))
+        throw new Error('evidence coverage mismatch');
       summary.replaceChildren();
       const stats = [
         ['PUBLIC SNAPSHOT', report.coverage.total],
