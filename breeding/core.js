@@ -19,8 +19,8 @@ const isVendored = ({root,file}) => {
 const importPattern = /\bimport\s*(?:\(\s*|[^;\n]*?\bfrom\s*)?['"]https?:\/\//i;
 const remoteImport = value => importPattern.test(value);
 
-// Case inputs are deliberately fixed local values, never passed to eval(), innerHTML,
-// dynamic import(), the network, a shell, or any external target.
+// Case inputs are deliberately fixed local values, never evaluated, interpreted as HTML markup,
+// dynamically imported, sent over the network, or used with a shell or external target.
 const targets = [
   {
     id:"receipt", name:"SHA Identity",
