@@ -33,3 +33,11 @@ sha256sum formal/lean/FiniteFoundation.lean
 The exact archived source revision should be compared to this report. A rerun may produce differing non-semantic log/version metadata. To independently verify a future publication package, retain the raw log, `lean-toolchain`, toolchain installation provenance, and exact tagged source.
 
 See `manifest.json` for versioned machine-readable metadata. The subsequent archive-preservation PR/commit does **not** replace the historical execution source commit.
+
+## Self-contained historical material and archive gate
+
+This directory additionally contains the exact `FiniteFoundation.lean` source snapshot and `lean-toolchain` snapshot from historical commit `68351489e8bbbb879efdcac19d02869124fcf724`. They are not alternate active sources for the browser or future proofs. The source digest is checked against the recovered evidence and the archive manifest.
+
+    python3 scripts/verify_lean_evidence_archive.py
+
+This tool validates the SHA-256 checksums, source-commit binding, pinned toolchain, expected theorem/axiom log and limited provenance declarations. Its result is **archive integrity**, not an independent rerun of the user's kernel checker or confirmation of the original unattached JSON's byte identity.

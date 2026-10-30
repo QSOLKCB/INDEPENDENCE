@@ -50,3 +50,7 @@ A new Python reference and separately coded oracle now enable practical exhausti
 ## v0.7.3 — Lean 4 Mathematical Foundation (pending actual compiler run)
 
 A pinned, no-Mathlib Lean proof source and fail-closed stdlib kernel runner cover specific finite CRT (2,3), GF(2), cyclic phase and degree-lex properties. This release prepares but does not automatically establish kernel-checked theorems. General CRT, monomial well-foundedness/totality and correspondence with existing Ada/Python/JS implementations remain outstanding. Execute the locked Lean toolchain and preserve the actual output before the v1.1.0 formalization.
+
+## v0.7.3 Lean evidence preservation (reported successful run)
+
+After the v0.7.3 CRT-right-inverse correction merged in PR #11, the user supplied a terminal transcript reporting Lean 4.35.0 exit 0, `KERNEL_CHECKED`, 13 theorem axiom audits, no `sorryAx`, and 169 passing Python tests. A self-contained copy of the specific historical Lean source, toolchain pin, recovered JSON report and a provenance manifest is archived under `formal/evidence/lean/v0.7.3` for the proposed v1.1.0 Zenodo package. The evidence source is a user-reported local run; the original file was not uploaded and byte-identical provenance is not independently verified. This record proves neither Ada contract discharge nor Python/JS conformance.

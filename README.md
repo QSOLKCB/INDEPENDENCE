@@ -196,3 +196,13 @@ For source-level validation without Lean:
     python3 scripts/check_lean_foundation.py
 
 General CRT, full monomial well-foundedness/totality, graph adjacency and model-to-code conformance remain open. See [docs/LEAN-FOUNDATION.md](docs/LEAN-FOUNDATION.md) for the exact scope, assumptions and reproducibility instructions.
+
+## Preserved Lean 4 proof evidence — pinned v0.7.3 source
+
+The user's successful local Lean 4.35.0 verification output (13/13 theorem audits; `--trust=0`; reported 169/169 Python tests) has been archived for the proposed v1.1.0 Zenodo formalization at [formal/evidence/lean/v0.7.3](formal/evidence/lean/v0.7.3). The archive includes `lean-evidence.json`, its manifest, a copy of the historical Lean source and `lean-toolchain`, and a provenance explanation.
+
+**Source commit:** `68351489e8bbbb879efdcac19d02869124fcf724` (merged PR #11). **Provenance qualification:** the report was recovered intact from the user-shared terminal transcript, not independently byte-matched against an upload of the original `lean-evidence.json`; the local execution was not independently attested. Archive hashes establish internal consistency, not authorship or Ada/Python/JS verification.
+
+    python3 scripts/verify_lean_evidence_archive.py
+
+This offline integrity gate does not itself run Lean. Re-run the pinned compiler separately to reproduce the proof.

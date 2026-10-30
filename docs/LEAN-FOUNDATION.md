@@ -85,3 +85,7 @@ continue to pass without any Lean installation.
 3. Decide whether to prove full degree-lex well-foundedness and general CRT.
 4. Keep the formal SPARK/Ada, independent Python conformance and production
    JavaScript obligations separate. Lean proof is never automatic transfer.
+
+## Successful local run reported after PR #11 — archive provenance
+
+A later user-supplied terminal transcript reported actual pinned Lean 4.35.0 `KERNEL_CHECKED` status, exit code 0 and 13 theorem/axiom audits, along with 169 passing Python regression tests, at source commit `68351489e8bbbb879efdcac19d02869124fcf724`. See `formal/evidence/lean/v0.7.3/` for the recovered report, source snapshot, pin and provenance manifest. **This section supersedes the earlier as-authored NOT_RUN status for this exact historical revision, based on reported local execution**, not independent remote attestation. No Ada or Python/JS correctness result is implied.
