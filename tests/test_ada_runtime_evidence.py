@@ -69,6 +69,42 @@ class AdaRuntimeEvidenceTests(unittest.TestCase):
         self.assertEqual(value["execution_attestation"], "NOT_INDEPENDENTLY_ESTABLISHED")
         self.assertEqual(value["cases"], 29)
 
+    def test_exhaustive_sample_receipt_uses_full_domain_mode(self):
+        # Synthetic self-consistency fixture, not a claim of actual Ada execution.
+        finite = list(finite_cases())
+        selected = sample_ada_cases(finite, len(finite))
+        rows = [[op, list(args), oracle(op, args)] for op, args in
+                selected + rejected_cases() + lexical_cases()]
+        expected_vectors = hashlib.sha256(json.dumps(
+            rows, separators=(",", ":"), ensure_ascii=False
+        ).encode("utf-8")).hexdigest()
+        bridge = build_report()
+        bridge["evidence"]["ada_cli_conformance"] = {
+            "status": "ADA_CLI_TESTED_UNATTESTED",
+            "cases": len(rows),
+            "vectors_sha256": expected_vectors,
+            "binary_sha256": "a" * 64,
+            "note": "CLI output matched oracle; binary provenance and SPARK compilation not independently attested",
+        }
+        bridge["unresolved"][3] = "Ada CLI execution matches selected inputs but provenance not attested"
+        record = copy.deepcopy(self.synthetic)
+        record.update({
+            "mode": "FULL_FINITE_SET",
+            "finite_cases_checked": len(finite),
+            "ada_processes_checked": len(rows),
+            "vectors_sha256": expected_vectors,
+            "python_bridge_receipt": make_receipt(bridge),
+        })
+        verified = checked.verify(record)
+        self.assertEqual(verified["integrity"], "PASS")
+        self.assertEqual(verified["cases"], 8903)
+        self.assertEqual(verified["execution_attestation"], "NOT_INDEPENDENTLY_ESTABLISHED")
+
+        wrong_mode = copy.deepcopy(record)
+        wrong_mode["mode"] = "SEEDED_SAMPLE"
+        with self.assertRaisesRegex(checked.EvidenceError, "mode or count"):
+            checked.verify(wrong_mode)
+
     def test_forged_execution_attestation_rejected(self):
         forged = copy.deepcopy(self.synthetic)
         forged["independent_execution_attestation"] = True
